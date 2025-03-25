@@ -283,7 +283,7 @@
                     class="img-fluid"
                     alt="Feature"
                   />
-                  <p>{{hospital.name}}</p>
+                  <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}">{{hospital.name}}</a>
                 </div>
                 {% endfor %}
                 <!-- /Slider Item -->

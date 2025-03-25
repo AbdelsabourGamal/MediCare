@@ -175,7 +175,7 @@
 
 											{% if user.is_authenticated and user.is_patient %}
 											<div class="clinic-booking">
-												<a class="apt-btn" href="{% url 'booking' pk=doctor.doctor_id  %}">Book Your Appointment</a>
+												<a class="apt-btn" href="{% url 'doctor:booking' pk=doctor.doctor_id  %}">Book Your Appointment</a>
 											</div>
 											{% endif %}
 

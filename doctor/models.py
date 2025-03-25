@@ -182,7 +182,7 @@ class Prescription(models.Model):
     extra_information = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.patient.username)
+        return str(self.patient)
 
 class Prescription_medicine(models.Model):
     prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, null=True, blank=True)

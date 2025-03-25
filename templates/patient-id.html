@@ -90,13 +90,44 @@
 									<div class="c-formContainer">
 										<h2 style="text-align: center;">Patient ID</h2>
 										<br>
-									  	<form class="c-form" action="#">
-									    	<input class="c-form__input" placeholder="Patient ID">
+										{% comment %} <h2>Search for a Patient</h2> {% endcomment %}
+    
+
+{% comment %} 									
+										{% if patient %}
+											<h3>Patient Found:</h3>
+											<p>Name: {{ patient.name }}</p>
+											<p>Email: {{ patient.email }}</p>
+										{% elif patient is None and request.GET.search_query %}
+											<p style="color:red;">No patient found!</p>
+											{% else %}
+											<form action="" method="GET"> {% endcomment %}
+												{% comment %} <input type="text" name="search_query" placeholder="Enter Patient ID" required> {% endcomment %}
+												{% comment %} <button class="c-form__button" type="submit">Search</button> {% endcomment %}
+												{% comment %} <input class="c-form__input" placeholder="Patient ID" type="text" name="search_query" required>
+												<label class="c-form__buttonLabel" for="checkbox">
+													  <button class="c-form__button" type="submit">Search</button>
+												</label>
+												<label class="c-form__toggle" for="checkbox" data-title="Search"></label>
+											</form>
+										 {% endcomment %}
+
+										{% if patient %}
+											<h3>Patient Found:</h3>
+											<p>Name: {{ patient.name }}</p>
+											<p>Email: {{ patient.email }}</p>
+										{% elif patient is None and request.GET.search_query %}
+											<p style="color:red;">No patient found!</p>
+											{% else %}
+											{% endif %}
+
+									  	 <form class="c-form" action="">
+									    	<input class="c-form__input" name="search_query" placeholder="Patient ID">
 									    	<label class="c-form__buttonLabel" for="checkbox">
 									      		<button class="c-form__button" type="submit">Search</button>
 									    	</label>
 									    	<label class="c-form__toggle" for="checkbox" data-title="Search"></label>
-									  	</form>
+									  	</form> 
 									</div>
 									</div>
 								</div>

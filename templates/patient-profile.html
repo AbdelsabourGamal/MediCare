@@ -109,7 +109,7 @@
                   </div>
                   <div class="patient-info">
                     <ul>
-                      <li>Phone <span>{{patient.phone_number}}</span></li>
+                      <li>Phone <span>+20{{patient.phone_number}}</span></li>
                       <li>Age <span>{{patient.age}}</span></li>
                       <li>Blood Group <span>{{patient.blood_group}}</span></li>
                     </ul>
@@ -280,7 +280,7 @@
                     <!-- Prescription Tab -->
                     <div class="tab-pane fade show active" id="pres">
                       <div class="text-right">
-                        <a href="{% url 'create-prescription' pk=patient.patient_id %}" class="add-new-btn"
+                        <a href="{% url 'doctor:create-prescription' pk=patient.patient_id %}" class="add-new-btn"
                           >Add Prescription</a
                         >
                       </div>
@@ -334,7 +334,7 @@
                                       
                                       
                                       <a
-                                        href="{% url 'doctor-view-prescription' pk=p.prescription_id %}"
+                                        href="{% url 'doctor:doctor-view-prescription' pk=p.prescription_id %}"
                                         class="btn btn-sm bg-info-light"
                                       >
                                         <i class="far fa-eye"></i> View
@@ -404,7 +404,7 @@
                                       </a>
                                       {% endcomment %}
                                       <a
-                                        href="{% url 'doctor-view-report' pk=report.report_id %}"
+                                        href="{% url 'doctor:doctor-view-report' pk=report.report_id %}"
                                         class="btn btn-sm bg-info-light"
                                       >
                                         <i class="far fa-eye"></i> View
