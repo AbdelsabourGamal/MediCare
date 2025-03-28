@@ -313,6 +313,7 @@ def doctor_profile(request, pk):
     # request.user --> get logged in user
     if request.user.is_patient:
         patient = request.user.patient
+        doctor = Doctor_Information.objects.get(doctor.id=pk)
     else:
         patient = None
     
