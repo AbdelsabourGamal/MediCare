@@ -165,7 +165,7 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="doctor-profile.html"
+                                      <a href="{% url 'doctor:doctor-profile' pk=appointment.doctor.doctor_id %}"
                                         >{{ appointment.doctor.name }}
                                         <span
                                           >{{appointment.doctor.department_name}}</span

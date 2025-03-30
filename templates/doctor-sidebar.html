@@ -44,13 +44,13 @@
         </li>
         <li class="nav-item has-submenu">
           
-            <a href="#" class="nav-link"><i class="fas fa-search"></i><span>Patient ID</span></a>
-              <ul class="submenu collapse" style="padding:19px">
+            <a href="{% url 'doctor:patient-id' %}" class="nav-link"><i class="fas fa-search"></i><span>Patient ID</span></a>
+              {% comment %} <ul class="submenu collapse" style="padding:19px">
                   <!-- <li><a class="nav-link" href="#">Search</a></li> -->
                   <form action="{% url 'doctor:patient-search' pk=request.user.pk%}"   method="GET"> 
                   <input type="text" class="form-control" placeholder="search" name="search_query" value="{{search_query}}">
                   </form>
-                </ul>
+                </ul> {% endcomment %}
           
         </li>
         

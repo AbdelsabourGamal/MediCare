@@ -92,7 +92,7 @@
 									{% endif %}
 
 									{% if user.is_authenticated and user.is_doctor %}
-									<li class="breadcrumb-item"><a href="{% url 'doctor-dashboard' %}">Home</a></li>
+									<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
 									{% endif %}
 									<li class="breadcrumb-item active" aria-current="page">Hospital</li>
 								</ol>
@@ -142,7 +142,7 @@
                   <div class="doctor-widget">
                     <div class="doc-info-left">
                       <div class="doctor-img">
-                        <a href="{% url 'doctor-profile' pk=doctor.doctor_id %}">
+                        <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">
                           <img
                             src="{{ doctor.featured_image.url }}"
                             class="img-fluid"
@@ -152,7 +152,7 @@
                       </div>
                       <div class="doc-info-cont">
                         <h4 class="doc-name">
-                          <a href="{% url 'doctor-profile' pk=doctor.doctor_id %}">Dr. {{doctor.name}}</a>
+                          <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">Dr. {{doctor.name}}</a>
                         </h4>
                         <p class="doc-speciality">{{ doctor.department_name.hospital_department_name }}</p>
                         <h5 class="doc-department">
@@ -230,14 +230,14 @@
                         </ul>
                       </div>
                       <div class="clinic-booking">
-                        <a class="view-pro-btn" href="{% url 'doctor-profile' pk=doctor.doctor_id %}"
+                        <a class="view-pro-btn" href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}"
                           >View Profile</a
                         >
 
                         {% if user.is_authenticated and user.is_patient %}
                         <a
                           class="apt-btn"
-                          href="{% url 'booking' pk=doctor.doctor_id %}"
+                          href="{% url 'doctor:booking' pk=doctor.doctor_id %}"
                           >Book Appointment</a
                         >
                         {% endif %}

@@ -51,7 +51,7 @@ class PatientForm(forms.ModelForm):
 class PasswordResetForm(ModelForm):
     class Meta:
         model = User
-        fields = ['email']
+        fields = ['email',"username"]
 
     # create a style for model form
     def __init__(self, *args, **kwargs):

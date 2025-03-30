@@ -304,14 +304,14 @@
                                     <td>
                                       <h2 class="table-avatar">
                                         <a
-                                          href="patient-profile.html"
+                                          href="{% url 'doctor:patient-profile' pk=today.patient.patient_id %}"
                                           class="avatar avatar-sm mr-2"
                                           ><img
                                             class="avatar-img rounded-circle"
                                             src="{{ today.patient.featured_image.url }}"
                                             alt="User Image"
                                         /></a>
-                                        <a href="patient-profile.html">{{today.patient.name}}<span>#PT{{today.serial_number}}</span></a>
+                                        <a href="{% url 'doctor:patient-profile' pk=today.patient.patient_id %}">{{today.patient.name}}<span>#PT{{today.serial_number}}</span></a>
                                       </h2>
                                     </td>
                                     <td>{{today.date}}<span class="d-block text-info">{{today.time}}</span></td>
@@ -319,7 +319,7 @@
                                     <td>
                                       {{today.patient.email}}
                                       <span class="d-block text-info"
-                                        >+880{{today.patient.phone_number}}</span
+                                        >+20{{today.patient.phone_number}}</span
                                       >
                                     </td>
                                     <td>

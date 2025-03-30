@@ -714,7 +714,7 @@ def delete_medicine(request, pk):
 @login_required(login_url='admin_login')
 def add_lab_worker(request):
     if request.user.is_hospital_admin:
-        user = Admin_Information.objects.get(user=request.user)
+        user = None
         
         form = LabWorkerCreationForm()
      

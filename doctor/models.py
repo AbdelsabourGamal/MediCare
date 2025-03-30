@@ -1,28 +1,11 @@
 from django.db import models
-
 import uuid
-
-# import django user model
 from hospital.models import Hospital_Information, User, Patient
 from hospital_admin.models import hospital_department, specialization, service
 from django.conf import settings
 
 
 # # Create your models here.
-
-"""
-null=True --> don't require a value when inserting into the database
-blank=True --> allow blank value when submitting a form
-auto_now_add --> automatically set the value to the current date and time
-unique=True --> prevent duplicate values
-primary_key=True --> set this field as the primary key
-editable=False --> prevent the user from editing this field
-
-django field types --> google it  # every field types has field options
-Django automatically creates id field for each model class which will be a PK # primary_key=True --> if u want to set manual
-"""
-# Create your models here.
-
 
 class Doctor_Information(models.Model):
     DOCTOR_TYPE = (
@@ -89,7 +72,7 @@ class Appointment(models.Model):
 
     id = models.AutoField(primary_key=True)
     date = models.DateField(null=True, blank=True)
-    time = models.CharField(max_length=200, null=True, blank=True)
+    time = models.TimeField(null=True, blank=True)
     doctor = models.ForeignKey(Doctor_Information, on_delete=models.CASCADE, null=True, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
     appointment_type = models.CharField(max_length=200, choices=APPOINTMENT_TYPE)
@@ -101,7 +84,7 @@ class Appointment(models.Model):
     
 
     def __str__(self):
-        return str(self.patient.username)
+        return str(self.patient.username) if self.patient else "No"
 
 class Education(models.Model):
     education_id = models.AutoField(primary_key=True)
@@ -182,7 +165,7 @@ class Prescription(models.Model):
     extra_information = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.patient.username)
+        return str(self.patient)
 
 class Prescription_medicine(models.Model):
     prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, null=True, blank=True)

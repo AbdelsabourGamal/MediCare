@@ -105,7 +105,7 @@
                     </a>
                     <div class="booking-info">
                       <h4>
-                        <a href="doctor-profile.html">{{doctor.name}}</a>
+                        <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">{{doctor.name}}</a>
                       </h4>
                       <div class="rating">
                         <i class="fas fa-star filled"></i>
@@ -199,7 +199,7 @@
                       <h4><i class="fa fa-calendar pr-3 padd-r-10"></i>Schedule an Appointment</h4>
                   </div>
 
-                  <form method="post" action="{% url 'booking' pk=doctor.doctor_id %}" enctype="multipart/form-data">
+                  <form method="post" action="{% url 'doctor:booking' pk=doctor.doctor_id %}" enctype="multipart/form-data">
                     {% csrf_token %}
                       <div class="agent-contact-form-sidebar">
                           <div class="row">

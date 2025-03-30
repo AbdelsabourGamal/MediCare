@@ -208,7 +208,7 @@
                                   src="{{hospital.featured_image.url}}"
                                   alt="User Image"
                               /></a>
-                              <a href="#">{{hospital.name}}</a>
+                              <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}">{{hospital.name}}</a>
                             </h2>
                           </td>
                           <td>{{hospital.address}}</td>
@@ -311,8 +311,12 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
+                              {% if patient.featured_image %}
 															<a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{patient.featured_image.url}}" alt="User Image"></a>
-															<a href="#">{{patient.name}}</a>
+                              {% else %}
+                              <img class="avatar-img rounded-circle" src="{{p.featured_image.url}}" alt="User Image"/>
+                              {% endif %}
+                              <a href="">{{patient.name}}</a>
 														</h2>
 													</td>
 													<td>{{patient.phone_number}}</td>
