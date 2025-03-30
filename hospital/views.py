@@ -2,6 +2,8 @@ import email
 from multiprocessing import context
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.hashers import check_password
+from doctor.views import patient_id
 # from django.contrib.auth.models import User
 # from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm, PatientForm, PasswordResetForm
@@ -33,7 +35,7 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.views.decorators.csrf import csrf_exempt
-
+import uuid
 
 # Create your views here.
 @csrf_exempt
@@ -47,19 +49,25 @@ def hospital_home(request):
 @csrf_exempt
 @login_required(login_url="login")
 def change_password(request,pk):
-    patient = Patient.objects.get(user_id=pk)
+    patient = get_object_or_404(Patient,user_id=pk)
+    user = get_object_or_404(User,username=patient.username)
     context={"patient":patient}
     if request.method == "POST":
+
+        old_password = request.POST["old_password"]
         new_password = request.POST["new_password"]
         confirm_password = request.POST["confirm_password"]
-        if new_password == confirm_password:
-            
-            request.user.set_password(new_password)
-            request.user.save()
-            messages.success(request,"Password Changed Successfully")
-            return redirect("patient-dashboard")
+        if check_password(old_password, user.password):
+            if new_password == confirm_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request,"Password Changed Successfully")
+                return redirect("login")
+            else:
+                messages.error(request,"New Password and Confirm Password is not same")
+                return redirect("change-password",pk)
         else:
-            messages.error(request,"New Password and Confirm Password is not same")
+            messages.error(request,"Old Password Is Not Correct")
             return redirect("change-password",pk)
     return render(request, 'change-password.html',context)
 
@@ -192,6 +200,7 @@ def patient_register(request):
             user = form.save(commit=False) # commit=False --> don't save to database yet (we have a chance to modify object)
             user.is_patient = True
             # user.username = user.username.lower()  # lowercase username
+            user.serial_number = str(uuid.uuid4())[:8]
             user.save()
             messages.success(request, 'Patient account was created!')
 

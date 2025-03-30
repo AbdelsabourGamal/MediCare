@@ -69,10 +69,10 @@ class Patient(models.Model):
     history = models.CharField(max_length=200, null=True, blank=True)
     dob = models.CharField(max_length=200, null=True, blank=True)
     nid = models.CharField(max_length=200, null=True, blank=True)
-    serial_number = models.CharField(max_length=200, null=True, blank=True)
+    serial_number = models.CharField(max_length=20,unique=True,default=str(uuid.uuid4())[:8])
     
     # Chat
-    login_status = models.CharField(max_length=200, null=True, blank=True, default="offline")
+    login_status = models.CharField(max_length=200, null=False, blank=False, default="offline")
 
     def __str__(self):
         return str(self.user.username)

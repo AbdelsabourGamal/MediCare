@@ -1,6 +1,7 @@
 import email
 from email import message
 from multiprocessing import context
+from django.contrib.auth.hashers import check_password
 from turtle import title
 from django.shortcuts import render, redirect
 # from django.contrib.auth.models import User
@@ -49,21 +50,26 @@ def generate_random_string():
 @login_required(login_url="doctor-login")
 def doctor_change_password(request,pk):
     doctor = Doctor_Information.objects.get(user_id=pk)
+    user = User.objects.get(username=doctor.username)
     context={'doctor':doctor}
     if request.method == "POST":
-        
+        old_password = request.POST["old_password"]
         new_password = request.POST["new_password"]
         confirm_password = request.POST["confirm_password"]
-        if new_password == confirm_password:
-            
-            request.user.set_password(new_password)
-            request.user.save()
-            messages.success(request,"Password Changed Successfully")
-            return redirect("doctor-dashboard")
-            
+        if check_password(old_password, user.password):
+            if new_password == confirm_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request,"Password Changed Successfully")
+                return redirect("doctor")
+                
+            else:
+                messages.error(request,"New Password and Confirm Password is not same")
+                return redirect("doctor:doctor-change-password",pk)
         else:
-            messages.error(request,"New Password and Confirm Password is not same")
-            return redirect("change-password",pk)
+            messages.error(request,"Old Password Is Not Correct")
+            return redirect("doctor:doctor-change-password",pk)
+
     return render(request, 'doctor-change-password.html',context)
 
 @csrf_exempt
@@ -313,10 +319,10 @@ def doctor_profile(request, pk):
     # request.user --> get logged in user
     if request.user.is_patient:
         patient = request.user.patient
+        doctor = Doctor_Information.objects.get(doctor_id=pk)
     else:
         patient = None
-    
-    doctor = Doctor_Information.objects.get(user=request.user)
+        doctor = Doctor_Information.objects.get(user=request.user)
 
     educations = Education.objects.filter(doctor=doctor).order_by('-year_of_completion')
     experiences = Experience.objects.filter(doctor=doctor).order_by('-from_year','-to_year')
@@ -447,8 +453,11 @@ def booking(request, pk):
         transformed_date = datetime.datetime.strptime(date, '%m/%d/%Y').strftime('%Y-%m-%d')
         transformed_date = str(transformed_date)
          
+        transformed_time = datetime.datetime.strptime(time, '%I:%M %p').strftime('%H:%M:%S')
+        transformed_time = str(transformed_time)
+
         appointment.date = transformed_date
-        appointment.time = time
+        appointment.time = transformed_time
         appointment.appointment_status = 'pending'
         appointment.serial_number = generate_random_string()
         appointment.appointment_type = appointment_type
@@ -534,7 +543,7 @@ def create_prescription(request,pk):
 
             if request.method == 'POST':
                 prescription = Prescription(doctor=doctor, patient=patient)
-                
+                # print(request.POST)
                 test_name= request.POST.getlist('test_name')
                 test_description = request.POST.getlist('description')
                 medicine_name = request.POST.getlist('medicine_name')
