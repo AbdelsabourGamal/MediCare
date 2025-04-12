@@ -76,7 +76,7 @@ class DoctorRegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
-
+"""
 class AdminRegisterSerializer(serializers.ModelSerializer):
     is_hospital_admin = serializers.BooleanField(default=True, read_only=True)
     class Meta:
@@ -103,7 +103,7 @@ class AdminRegisterSerializer(serializers.ModelSerializer):
         )
         admin.save()
         return user
-    
+"""    
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()

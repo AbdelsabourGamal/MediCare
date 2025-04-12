@@ -13,7 +13,7 @@ urlpatterns = [
     path('', views.getRoutes),
     path('patient_register/', views.PatientRegister.as_view()),
     path('doctor_register/', views.DoctorRegister.as_view()),
-    path('admin_register/', views.AdminRegister.as_view()),
+    # path('admin_register/', views.AdminRegister.as_view()),
 
     path('login/', views.LoginView.as_view()),
     path('logout/', views.LogoutView.as_view(), name='logout'),

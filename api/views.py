@@ -6,7 +6,7 @@ from doctor.views import patient_id
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.response import Response
-from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer, AdminRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer
+from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
 from hospital.models import Hospital_Information, Patient, User 
@@ -53,6 +53,8 @@ def getRoutes(request):
         {'prescription': '/api/prescription'},
         {'prescription_medicine': '/api/prescription_medicine'},
         {'prescription_test': '/api/prescription_test'},
+        {'report': '/api/report'},
+        {'payment': '/api/payment'},
         {'all_prescription_data': '/api/all_prescription_data'},
 
     ]
@@ -91,6 +93,7 @@ class DoctorRegister(generics.CreateAPIView):
             "email": user.email
         }, status=status.HTTP_201_CREATED)
 
+""" AdminRegister
 class AdminRegister(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = AdminRegisterSerializer
@@ -99,6 +102,7 @@ class AdminRegister(generics.CreateAPIView):
     def perform_create(self, serializer):
         user = serializer.save()
         Admin_Information.objects.create(user=user)
+"""
 
 class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
@@ -107,7 +111,11 @@ class LoginView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({
+            "message": "Invalid username or password",
+            "code": "400"
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 class PasswordResetView(APIView):
     permission_classes = [AllowAny]
