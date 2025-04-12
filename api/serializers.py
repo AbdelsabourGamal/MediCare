@@ -2,8 +2,9 @@ from attr import field
 from rest_framework import serializers
 from traitlets import default
 from hospital.models import Hospital_Information, Patient, User 
-from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test
+from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
 from hospital_admin.models import Admin_Information
+from sslcommerz.models import Payment
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.tokens import RefreshToken  # type: ignore
 from django.contrib.auth import authenticate
@@ -123,13 +124,8 @@ class LoginSerializer(serializers.Serializer):
             }
         }
 
-class PasswordResetRequestSerializer(serializers.Serializer):
+class PasswordResetSerializer(serializers.Serializer):
     email = serializers.EmailField()
-
-class SetNewPasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(min_length=6, max_length=68, write_only=True)
-    token = serializers.CharField(write_only=True)
-
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
@@ -189,7 +185,20 @@ class PrescriptionTestSerializer(serializers.ModelSerializer):
         model = Prescription_test
         fields = '__all__'
 
+class ReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Report
+        fields = '__all__'
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+
 class CombinedDataSerializer(serializers.Serializer):
-    appointments = PrescriptionSerializer(many=True)
-    prescriptions = PrescriptionMedicineSerializer(many=True)
-    prescriptions = PrescriptionTestSerializer(many=True)
+    prescriptions = PrescriptionSerializer(many=True)
+    prescriptions_medicine = PrescriptionMedicineSerializer(many=True)
+    prescriptions_test = PrescriptionTestSerializer(many=True)
+    reports = ReportSerializer(many=True)
+    payments = PaymentSerializer(many=True)
+

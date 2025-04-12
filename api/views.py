@@ -1,5 +1,4 @@
-from ast import mod
-from os import access
+from django.contrib.auth.tokens import default_token_generator
 import uuid
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
@@ -7,18 +6,20 @@ from doctor.views import patient_id
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.response import Response
-from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer, AdminRegisterSerializer,LoginSerializer, PasswordResetRequestSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, SetNewPasswordSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer
+from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer, AdminRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
 from hospital.models import Hospital_Information, Patient, User 
-from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test
+from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
+from sslcommerz.models import Payment
 from hospital_admin.models import Admin_Information
 from rest_framework import generics,status
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from django.core.mail import send_mail
 from django.conf import settings
-from django.utils.crypto import get_random_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -37,7 +38,6 @@ def getRoutes(request):
         {'logout': '/api/logout'},
 
         {'password_reset': '/api/password_reset'},
-        {'reset_password_confirm': '/api/reset_password_confirm'},
 
         {'change_password': '/api/change_password'},
 
@@ -94,21 +94,19 @@ class LoginView(GenericAPIView):
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-reset_tokens = {}  # عشان نحتفظ بالتوكن بشكل مؤقت
-class PasswordResetRequestView(APIView):
+class PasswordResetView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
-        serializer = PasswordResetRequestSerializer(data=request.data)
+        serializer = PasswordResetSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data['email'] # type: ignore
             try:
                 user = User.objects.get(email=email)
-                token = get_random_string(50)
-                reset_tokens[email] = token
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                token = default_token_generator.make_token(user)
 
                 # Send Email
-                reset_link = f"http://127.0.0.1:8000/api/reset_password_confirm/?email={email}&token={token}"
+                reset_link = f"http://127.0.0.1:8000/reset/{uid}/{token}"
                 send_mail(
                     'Password Reset Request',
                     f'Click here to reset your password: {reset_link}',
@@ -119,28 +117,6 @@ class PasswordResetRequestView(APIView):
                 return Response({'message': 'Password reset link sent to email.'}, status=status.HTTP_200_OK)
             except User.DoesNotExist:
                 return Response({'error': 'User with this email does not exist'}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class PasswordResetConfirmView(APIView):
-    def post(self, request):
-        serializer = SetNewPasswordSerializer(data=request.data)
-        if serializer.is_valid():
-            email = request.query_params.get('email')
-            token = serializer.validated_data['token'] # type: ignore
-
-            if email not in reset_tokens or reset_tokens[email] != token:
-                return Response({'error': 'Invalid or expired token'}, status=status.HTTP_400_BAD_REQUEST)
-
-            try:
-                user = User.objects.get(email=email)
-                user.set_password(serializer.validated_data['password']) # type: ignore
-                user.save()
-                del reset_tokens[email]  # احذف التوكن بعد التغيير
-
-                return Response({'message': 'Password reset successful'}, status=status.HTTP_200_OK)
-            except User.DoesNotExist:
-                return Response({'error': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -210,32 +186,27 @@ class GetOneDoctor(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [AllowAny]
 
-# class PatientProfiles(generics.ListAPIView):
-    # queryset = Patient.objects.all()
-    # serializer_class = PatientProfileSerializer
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [AllowAny]
-
 class PatientProfile(generics.RetrieveUpdateAPIView):
-    queryset = Patient.objects.all()
+    # queryset = Patient.objects.all()
     serializer_class = PatientProfileSerializer
-    lookup_field = 'pk'
+    # lookup_field = 'pk'
     authentication_classes = [JWTAuthentication]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self): # type: ignore
+        return Patient.objects.get(user=self.request.user)
 
 class PatientAppointment(generics.ListCreateAPIView):
-    # user = request.user
     queryset = Appointment.objects.all()
     serializer_class = PatientAppointmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
+    def get_queryset(self): # type: ignore
         return Appointment.objects.filter(patient__user=self.request.user)
 
     def perform_create(self,serializer):
         user = self.request.user
-        print(user)
         patient_data = Patient.objects.get(user=user)
         serializer.save(
             patient = patient_data,
@@ -270,7 +241,24 @@ class PatientPrescriptionTest(generics.ListAPIView):
 
     def get_queryset(self):
         return Prescription_test.objects.filter(prescription__patient__user=self.request.user)
-    
+
+class PatientReport(generics.ListAPIView):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self): # type: ignore
+        return Report.objects.filter(patient__user=self.request.user)
+
+class PatientPayment(generics.ListAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self): # type: ignore
+        return Report.objects.filter(patient__user=self.request.user)
 
 class CombinedDataView(APIView):
     permission_classes = [IsAuthenticated]
@@ -281,12 +269,16 @@ class CombinedDataView(APIView):
         prescriptions = Prescription.objects.filter(patient__user=user)
         prescriptions_medicine = Prescription_medicine.objects.filter(prescription__patient__user=user)
         prescriptions_test = Prescription_medicine.objects.filter(prescription__patient__user=user)
+        reports = Report.objects.filter(patient__user=user)
+        payments = Payment.objects.filter(patient__user=user)
 
         # استخدام Serializer لتحويل البيانات إلى JSON
         data = {
             "prescriptions": PrescriptionSerializer(prescriptions, many=True).data,
             "prescriptions_medicine": PrescriptionMedicineSerializer(prescriptions_medicine, many=True).data,
             "prescriptions_test": PrescriptionTestSerializer(prescriptions_test, many=True).data,
+            "reports": ReportSerializer(reports, many=True).data,
+            "payments": PaymentSerializer(payments, many=True).data,
         }
 
         return Response(data)

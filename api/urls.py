@@ -18,8 +18,7 @@ urlpatterns = [
     path('login/', views.LoginView.as_view()),
     path('logout/', views.LogoutView.as_view(), name='logout'),
 
-    path('password_reset/', views.PasswordResetRequestView.as_view(), name='password-reset'),
-    path('reset_password_confirm/', views.PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+    path('password_reset/', views.PasswordResetView.as_view(), name='password-reset'),
 
     path('change_password/', views.ChangePasswordView.as_view(), name='change_password'),
 
@@ -29,17 +28,17 @@ urlpatterns = [
     path('doctor/', views.GetDoctors.as_view()),
     path('doctor/<int:pk>/', views.GetOneDoctor.as_view()),
 
-    # path('patient_profile/', views.PatientProfiles.as_view()),
-    path('patient_profile/<int:pk>/', views.PatientProfile.as_view()),
+    path('patient_profile/', views.PatientProfile.as_view()),
 
     path('appointment/', views.PatientAppointment.as_view()),
 
     path('prescription/', views.PatientPrescription.as_view()),
     path('prescription_medicine/', views.PatientPrescriptionMedicine.as_view()),
     path('prescription_test/', views.PatientPrescriptionTest.as_view()),
+    path('report/', views.PatientReport.as_view()),
+    path('payment/', views.PatientPayment.as_view()),
 
     path('all_prescription_data/', views.CombinedDataView.as_view()),
 
 
 ]
-
