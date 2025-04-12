@@ -61,7 +61,7 @@ def doctor_change_password(request,pk):
                 request.user.set_password(new_password)
                 request.user.save()
                 messages.success(request,"Password Changed Successfully")
-                return redirect("doctor")
+                return redirect("doctor:doctor-login")
                 
             else:
                 messages.error(request,"New Password and Confirm Password is not same")

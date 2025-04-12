@@ -1,5 +1,3 @@
-import email
-from multiprocessing import context
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
@@ -231,25 +229,6 @@ def patient_dashboard(request):
     return render(request, 'patient-dashboard.html', context)
 
 
-# def profile_settings(request):
-#     if request.user.is_patient:
-#         # patient = Patient.objects.get(user_id=pk)
-#         patient = Patient.objects.get(user=request.user)
-#         form = PatientForm(instance=patient)  
-
-#         if request.method == 'POST':
-#             form = PatientForm(request.POST, request.FILES,instance=patient)  
-#             if form.is_valid():
-#                 form.save()
-#                 return redirect('patient-dashboard')
-#             else:
-#                 form = PatientForm()
-#     else:
-#         redirect('logout')
-
-#     context = {'patient': patient, 'form': form}
-#     return render(request, 'profile-settings.html', context)
-
 @csrf_exempt
 @login_required(login_url="login")
 def profile_settings(request):
@@ -308,7 +287,7 @@ def search(request):
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
-        return render(request, 'patient-login.html')    
+        return render(request, 'patient-login.html')
     
 
 def checkout_payment(request):
@@ -586,7 +565,7 @@ def test_cart(request, pk):
         if test_carts.exists() and test_orders.exists():
             test_order = test_orders[0]
             
-            context = {'test_carts': test_carts,'test_order': test_order, 'patient': patient, 'prescription_test':prescription_test, 'prescription_id':pk}
+            context = {'test_carts': test_carts,'test_order': test_order, 'patient': patient, 'prescription': prescription ,'prescription_test':prescription_test, 'prescription_id':pk}
             return render(request, 'test-cart.html', context)
         else:
             # messages.warning(request, "You don't have any test in your cart!")
