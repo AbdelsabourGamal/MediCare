@@ -63,18 +63,33 @@ class PatientRegister(generics.CreateAPIView):
     serializer_class = PatientRegisterSerializer
     permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        Patient.objects.create(user=user)
+
+        return Response({
+            "message": "Patient registered successfully",
+            "username": user.username,
+            "email": user.email
+        }, status=status.HTTP_201_CREATED)
+
 
 class DoctorRegister(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = DoctorRegisterSerializer
     permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        Doctor_Information.objects.create(user=user)
+
+        return Response({
+            "message": "Doctor registered successfully",
+            "username": user.username,
+            "email": user.email
+        }, status=status.HTTP_201_CREATED)
 
 class AdminRegister(generics.CreateAPIView):
     queryset = User.objects.all()

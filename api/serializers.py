@@ -21,44 +21,51 @@ class PatientRegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user_data = {
-            "username": validated_data.get("username"),
-            "email": validated_data.get("email"),
-            "password": validated_data.get("password"),
-            "first_name": validated_data.get("first_name"),
-            "last_name": validated_data.get("last_name")
-        }
+        required_fields = ['username', 'email', 'password', 'first_name', 'last_name']
+        for field in required_fields:
+            if not validated_data.get(field):
+                raise serializers.ValidationError(f"{field} is required.")
 
-        user = User.objects.create_user(**user_data)
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+        )
         user.is_patient = True
         user.save()
 
-        serial_number = str(uuid.uuid4())[:8]  
+        serial_number = str(uuid.uuid4())[:8]
         patient = Patient.objects.create(
             user=user,
             username=user.username,
-            email=user.email
+            email=user.email,
+            serial_number=serial_number,
         )
-        patient.serial_number = serial_number
-        patient.save()
         return user
+
 
 class DoctorRegisterSerializer(serializers.ModelSerializer):
     is_doctor = serializers.BooleanField(default=True, read_only=True)
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'is_doctor','first_name','last_name']
+        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'is_doctor']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user_data = {
-            "username": validated_data.get("username"),
-            "email": validated_data.get("email"),
-            "password": validated_data.get("password"),
-            "first_name": validated_data.get("first_name"),
-            "last_name": validated_data.get("last_name")
-        }
-        user = User.objects.create_user(**user_data)
+        required_fields = ['username', 'email', 'password', 'first_name', 'last_name']
+        for field in required_fields:
+            if not validated_data.get(field):
+                raise serializers.ValidationError(f"{field} is required.")
+
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+        )
         user.is_doctor = True
         user.save()
 
@@ -67,7 +74,6 @@ class DoctorRegisterSerializer(serializers.ModelSerializer):
             username=user.username,
             email=user.email
         )
-        doctor.save()
         return user
 
 
