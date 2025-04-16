@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'ChatApp.apps.ChatappConfig',
     'debug_toolbar',
 
 ]
@@ -74,14 +73,11 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
-    'AUTH_TOKEN_CLASSES':
-    ("rest_framework_simplejwt.tokens.AccessToken",),
-    "TOKEN_BLACKLIST": True
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
 
 MIDDLEWARE = [
@@ -209,5 +205,5 @@ AUTH_USER_MODEL = 'hospital.User'
 
 
 # SESSION AGE 45 Minutes
-SESSION_COOKIE_AGE = 45*60
+# SESSION_COOKIE_AGE = 5*60
 SESSION_SAVE_EVERY_REQUEST = True

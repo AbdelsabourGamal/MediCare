@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 
 
 
-
 urlpatterns = [
     path('', views.admin_login, name='admin-login'),
     path('admin-dashboard/',views.admin_dashboard, name='admin-dashboard'),
@@ -13,7 +12,6 @@ urlpatterns = [
     path('appointment-list',views.appointment_list, name='appointment-list'),
     path('register-doctor-list/', views.register_doctor_list,name='register-doctor-list'),
     path('pending-doctor-list/', views.pending_doctor_list,name='pending-doctor-list'),
-    path('forgot-password/', views.admin_forgot_password,name='admin_forgot_password'),
     path('hospital-list/', views.hospital_list,name='hospital-list'),
     path('add-hospital/', views.add_hospital,name='add-hospital'),
     path('edit-hospital/<int:pk>/', views.edit_hospital,name='edit-hospital'),
@@ -32,7 +30,7 @@ urlpatterns = [
     path('admin-logout/', views.logoutAdmin, name='admin-logout'),
     path('emergency/', views.emergency_details,name='emergency'),
     path('edit-emergency-information/<int:pk>/', views.edit_emergency_information,name='edit-emergency-information'),
-    path('hospital-profile/', views.hospital_profile ,name='hospital-profile'),
+    path('hospital-profile/<int:pk>/', views.hospital_profile ,name='hospital-profile'),
     path('hospital-admin-profile/<int:pk>/', views.hospital_admin_profile,name='hospital-admin-profile'),
     path('create-invoice/<int:pk>/', views.create_invoice,name='create-invoice'),
     path('create-report/<int:pk>/', views.create_report,name='create-report'),

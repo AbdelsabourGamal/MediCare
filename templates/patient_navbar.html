@@ -11,7 +11,7 @@
     </a>
     <a href="{% url 'hospital_home'%}" class="navbar-brand logo">
       <img
-        src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}"
+        src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
         class="img-fluid"
         alt="Logo"
       />
@@ -21,7 +21,7 @@
     <div class="menu-header">
       <a href="" class="menu-logo">
         <img
-          src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}"
+          src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
           class="img-fluid"
           alt="Logo"
         />
@@ -44,22 +44,8 @@
         <ul class="submenu">
           <li><a href="{% url 'multiple-hospital' %}">Hospital Info</a></li>
           <li><a href="{% url 'search' %}">Search Doctor</a></li>
-          
-          <!-- <li><a href="#">Checkout</a></li> -->
-          <!-- <li>
-            <a href="">Booking Success</a>
-          </li> -->
-          
-          <!-- <li><a href="#">Favourites</a></li> -->
-          <!-- <li><a href="#">Chat</a></li> -->
         </ul>
       </li>
-
-      {% if user.is_authenticated and user.is_patient %}
-      <li>
-        <a href="{% url 'chat-home' pk=user.id %}">Chat with Doctor</a>
-      </li>
-      {% endif %}
 
       <li>
         <a href="{% url 'pharmacy_shop' %}">Medical Shop</a>
@@ -88,15 +74,6 @@
     </ul>
   </div>
   <ul class="nav header-navbar-rht">
-    <li class="nav-item contact-item">
-      <div class="header-contact-img">
-        <i class="far fa-hospital"></i>
-      </div>
-      <div class="header-contact-detail">
-        <p class="contact-header">Contact</p>
-        <p class="contact-info-header">+20{{patient.phone_number}}</p>
-      </div>
-    </li>
     <!-- User Menu -->
     <li class="nav-item dropdown has-arrow logged-item">
       <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">

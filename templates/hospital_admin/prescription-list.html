@@ -88,10 +88,10 @@
 													<th>Prescription Id</th>
                           <th>Doctor Name</th>
 													<th>Add Report Results</th>
-                                                    												
 												</tr>
 											</thead>
 											<tbody>
+                        <h1>{{patient}}</h1>
                          {% for ps in prescription %}
 												<tr>
                           <td>{{ps.prescription_id}}</td>
@@ -101,7 +101,6 @@
 															<a href="#">{{ps.doctor.name}}</a>
 														</h2>
 													</td>
-													
                                                     <td>
                                                         <div class="table-action">
                                                         <a
@@ -110,13 +109,10 @@
                                                             >
                                                             <i class="fas fa-file-alt"></i> Create Report 
                                                         </a>
-                                            
                                                         </div>
                                                     </td>
 												</tr>
                       {% endfor %}
-												
-												
 											</tbody>
 										</table>
 									</div>

@@ -1,14 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/index.html  30 Nov 2019 04:12:03 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -23,7 +22,7 @@
       href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
+    <!-- Fortawesome CSS -->
     <link
       rel="stylesheet"
       href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
@@ -38,12 +37,6 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <!-- Main Wrapper -->
@@ -52,49 +45,46 @@
       <header class="header">{% include 'navbar_home.html' %}</header>
       <!-- header -->
 
-      <!-- Home Banner -->
-      <section class="section section-search" style="background-color:rgb(172, 209, 242); padding-bottom: 0px;min-height: 0px;padding-left: 0px;padding-right: 0px;">
-        <div  style="background-color:rgb(172, 209, 242)">
-          <div class="banner-wrapper" style="background-color:rgb(172, 209, 242);padding-bottom: 20px;padding-top: 12px;"> 
-            <div class="banner-header text-center">
-              <h1>Welcome To HealthStack</h1>
-              <p>
-                Choose well by choosing us.
-              </p>
-            </div>
-
-           
-            <!-- /Search -->
-          </div>
-          <div class="home-image">
+      <!-- Landing Section -->
+      <search class="section section-landing">
+        <div class="container-fluid">
+          <div class="image-container">
             <img
-              src="{% static 'HealthStack-System/images/Normal/p2.png' %}"
-              class="img-fluid" style="width: 100%;"
+              src="../static/HealthStack-System/images/Normal/landing.png"
+              alt="Hospital Staff"
             />
           </div>
+          <div class="description-container">
+            <h1><span>Welcome to Our</span><br />Hospital Management System</h1>
+            <p>
+              Streamline your hospital operations with our cutting-edge Hospital
+              Management System. From patient records to appointment scheduling,
+              our platform ensures accuracy, efficiency, and seamless
+              communication across all departments.
+            </p>
+            <a href="#clinics">Our Clinics</a>
+          </div>
         </div>
-      </section>
-      <!-- /Home Banner -->
+      </search>
 
-      <!-- Clinic and Specialities -->
-      <section class="section section-specialities" style="padding-top: 80px">
+      <!-- Clinic and Specialties -->
+      <section class="section section-specialties" id="clinics">
         <div class="container-fluid">
           <div class="section-header text-center">
-            <h2>Clinic and Specialities</h2>
-            <p class="sub-title">
-            </p>
+            <h2>Our Clinics</h2>
+            <p class="sub-title"></p>
           </div>
           <div class="row justify-content-center">
             <div class="col-md-9">
               <!-- Slider -->
-              <div class="specialities-slider slider">
+              <div class="specialties-slider slider">
                 <!-- Slider Item -->
-                <div class="speicality-item text-center">
-                  <div class="speicality-img">
+                <div class="specialty-item text-center">
+                  <div class="specialty-img">
                     <img
-                      src="{% static 'HealthStack-System/images/Normal/specialities/specialities-01.png' %}"
+                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-01.png' %}"
                       class="img-fluid"
-                      alt="Speciality"
+                      alt="Specialty"
                     />
                     <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
@@ -103,12 +93,12 @@
                 <!-- /Slider Item -->
 
                 <!-- Slider Item -->
-                <div class="speicality-item text-center">
-                  <div class="speicality-img">
+                <div class="specialty-item text-center">
+                  <div class="specialty-img">
                     <img
-                      src="{% static 'HealthStack-System/images/Normal/specialities/specialities-02.png' %}"
+                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-02.png' %}"
                       class="img-fluid"
-                      alt="Speciality"
+                      alt="Specialty"
                     />
                     <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
@@ -117,12 +107,12 @@
                 <!-- /Slider Item -->
 
                 <!-- Slider Item -->
-                <div class="speicality-item text-center">
-                  <div class="speicality-img">
+                <div class="specialty-item text-center">
+                  <div class="specialty-img">
                     <img
-                      src="{% static 'HealthStack-System/images/Normal/specialities/specialities-03.png' %}"
+                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-03.png' %}"
                       class="img-fluid"
-                      alt="Speciality"
+                      alt="Specialty"
                     />
                     <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
@@ -131,12 +121,12 @@
                 <!-- /Slider Item -->
 
                 <!-- Slider Item -->
-                <div class="speicality-item text-center">
-                  <div class="speicality-img">
+                <div class="specialty-item text-center">
+                  <div class="specialty-img">
                     <img
-                      src="{% static 'HealthStack-System/images/Normal/specialities/specialities-04.png' %}"
+                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-04.png' %}"
                       class="img-fluid"
-                      alt="Speciality"
+                      alt="Specialty"
                     />
                     <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
@@ -145,12 +135,12 @@
                 <!-- /Slider Item -->
 
                 <!-- Slider Item -->
-                <div class="speicality-item text-center">
-                  <div class="speicality-img">
+                <div class="specialty-item text-center">
+                  <div class="specialty-img">
                     <img
-                      src="{% static 'HealthStack-System/images/Normal/specialities/specialities-05.png' %}"
+                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-05.png' %}"
                       class="img-fluid"
-                      alt="Speciality"
+                      alt="Specialty"
                     />
                     <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
@@ -163,35 +153,20 @@
           </div>
         </div>
       </section>
-      <!-- Clinic and Specialities -->
+      <!-- Clinic and specialties -->
 
       <!-- Popular Section -->
       <section class="section section-doctor">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="section-header">
-                <h2>Book Our Doctor</h2>
-                <p>From the Best</p>
-              </div>
-              <div class="about-content">
-                <p>
-                  You can book doctors from any hospital from here.
-                </p>
-                <!-- <p>
-                  web page editors now use Lorem Ipsum as their default model
-                  text, and a search for 'lorem ipsum' will uncover many web
-                  sites still in their infancy. Various versions have evolved
-                  over the years, sometimes
-                </p> -->
-                <!-- <a href="javascript:;">Read More..</a> -->
-              </div>
+          <div class="section-header">
+            <h2>Book Our Doctor</h2>
+            <div class="content">
+              You can book doctors from any hospital from here.
             </div>
-
-
-            <div class="col-lg-8">
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
               <div class="doctor-slider slider">
-
                 {% for doctor in doctors %}
                 <!-- Doctor Widget -->
                 <div class="profile-widget">
@@ -209,29 +184,35 @@
                   </div>
                   <div class="pro-content">
                     <h3 class="title">
-                      <a href="{% url 'doctor:doctor-profile' doctor.pk %}">{{doctor.name}}</a>
+                      <a href="{% url 'doctor:doctor-profile' doctor.pk %}"
+                        >{{doctor.name}}</a
+                      >
                       <i class="fas fa-check-circle verified"></i>
                     </h3>
-                    <p class="speciality">
+                    <p class="specialty">
                       {{ doctor.department_name.hospital_department_name }}
                     </p>
-                    {% comment %} <div class="rating">
+                    {% comment %}
+                    <div class="rating">
                       <i class="fas fa-star filled"></i>
                       <i class="fas fa-star filled"></i>
                       <i class="fas fa-star filled"></i>
                       <i class="fas fa-star filled"></i>
                       <i class="fas fa-star filled"></i>
                       <span class="d-inline-block average-rating">(17)</span>
-                    </div> {% endcomment %}
+                    </div>
+                    {% endcomment %}
                     <ul class="available-info">
                       <li>
-                        <i class="fas fa-map-marker-alt"></i> {{doctor.hospital_name}}
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{doctor.hospital_name}}
                       </li>
                       <li>
                         <i class="far fa-clock"></i> {{ doctor.visiting_hour }}
                       </li>
                       <li>
-                        <i class="far fa-money-bill-alt"></i> Consulation fee: {{ doctor.consultation_fee }} BDT
+                        <i class="far fa-money-bill-alt"></i> Consulation fee:
+                        {{ doctor.consultation_fee }} BDT
                         <i
                           class="fas fa-info-circle"
                           data-toggle="tooltip"
@@ -239,41 +220,30 @@
                         ></i>
                       </li>
                     </ul>
-                    
                   </div>
                 </div>
                 <!-- /Doctor Widget -->
                 {% endfor %}
-
-
-               
               </div>
             </div>
-
           </div>
         </div>
       </section>
       <!-- /Popular Section -->
 
-      <!-- Availabe Features -->
+      <!-- Available Features -->
       <section class="section section-features">
         <div class="container-fluid">
+          <div class="section-header">
+            <h2 class="mt-2">Available Hospitals</h2>
+            <p>
+              Here You can access multiple hospitals. You can book your
+              appointment from your doctor & can collect all hospital
+              information from here.
+            </p>
+          </div>
           <div class="row">
-            <div class="col-md-5 features-img">
-              <img
-                src="{% static 'HealthStack-System/images/Normal/pppp.jpg' %}"
-                class="img-fluid"
-                alt="Feature"
-              />
-            </div>
-            <div class="col-md-7">
-              <div class="section-header">
-                <h2 class="mt-2">Availabe Hospitals</h2>
-                <p>
-                  Here You can access multiple hospitals. You can book your appointment from
-                  your doctor & can collect all hospital infromations from here.
-                </p>
-              </div>
+            <div class="col-md-12">
               <div class="features-slider slider">
                 <!-- Slider Item -->
                 {% for hospital in hospitals %}
@@ -283,18 +253,18 @@
                     class="img-fluid"
                     alt="Feature"
                   />
-                  <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}">{{hospital.name}}</a>
+                  <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
+                    >{{hospital.name}}</a
+                  >
                 </div>
                 {% endfor %}
                 <!-- /Slider Item -->
-
-                
               </div>
             </div>
           </div>
         </div>
       </section>
-      <!-- Availabe Features -->
+      <!-- Available Features -->
 
       <!-- Footer -->
       {% include 'footer.html' %}

@@ -58,8 +58,10 @@
     />
 
     <!-- <link rel="stylesheet"href="{% static 'HealthStack-System/css/Normal/search2.css' %}"> -->
-    <link rel="stylesheet"href="{% static 'HealthStack-System/css/Normal/search3.css' %}">
-
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/Normal/search3.css' %}"
+    />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -76,31 +78,41 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-            
-						<div class="col-md-6 col-6">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Search Doctor</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Search Doctor</h2>
-						</div>
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-md-6 col-6">
+              <nav aria-label="breadcrumb" class="page-breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="{% url 'patient-dashboard' %}">Home</a>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">
+                    Search Doctor
+                  </li>
+                </ol>
+              </nav>
+              <h2 class="breadcrumb-title">Search Doctor</h2>
+            </div>
 
-						<div class="col-md-6 col-6">
-							<div class="top-nav-search">
-								<form action="{% url 'search' %}" method="GET">
-									<input type="text" class="form-control" placeholder="Search doctor" name="search_query" value="{{search_query}}">
-									<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-								</form>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
+            <div class="col-md-6 col-6">
+              <div class="top-nav-search">
+                <form action="{% url 'search' %}" method="GET">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search doctor"
+                    name="search_query"
+                    value="{{search_query}}"
+                  />
+                  <button class="btn" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- /Breadcrumb -->
 
       <!-- Page Content -->
@@ -121,7 +133,9 @@
                   <div class="doctor-widget">
                     <div class="doc-info-left">
                       <div class="doctor-img">
-                        <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">
+                        <a
+                          href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}"
+                        >
                           <img
                             src="{{ doctor.featured_image.url }}"
                             class="img-fluid"
@@ -131,16 +145,24 @@
                       </div>
                       <div class="doc-info-cont">
                         <h4 class="doc-name">
-                          <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">Dr. {{doctor.name}}</a>
+                          <a
+                            href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}"
+                            >Dr. {{doctor.name}}</a
+                          >
                         </h4>
-                        <p class="doc-speciality"><b>Department: </b>{{ doctor.department_name.hospital_department_name }}</p>
-                        <h5 class="doc-department"><b>Specialization: </b>
+                        <p class="doc-specialty">
+                          <b>Department: </b>{{
+                          doctor.department_name.hospital_department_name }}
+                        </p>
+                        <h5 class="doc-department">
+                          <b>Specialization: </b>
                           {{ doctor.specialization.specialization_name }}
                         </h5>
-                        
+
                         <div class="clinic-details">
                           <p class="doc-location">
-                            <i class="fas fa-map-marker-alt"></i> <b>Hospital: </b>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <b>Hospital: </b>
                             {{doctor.hospital_name}}
                           </p>
                           <ul class="clinic-gallery">
@@ -187,12 +209,13 @@
                           <li>
                             <i class="far fa-money-bill-alt"></i>
                             {{doctor.consultation_fee}} BDT
-                            
                           </li>
                         </ul>
                       </div>
                       <div class="clinic-booking">
-                        <a class="view-pro-btn" href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}"
+                        <a
+                          class="view-pro-btn"
+                          href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}"
                           >View Profile</a
                         >
                         <a

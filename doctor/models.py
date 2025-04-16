@@ -49,14 +49,13 @@ class Doctor_Information(models.Model):
     end_year = models.CharField(max_length=200, null=True, blank=True)
     
     # register_status = models.BooleanField(default=False) default='pending'
-    register_status =  models.CharField(max_length=200, null=True, blank=True)
+    register_status =  models.CharField(default='Pending',max_length=200, null=True, blank=True)
     
     # ForeignKey --> one to one relationship with Hospital_Information model.
     hospital_name = models.ForeignKey(Hospital_Information, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return str(self.user.username)
-
 
 class Appointment(models.Model):
     # ('database value', 'display_name')
@@ -178,7 +177,7 @@ class Prescription_medicine(models.Model):
     instruction = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.prescription.prescription_id)
+        return str(self.prescription)
 
 class Prescription_test(models.Model):
     prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, null=True, blank=True)

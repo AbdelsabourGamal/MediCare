@@ -1,7 +1,8 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/doctor-dashboard.html  30 Nov 2019 04:12:03 GMT -->
+  <!-- doccure/appointments.html  30 Nov 2019 04:12:09 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
@@ -13,7 +14,7 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href=" {% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
@@ -39,14 +40,8 @@
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
-  {% if user.is_authenticated %}
     <!-- Main Wrapper -->
     <div class="main-wrapper">
       <!-- Header -->
@@ -61,17 +56,14 @@
               <nav aria-label="breadcrumb" class="page-breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <a href="{% url 'hospital_home'%}">Home</a>
+                    <a href="index-2.html">Home</a>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    Doctor
-                  </li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Dashboard
+                    Appointments
                   </li>
                 </ol>
               </nav>
-              <h2 class="breadcrumb-title">Doctor Dashboard</h2>{% include 'message.html' %}
+              <h2 class="breadcrumb-title">Appointments</h2>
             </div>
           </div>
         </div>
@@ -87,32 +79,19 @@
               <div>{% include 'doctor-sidebar.html' %}</div>
               <!-- /Profile Sidebar -->
             </div>
-
+            
             <div class="col-md-7 col-lg-8 col-xl-9">
+              <div class="appointments">
+                <!-- Appointment List -->
 
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="appointment-tab">
-                    <!-- Appointment Tab -->
-                    <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
-                      {% comment %} <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          href="#upcoming-appointments"
-                          data-toggle="tab"
-                          >Upcoming</a
-                        >
-                      </li> {% endcomment %}
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          data-toggle="tab"
-                          >Patient Appoinment</a
-                        >
-                      </li>
-                    </ul>
-                      <!-- Today Appointment Tab -->
-                      <div class="tab-pane" id="today-appointments">
+                    <!-- /Appointment Tab -->
+
+                   <div class="tab-content">
+                      <!-- Upcoming Appointment Tab -->
+                      <div
+                        class="tab-pane show active"
+                        id="upcoming-appointments"
+                      >
                         <div class="card card-table mb-0">
                           <div class="card-body">
                             <div class="table-responsive">
@@ -125,60 +104,93 @@
                                     <th>Appt Date</th>
                                     <th>Purpose</th>
                                     <th>Contact</th>
-                                    <th>Status</th>
+                                    <th>Payment Status</th>
+                                    <th>Appoinment Status</th>
+                                    <th></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-
-                                  {% for today in total_appointments %}
+                                  {% for appointment in total_appointments %}
                                   <tr>
                                     <td>
                                       <h2 class="table-avatar">
                                         <a
-                                          href="{% url 'doctor:patient-profile' pk=today.patient.patient_id %}"
+                                          href="{% url 'doctor:patient-profile' pk=appointment.patient.patient_id %}"
                                           class="avatar avatar-sm mr-2"
                                           ><img
                                             class="avatar-img rounded-circle"
-                                            src="{{ today.patient.featured_image.url }}"
+                                            src="{{appointment.patient.featured_image.url}}"
                                             alt="User Image"
                                         /></a>
-                                        <a href="{% url 'doctor:patient-profile' pk=today.patient.patient_id %}">{{today.patient.name}}<span>#PT{{today.serial_number}}</span></a>
+                                        <a href="{% url 'doctor:patient-profile' pk=appointment.patient.patient_id %}">{{appointment.patient.name}}<span>#PT{{appointment.serial_number}}</span></a>
                                       </h2>
                                     </td>
-                                    <td>{{today.date}}<span class="d-block text-info">{{today.time}}</span></td>
-                                    <td>{{ today.appointment_type }}</td>
                                     <td>
-                                      {{today.patient.email}}
+                                      {{appointment.date}}
                                       <span class="d-block text-info"
-                                        >+20{{today.patient.phone_number}}</span
+                                        >{{appointment.time}}</span
+                                      >
+                                    </td>
+                                    <td>{{ appointment.appointment_type }}</td>
+                                    <td>
+                                      {{appointment.patient.email}}
+                                      <span class="d-block text-info"
+                                        >Phone: +20{{appointment.patient.phone_number}}</span
                                       >
                                     </td>
                                     <td>
-                                      {% if today.appointment_status == 'pending' %}
+                                      {% if appointment.payment_status == 'pending' %}
                                       <span class="badge badge-pill bg-warning-light">Pending</span>
                                       {% endif %}
-                                      {% if today.appointment_status == 'confirmed' %}
-                                      <span class="badge badge-pill bg-success-light">Confirmed</span>
+                                      {% if appointment.payment_status == 'VALID' %}
+                                      <span class="badge badge-pill bg-success-light">Paid</span>
                                       {% endif %}
                                     </td>
-                                  
+                                    <td>
+                                      {% if appointment.appointment_status == 'pending' %}
+                                      <span class="badge badge-pill bg-warning-light">Pending</span>
+                                      {% endif %}
+                                      {% if appointment.appointment_status == 'confirmed' %}
+                                      <span class="badge badge-pill bg-success-light">Confirmed</span>
+                                      {% endif %}
+                                      {% if appointment.appointment_status == 'cancelled' %}
+                                      <span class="badge badge-pill bg-danger-light">Cancelled</span>
+                                      {% endif %}
+                                    </td>
+                                    {% if appointment.appointment_status == 'pending' %}
+                                    <td class="text-right">
+                                      <div class="table-action">
+                                        <a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+                                          <i class="far fa-eye"></i> View
+                                        </a>
+                                        <a href="{% url 'doctor:accept-appointment' pk=appointment.id %}" onclick="return confirm('Accept appointment?');" class="btn btn-sm bg-success-light">
+                                          <i class="fas fa-check"></i> Accept
+                                        </a>
+                                        <a href="{% url 'doctor:reject-appointment' pk=appointment.id %}" onclick="return confirm('Reject Appointment?');" class="btn btn-sm bg-danger-light">
+                                          <i class="fas fa-times"></i> Cancel
+                                        </a>
+                                      </div>
+                                    </td>
+                                    {% endif %}
                                   </tr>
-                                  {% endfor %}
-                 
+                                  {% endfor %} 
+
+                               
                                 </tbody>
                               </table>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <!-- /Today Appointment Tab -->
-                    </div>
-                  </div>
-                </div>
+                      <!-- /Upcoming Appointment Tab --> 
+                
               </div>
+              
             </div>
+            
           </div>
         </div>
+        
       </div>
       <!-- /Page Content -->
 
@@ -187,9 +199,64 @@
       <!-- /Footer -->
     </div>
     <!-- /Main Wrapper -->
-  {% else %} 
-  <p> You are not logged in </p> 
-  {% endif %}
+
+    <!-- Appointment Details Modal -->
+    <div class="modal fade custom-modal" id="appt_details">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Appointment Details</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="info-details">
+              <li>
+                <div class="details-header">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <span class="title">#APT0001</span>
+                      <span class="text">21 Oct 2019 10:00 AM</span>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="text-right">
+                        <button
+                          type="button"
+                          class="btn bg-success-light btn-sm"
+                          id="topup_status"
+                        >
+                          Completed
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <span class="title">Status:</span>
+                <span class="text">Completed</span>
+              </li>
+              <li>
+                <span class="title">Confirm Date:</span>
+                <span class="text">29 Jun 2019</span>
+              </li>
+              <li>
+                <span class="title">Paid Amount</span>
+                <span class="text">$450</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Appointment Details Modal -->
+
     <!-- jQuery -->
     <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
 
@@ -201,27 +268,12 @@
     <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
     <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
 
-    <!-- Circle Progress JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/circle-progress.min.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'HealthStack-System/js/Normal/script.js' %}"></script>
 
     <!-- Custom JS -->
     <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- Searchbar JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
-
-    {% if messages %}
-    <script>
-        {% for message in messages %}
-            $(document).ready(function () {
-                $('.toast').toast('show');
-            });
-        {% endfor %}
-    </script>
-  {% endif %}
-
-
   </body>
 
-  <!-- doccure/doctor-dashboard.html  30 Nov 2019 04:12:09 GMT -->
+  <!-- doccure/appointments.html  30 Nov 2019 04:12:09 GMT -->
 </html>

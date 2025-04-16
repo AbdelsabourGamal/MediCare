@@ -53,7 +53,7 @@
 							<div class="col">
 								<h3 class="page-title">Profile</h3>
 								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+									<li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
 									<li class="breadcrumb-item active">Profile</li>
 								</ul>
 							</div>
@@ -100,10 +100,7 @@
 														<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
 														<p class="col-sm-10">0{{ admin.phone_number }}</p>
 													</div>
-													{% comment %} <div class="row">
-														<p class="col-sm-2 text-muted text-sm-right mb-0">Address</p>
-														<p class="col-sm-10 mb-0">{{ admin.role }}<br>
-													</div> {% endcomment %}
+							
 												</div>
 											</div>
 											
@@ -118,7 +115,8 @@
 															</button>
 														</div>
 														<div class="modal-body">
-															<form>
+
+															{% comment %} <form>
 																<div class="row form-row">
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
@@ -187,25 +185,25 @@
 																	</div>
 																</div>
 																<button type="submit" class="btn btn-primary btn-block">Save Changes</button>
-															</form>
+															</form> {% endcomment %}
 														</div>
 													</div>
 												</div>
 											</div>
 											<!-- /Edit Details Modal -->
-											
+											<form method="POST" enctype="multipart/form-data">
+												{% csrf_token %}
+												{{ form }}
+												
+												<button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+											</form>
 										</div>
-
-									
 									</div>
 									<!-- /Personal Details -->
-
 								</div>
 								<!-- /Personal Details Tab -->
-								
 								<!-- Change Password Tab -->
 								<div id="password_tab" class="tab-pane fade">
-								
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title">Change Password</h5>

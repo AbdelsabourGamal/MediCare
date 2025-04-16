@@ -83,29 +83,17 @@ def schedule_timings(request):
 @csrf_exempt
 @login_required(login_url="doctor-login")
 def patient_id(request):
+    doctor = Doctor_Information.objects.get(user=request.user)
     query = request.GET.get('search_query')
-    patient = None
+    patients = None
     if query:
         try:
-            patient = Patient.objects.filter(name__icontains=query)
+            patients = Patient.objects.filter(name__icontains=query)
         except:
-            patient = None
+            patients = None
 
-    return render(request, 'patient-id.html', {'patient': patient})
+    return render(request, 'patient-id.html', {'patients': patients,'doctor':doctor})
 
-# @csrf_exempt
-# @login_required(login_url="doctor-login")
-# def patient_id(request):
-#     query = request.GET.get('search_query')  # استلام قيمة البحث
-#     patient = None
-
-#     if query:
-#         try:
-#             patient = Patient.objects.filter(name__icontains=query)
-#         except:
-#             patient = None  # إذا لم يتم العثور على المريض
-
-#     return render(request, 'patient-id.html', {'patient': patient})
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -184,9 +172,7 @@ def doctor_login(request):
 def doctor_dashboard(request):
         if request.user.is_authenticated:    
             if request.user.is_doctor:
-                # doctor = Doctor_Information.objects.get(user_id=pk)
                 doctor = Doctor_Information.objects.get(user=request.user)
-                # appointments = Appointment.objects.filter(doctor=doctor).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed'))
                 current_date = datetime.date.today()
                 current_date_str = str(current_date)  
                 today_appointments = Appointment.objects.filter(date=current_date_str).filter(doctor=doctor)
@@ -213,16 +199,14 @@ def appointments(request):
         if request.user.is_authenticated:    
             if request.user.is_doctor:
                 doctor = Doctor_Information.objects.get(user=request.user)
-
                 total_appointments = Appointment.objects.filter(doctor=doctor)
             else:
-                return redirect('doctor:doctor-logout')
+                return redirect('doctor:doctor-login')
             
             context = {'doctor': doctor, 'total_appointments': total_appointments}
             return render(request, 'appointments.html', context)
         else:
             return redirect('doctor:doctor-login')
-
 
 
 @csrf_exempt
@@ -503,13 +487,13 @@ def booking(request, pk):
 def my_patients(request):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
-        appointments = Appointment.objects.filter(doctor=doctor).filter(appointment_status='pending')
-        # appointments = Patient.objects.filter(name=appointment.patient.name)
+        # appointments = Appointment.objects.filter(doctor=doctor).filter(appointment_status='pending')
+        patients = Patient.objects.filter(appointment__doctor=doctor).distinct()
     else:
         redirect('doctor:doctor-logout')
     
     
-    context = {'doctor': doctor, 'appointments': appointments}
+    context = {'doctor': doctor, 'patients': patients}
     return render(request, 'my-patients.html', context)
 
 
@@ -580,7 +564,7 @@ def create_prescription(request,pk):
                         test_info = Test_Information.objects.get(test_id=test_info_id[i])
                         tests.test_info_price = test_info.test_price
                     
-                        tests.save()
+                    tests.save()
 
                 messages.success(request, 'Prescription Created')
                 return redirect('doctor:patient-profile', pk=patient.patient_id)

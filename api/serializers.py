@@ -45,7 +45,6 @@ class PatientRegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
-
 class DoctorRegisterSerializer(serializers.ModelSerializer):
     is_doctor = serializers.BooleanField(default=True, read_only=True)
     class Meta:

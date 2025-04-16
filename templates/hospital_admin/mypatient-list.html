@@ -99,7 +99,9 @@
                                                     <td>{{p.patient_id}}</td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{p.featured_image.url}}" alt="User Image"></a>
+                              {% if p.featured_image %}
+															<a href="" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{p.featured_image.url}}" alt="User Image"></a>
+                              {% endif %}
 															<a href="{% url 'prescription-list' pk=p.patient_id %}">{{p.name}}</a>
 														</h2>
 													</td>

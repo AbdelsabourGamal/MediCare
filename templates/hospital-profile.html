@@ -34,16 +34,8 @@
 	 		color: black;
 			width: 1000px;
 			text-align: center;
-
-
 		}
 		</style>
-		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
 	
 	</head>
 	<body>
@@ -61,8 +53,9 @@
 				{% include 'doctor-navbar.html' %}
 				{% endif %}
 			
-			
-			
+				{% if user.is_authenticated and user.is_hospital_admin %}
+				{% include 'hospital_admin/hospital-admin-navbar.html' %}
+				{% endif %}
 			</header>
 			<!-- /Header -->
 
@@ -129,7 +122,7 @@
 											</div>
 											<div class="doc-info-cont col-md-6 col-lg-6">
 												<h4 class="doc-name">{{hospitals.name}}</h4>
-												<p class="doc-speciality">{{hospitals.hospital_type}} Hospital</p>
+												<p class="doc-specialty">{{hospitals.hospital_type}} Hospital</p>
 												
 												{% comment %} <div class="rating">
 													<i class="fas fa-star filled"></i>
@@ -320,7 +313,7 @@
 													<div class="col-md-4">
 														<div class="clinic-content">
 															<h4 class="clinic-name"><a href="#">{{hospitals.name}}</a></h4>
-															<p class="doc-speciality">{{hospital.hospital_type}}</p>
+															<p class="doc-specialty">{{hospital.hospital_type}}</p>
 															
 															<div class="clinic-details mb-0">
 																<h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> {{hospitals.address}} <br><a href="javascript:void(0);">Get Directions</a></h5>

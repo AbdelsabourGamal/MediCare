@@ -196,7 +196,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for hospital in hospitals%}
+                        {% for hospital in hospitals|slice:5%}
                         <tr>
                           <td>
                             <h2 class="table-avatar">
@@ -208,7 +208,7 @@
                                   src="{{hospital.featured_image.url}}"
                                   alt="User Image"
                               /></a>
-                              <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}">{{hospital.name}}</a>
+                              <a href="../hospital-profile/{{hospital.hospital_id}}">{{hospital.name}}</a>
                             </h2>
                           </td>
                           <td>{{hospital.address}}</td>
@@ -254,12 +254,12 @@
                         <tr>
                           <th>Doctor Name</th>
                           <th>Department</th>
-                          <th>Speciality</th>
+                          <th>specialty</th>
                           <th>Hospital</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for doctor in doctors%}
+                        {% for doctor in doctors|slice:5%}
                         <tr>
                           <td>
                             <h2 class="table-avatar">
@@ -275,7 +275,7 @@
                             </h2>
                           </td>
                           <td>{{doctor.department}}</td>
-                          <td>{{doctor.speciality}}</td>
+                          <td>{{doctor.specialty}}</td>
                           <td>{{doctor.hospital}}</td>
 
                         </tr>
@@ -307,16 +307,14 @@
 												</tr>
 											</thead>
 											<tbody>
-                        {% for patient in patients%}
+                        {% for patient in patients|slice:5%}
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-                              {% if patient.featured_image %}
-															<a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{patient.featured_image.url}}" alt="User Image"></a>
-                              {% else %}
-                              <img class="avatar-img rounded-circle" src="{{p.featured_image.url}}" alt="User Image"/>
+															{% if patient.featured_image %}
+                              <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{patient.featured_image.url}}" alt="User Image"></a>
                               {% endif %}
-                              <a href="">{{patient.name}}</a>
+															<a href="">{{patient.name}}</a>
 														</h2>
 													</td>
 													<td>{{patient.phone_number}}</td>
@@ -356,7 +354,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for p in pharmacists %}
+                        {% for p in pharmacists|slice:5 %}
                         <tr>
                           <td>
                             <h2 class="table-avatar">
@@ -405,7 +403,7 @@
 												</tr>
 											</thead>
 											<tbody>
-                        {% for lab_worker in lab_workers%}
+                        {% for lab_worker in lab_workers|slice:5%}
 												<tr>
 													<td>
 														<h2 class="table-avatar">
@@ -513,7 +511,7 @@
     </script>
   {% endif %}
 
-    
+
 
   </body>
 

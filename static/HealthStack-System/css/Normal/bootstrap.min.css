@@ -167,7 +167,6 @@ sup {
 }
 
 a {
-    color: #007bff;
     text-decoration: none;
     background-color: transparent
 }
@@ -4748,8 +4747,6 @@ input[type=submit].btn-block {
     position: relative;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
     -ms-flex-align: center;
     align-items: center;
     -ms-flex-pack: justify;
@@ -4765,8 +4762,6 @@ input[type=submit].btn-block {
 .navbar .container-xl {
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
     -ms-flex-align: center;
     align-items: center;
     -ms-flex-pack: justify;

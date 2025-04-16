@@ -32,7 +32,6 @@ def getRoutes(request):
 
         {'patient_register': '/api/patient_register'},
         {'doctor_register': '/api/doctor_register'},
-        {'admin_register': '/api/admin_register'},
 
         {'login': '/api/login'},
         {'logout': '/api/logout'},
@@ -75,8 +74,7 @@ class PatientRegister(generics.CreateAPIView):
             "username": user.username,
             "email": user.email
         }, status=status.HTTP_201_CREATED)
-
-
+    
 class DoctorRegister(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = DoctorRegisterSerializer
@@ -173,14 +171,11 @@ class LogoutView(APIView):
         try:
             # if access_token:
             access = AccessToken(access_token)
-            print(access_token)
-            print(access)
-            access.blacklist()
+            access.blacklist() # type: ignore
             return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
         except Exception:
             return Response({"error": "Invalid token or already blacklisted"}, status=status.HTTP_400_BAD_REQUEST)
-
-
+        
 #################################################################################################################################
 
 class getHospitals(generics.ListAPIView):
@@ -231,6 +226,7 @@ class PatientAppointment(generics.ListCreateAPIView):
     def perform_create(self,serializer):
         user = self.request.user
         patient_data = Patient.objects.get(user=user)
+
         serializer.save(
             patient = patient_data,
             appointment_status = "pending",
@@ -244,7 +240,7 @@ class PatientPrescription(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
+    def get_queryset(self): # type: ignore
         return Prescription.objects.filter(patient__user=self.request.user)
 
 class PatientPrescriptionMedicine(generics.ListAPIView):
@@ -253,7 +249,7 @@ class PatientPrescriptionMedicine(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
+    def get_queryset(self): # type: ignore
         return Prescription_medicine.objects.filter(prescription__patient__user=self.request.user)
 
 class PatientPrescriptionTest(generics.ListAPIView):
@@ -262,7 +258,7 @@ class PatientPrescriptionTest(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
+    def get_queryset(self): # type: ignore
         return Prescription_test.objects.filter(prescription__patient__user=self.request.user)
 
 class PatientReport(generics.ListAPIView):

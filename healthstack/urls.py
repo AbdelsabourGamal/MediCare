@@ -27,13 +27,12 @@ from django.contrib.auth import views as auth_views
 # All urls paths of different pages will be in url patterns below
 
 urlpatterns = [
-    path('test/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('login/', views.login_user, name='login'),
     path('', include('hospital.urls')),
     path('doctor/', include('doctor.urls')),
     path('api/', include('api.urls', namespace="api")),
-    path('hospital_admin/', include('hospital_admin.urls')),
-    path('chat/', include('ChatApp.urls')),
+    path('hospital_admin/', include('hospital_admin.urls',)),
     path('sslcommerz/', include('sslcommerz.urls')),
     path('pharmacy/', include('pharmacy.urls')),
     path('__debug__/', include('debug_toolbar.urls')),

@@ -73,17 +73,11 @@ def change_password(request,pk):
 def add_billing(request):
     return render(request, 'add-billing.html')
 
-def appointments(request):
-    return render(request, 'appointments.html')
-
 def edit_billing(request):
     return render(request, 'edit-billing.html')
 
 def edit_prescription(request):
     return render(request, 'edit-prescription.html')
-
-# def forgot_password(request):
-#     return render(request, 'forgot-password.html')
 
 @csrf_exempt
 def resetPassword(request):
@@ -233,7 +227,6 @@ def patient_dashboard(request):
 @login_required(login_url="login")
 def profile_settings(request):
     if request.user.is_patient:
-        # patient = Patient.objects.get(user_id=pk)
         patient = Patient.objects.get(user=request.user)
         old_featured_image = patient.featured_image
         
@@ -340,36 +333,26 @@ def hospital_profile(request, pk):
             departments = hospital_department.objects.filter(hospital=hospitals)
             specializations = specialization.objects.filter(hospital=hospitals)
             services = service.objects.filter(hospital=hospitals)
-            
-            # department_list = None
-            # for d in departments:
-            #     vald = d.hospital_department_name
-            #     vald = re.sub("'", "", vald)
-            #     vald = vald.replace("[", "")
-            #     vald = vald.replace("]", "")
-            #     vald = vald.replace(",", "")
-            #     department_list = vald.split()
-            
+
             context = {'patient': patient, 'doctors': doctors, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
             return render(request, 'hospital-profile.html', context)
-        
+
         elif request.user.is_doctor:
-           
+
             doctor = Doctor_Information.objects.get(user=request.user)
             hospitals = Hospital_Information.objects.get(hospital_id=pk)
-            
+
             departments = hospital_department.objects.filter(hospital=hospitals)
             specializations = specialization.objects.filter(hospital=hospitals)
             services = service.objects.filter(hospital=hospitals)
-            
+
             context = {'doctor': doctor, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
             return render(request, 'hospital-profile.html', context)
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
         return render(request, 'patient-login.html') 
-    
-    
+
 def data_table(request):
     return render(request, 'data-table.html')
 
@@ -430,8 +413,6 @@ def hospital_doctor_list(request, pk):
         logout(request)
         messages.error(request, 'Not Authorized')
         return render(request, 'patient-login.html')   
-    
-
 
 @csrf_exempt
 @login_required(login_url="login")
@@ -466,7 +447,7 @@ def hospital_doctor_register(request, pk):
                 
                 messages.success(request, 'Hospital Registration Request Sent')
                 
-                return redirect('doctor-dashboard')
+                return redirect('doctor:doctor-dashboard')
                 
                  
             context = {'doctor': doctor, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations}
@@ -635,28 +616,11 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(),content_type="aplication/pres_pdf")
     return None
 
-
-# def prescription_pdf(request,pk):
-#  if request.user.is_patient:
-#     patient = Patient.objects.get(user=request.user)
-#     prescription = Prescription.objects.get(prescription_id=pk)
-#     perscription_medicine = Perscription_medicine.objects.filter(prescription=prescription)
-#     perscription_test = Perscription_test.objects.filter(prescription=prescription)
-#     current_date = datetime.date.today()
-#     context={'patient':patient,'current_date' : current_date,'prescription':prescription,'perscription_test':perscription_test,'perscription_medicine':perscription_medicine}
-#     pdf=render_to_pdf('prescription_pdf.html', context)
-#     if pdf:
-#         response=HttpResponse(pdf, content_type='application/pdf')
-#         content="inline; filename=report.pdf"
-#         # response['Content-Disposition']= content
-#         return response
-#     return HttpResponse("Not Found")
-
 @csrf_exempt
 def prescription_pdf(request,pk):
  if request.user.is_patient:
     patient = Patient.objects.get(user=request.user)
-    prescription = Prescription.objects.get(prescription_id=pk)
+    prescription = Prescription.objects.get(prescription_id=32)
     prescription_medicine = Prescription_medicine.objects.filter(prescription=prescription)
     prescription_test = Prescription_test.objects.filter(prescription=prescription)
     # current_date = datetime.date.today()
@@ -707,5 +671,3 @@ def got_offline(sender, user, request, **kwargs):
     user.login_status = False
     user.save()
     
-
-

@@ -164,10 +164,6 @@ def admin_register(request):
     context = {'page': page, 'form': form}
     return render(request, 'hospital_admin/register.html', context)
 
-@csrf_exempt
-@login_required(login_url='admin_login')
-def admin_forgot_password(request):
-    return render(request, 'hospital_admin/forgot-password.html')
 
 @csrf_exempt
 @login_required(login_url='admin_login')
@@ -228,8 +224,16 @@ def appointment_list(request):
 
 @csrf_exempt
 @login_required(login_url='admin_login')
-def hospital_profile(request):
-    return render(request, 'hospital-profile.html')
+def hospital_profile(request,pk):
+    doctor = Doctor_Information.objects.all()
+    hospitals = Hospital_Information.objects.get(hospital_id=pk)
+
+    departments = hospital_department.objects.filter(hospital=hospitals)
+    specializations = specialization.objects.filter(hospital=hospitals)
+    services = service.objects.filter(hospital=hospitals)
+
+    context = {'doctor': doctor, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
+    return render(request, 'hospital-profile.html', context)
 
 @csrf_exempt
 @login_required(login_url='admin_login')
@@ -237,18 +241,17 @@ def hospital_admin_profile(request, pk):
 
     # profile = request.user.profile
     # get user id of logged in user, and get all info from table
-    admin = Admin_Information.objects.get(user_id=pk)
-    form = AdminForm(instance=admin)
+    admin = Admin_Information.objects.get(user_id=request.user.id)
+
 
     if request.method == 'POST':
-        form = AdminForm(request.POST, request.FILES,
-                          instance=admin)
+        form = AdminForm(request.POST, request.FILES,instance=admin)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile Updated')
-            return redirect('admin-dashboard', pk=pk)
-        else:
-            form = AdminForm()
+            return redirect('admin-dashboard')
+    else:
+        form = AdminForm(instance=admin)
 
     context = {'admin': admin, 'form': form}
     return render(request, 'hospital_admin/hospital-admin-profile.html', context)
@@ -721,16 +724,18 @@ def add_lab_worker(request):
         if request.method == 'POST':
             form = LabWorkerCreationForm(request.POST)
             if form.is_valid():
-                # form.save(), commit=False --> don't save to database yet (we have a chance to modify object)
-                user = form.save(commit=False)
-                user.is_labworker = True
-                user.save()
+                try:
+                    user = form.save(commit=False)
+                    user.is_labworker = True
+                    user.save()
 
-                messages.success(request, 'Clinical Laboratory Technician account was created!')
+                    messages.success(request, 'Clinical Laboratory Technician account was created!')
 
-                # After user is created, we can log them in
-                #login(request, user)
-                return redirect('lab-worker-list')
+                    # After user is created, we can log them in
+                    #login(request, user)
+                    return redirect('lab-worker-list')
+                except:
+                    return redirect('admin-dashboard')
             else:
                 messages.error(request, 'An error has occurred during registration')
     
@@ -837,7 +842,7 @@ def register_doctor_list(request):
 def pending_doctor_list(request):
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
-    doctors = Doctor_Information.objects.filter(register_status='Pending')
+        doctors = Doctor_Information.objects.filter(register_status='Pending')
     return render(request, 'hospital_admin/Pending-doctor-list.html', {'all': doctors, 'admin': user})
 
 @csrf_exempt

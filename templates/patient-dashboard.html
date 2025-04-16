@@ -8,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -55,20 +55,19 @@
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
         <div class="container-fluid">
-          <div class="row align-items-center">
-            
+          <div class="row align-items-center"> 
             <div class="col-md-12 col-12">
               <nav aria-label="breadcrumb" class="page-breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <a href="{% url 'patient-dashboard' %}">Home</a>
+                    <a href="{% url 'hospital_home' %}">Home</a>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">
                     Patient Dashboard
                   </li>
                 </ol>
               </nav>
-              <h2 class="breadcrumb-title">Patient Dashboard</h2>{% include 'message.html' %}
+              {% include 'message.html' %}
             </div>
 
           </div>
@@ -77,7 +76,7 @@
       <!-- /Breadcrumb -->
       
       <!-- Page Content -->
-      <div class="content">
+      <div class="p-dashboard">
         <div class="container-fluid">
           <div class="row">
             <!-- Profile Sidebar -->
@@ -142,7 +141,7 @@
                               <thead>
                                 <tr>
                                   <th>Doctor</th>
-                                  <th>Appt Date</th>
+                                  <th>Appointment Date</th>
                                   <th>Type</th>
                                   <th>Amount</th>
                                   <th>Status</th>
@@ -338,7 +337,7 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="doctor-profile.html"
+                                      <a href="{% url 'doctor:doctor-profile' pk=report.doctor.doctor_id %}"
                                         >Dr.{{report.doctor}}<span>{{report.doctor.department_name }}</span></a
                                       >
                                     </h2>
@@ -446,6 +445,7 @@
       {% include 'footer.html' %}
       <!-- /Footer -->
     </div>
+
     <!-- /Main Wrapper -->
     <!-- <div class="modal fade" id="delete_modal" aria-hidden="true" role="dialog">
       <div class="modal-dialog modal-dialog-centered text-center" role="document" >
@@ -469,7 +469,7 @@
     </div> -->
 
     <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></>
 
     <!-- Bootstrap Core JS -->
     <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
@@ -484,6 +484,19 @@
 
     <!-- Searchbar JS -->
     <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const lis = document.querySelectorAll(".dashboard-menu ul li");
+
+  lis.forEach((li) => {
+    li.addEventListener("click", function () {
+      // Remove 'active' from all li elements
+      lis.forEach((item) => item.classList.remove("active"));
+
+      this.classList.add("active");
+    });
+  });
+});
 
     {% if messages %}
     <script>
@@ -499,5 +512,5 @@
 
   </body>
 
-  <!-- doccure/patient-dashboard.html  30 Nov 2019 04:12:16 GMT -->
+  
 </html>
