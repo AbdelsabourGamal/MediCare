@@ -246,10 +246,10 @@ def accept_appointment(request, pk):
     html_message = render_to_string('appointment_accept_mail.html', {'values': values})
     plain_message = strip_tags(html_message)
     
-    try:
-        send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
-    except BadHeaderError:
-        return HttpResponse('Invalid header found')
+    # try:
+    #     send_mail(subject, plain_message, 'medicaresvu@gmail.com',  ["bdalsbdrjmal45@gmail.com"], html_message=html_message, fail_silently=False)
+    # except BadHeaderError:
+    #     return HttpResponse('Invalid header found')
     
     messages.success(request, 'Appointment Accepted')
     
@@ -279,10 +279,10 @@ def reject_appointment(request, pk):
     html_message = render_to_string('appointment_reject_mail.html', {'values': values})
     plain_message = strip_tags(html_message)
     
-    try:
-        send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
-    except BadHeaderError:
-        return HttpResponse('Invalid header found')
+    # try:
+    #     send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
+    # except BadHeaderError:
+    #     return HttpResponse('Invalid header found')
     
     messages.error(request, 'Appointment Rejected')
     

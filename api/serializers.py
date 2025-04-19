@@ -4,7 +4,7 @@ from traitlets import default
 from hospital.models import Hospital_Information, Patient, User 
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
 from hospital_admin.models import Admin_Information
-from sslcommerz.models import Payment
+# from sslcommerz.models import Payment
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.tokens import RefreshToken  # type: ignore
 from django.contrib.auth import authenticate
@@ -194,7 +194,7 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
-
+"""
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
@@ -207,3 +207,4 @@ class CombinedDataSerializer(serializers.Serializer):
     reports = ReportSerializer(many=True)
     payments = PaymentSerializer(many=True)
 
+"""

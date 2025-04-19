@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/', include('api.urls', namespace="api")),
     path('hospital_admin/', include('hospital_admin.urls',)),
     path('sslcommerz/', include('sslcommerz.urls')),
+    path('paypal/', include('paypal.urls')),
     path('pharmacy/', include('pharmacy.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
     

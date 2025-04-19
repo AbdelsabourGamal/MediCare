@@ -68,6 +68,11 @@ class Appointment(models.Model):
         ('confirmed', 'confirmed'),
         ('cancelled', 'cancelled'),
     )
+    PAYMENT_STATUS = (
+        ('pending', 'pending'),
+        ('confirmed', 'confirmed'),
+        ('cancelled', 'cancelled'),
+    )
 
     id = models.AutoField(primary_key=True)
     date = models.DateField(null=True, blank=True)
@@ -77,7 +82,7 @@ class Appointment(models.Model):
     appointment_type = models.CharField(max_length=200, choices=APPOINTMENT_TYPE)
     appointment_status = models.CharField(max_length=200, choices=APPOINTMENT_STATUS)
     serial_number = models.CharField(max_length=200, null=True, blank=True)
-    payment_status = models.CharField(max_length=200, null=True, blank=True, default='pending')
+    payment_status = models.CharField(max_length=200, choices=PAYMENT_STATUS,default='pending')
     transaction_id = models.CharField(max_length=255, null=True, blank=True)
     message = models.CharField(max_length=255, null=True, blank=True)
     

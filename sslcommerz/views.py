@@ -80,8 +80,7 @@ def ssl_payment_request(request, pk, id):
     Additional code to be added later (examples):
     1) saved_address = BillingAddress.objects.get_or_create(user=request.user)
     """
-    
-    
+
     patient = Patient.objects.get(patient_id=pk)
     appointment = Appointment.objects.get(id=id)
     

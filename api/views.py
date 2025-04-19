@@ -6,12 +6,12 @@ from doctor.views import patient_id
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.response import Response
-from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer
+from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
-from hospital.models import Hospital_Information, Patient, User 
+from hospital.models import Hospital_Information, Patient, User ,BlacklistedAccess
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
-from sslcommerz.models import Payment
+# from sslcommerz.models import Payment
 from hospital_admin.models import Admin_Information
 from rest_framework import generics,status
 from rest_framework.views import APIView
@@ -20,7 +20,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
 @api_view(['GET'])
 def getRoutes(request):
     # Specify which urls (routes) to accept
@@ -115,31 +115,36 @@ class LoginView(GenericAPIView):
             "code": "400"
         }, status=status.HTTP_400_BAD_REQUEST)
 
+
 class PasswordResetView(APIView):
     permission_classes = [AllowAny]
+    
     def post(self, request):
         serializer = PasswordResetSerializer(data=request.data)
-        if serializer.is_valid():
-            email = serializer.validated_data['email'] # type: ignore
-            try:
-                user = User.objects.get(email=email)
-                uid = urlsafe_base64_encode(force_bytes(user.pk))
-                token = default_token_generator.make_token(user)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+        email = serializer.validated_data['email']
+        try:
+            user = User.objects.get(email=email)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
 
-                # Send Email
-                reset_link = f"http://127.0.0.1:8000/reset/{uid}/{token}"
-                send_mail(
-                    'Password Reset Request',
-                    f'Click here to reset your password: {reset_link}',
-                    settings.DEFAULT_FROM_EMAIL,
-                    [email],
-                )
-
-                return Response({'message': 'Password reset link sent to email.'}, status=status.HTTP_200_OK)
-            except User.DoesNotExist:
-                return Response({'error': 'User with this email does not exist'}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            reset_link = f"https://127.0.0.1:8000/reset/{uid}/{token}"
+            send_mail(
+                'Password Reset Request',
+                f'Use this link to reset your password: {reset_link}',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+            return Response({'message': 'Password reset link sent.'}, status=status.HTTP_200_OK)
+            
+        except User.DoesNotExist:
+            return Response({'error': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(f"Error sending email: {e}")  
+            return Response({'error': 'Failed to send email'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
@@ -162,19 +167,16 @@ class LogoutView(APIView):
 
     def post(self, request):
         refresh_token = request.data.get("refresh")
-        access_token = request.headers.get("Authorization","").split("Bearer ")[-1]
         if not refresh_token:
             return Response({"error": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
         refresh = RefreshToken(refresh_token)
         refresh.blacklist()
 
-        try:
-            # if access_token:
-            access = AccessToken(access_token)
-            access.blacklist() # type: ignore
+        access = request.auth
+        if access:
+            BlacklistedToken.objects.create(token=str(access)) 
             return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
-        except Exception:
-            return Response({"error": "Invalid token or already blacklisted"}, status=status.HTTP_400_BAD_REQUEST)
+
         
 #################################################################################################################################
 
@@ -269,7 +271,7 @@ class PatientReport(generics.ListAPIView):
 
     def get_queryset(self): # type: ignore
         return Report.objects.filter(patient__user=self.request.user)
-
+"""
 class PatientPayment(generics.ListAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
@@ -301,3 +303,4 @@ class CombinedDataView(APIView):
         }
 
         return Response(data)
+"""

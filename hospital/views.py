@@ -21,7 +21,7 @@ from xhtml2pdf import pisa
 from .utils import searchDoctors, searchHospitals, searchDepartmentDoctors, paginateHospitals
 from .models import Patient, User
 from doctor.models import Doctor_Information, Appointment,Report, Specimen, Test, Prescription, Prescription_medicine, Prescription_test
-from sslcommerz.models import Payment
+from paypal.models import Paymentpal
 from django.db.models import Q, Count
 import re
 from io import BytesIO
@@ -105,7 +105,7 @@ def resetPassword(request):
             plain_message = strip_tags(html_message)
             
             try:
-                send_mail(subject, plain_message, 'admin@example.com',  [user.email], html_message=html_message, fail_silently=False)
+                send_mail(subject, plain_message, 'medicaresvu@example.com',  [user.email], html_message=html_message, fail_silently=False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect ("password_reset_done")
@@ -215,7 +215,7 @@ def patient_dashboard(request):
         report = Report.objects.filter(patient=patient)
         prescription = Prescription.objects.filter(patient=patient).order_by('-prescription_id')
         appointments = Appointment.objects.filter(patient=patient).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed'))
-        payments = Payment.objects.filter(patient=patient).filter(appointment__in=appointments).filter(payment_type='appointment').filter(status='VALID')
+        payments = Paymentpal.objects.filter(patient=patient).filter(payment_type='appointment').filter(status='confirmed')
         context = {'patient': patient, 'appointments': appointments, 'payments': payments,'report':report,'prescription':prescription}
     else:
         return redirect('logout')

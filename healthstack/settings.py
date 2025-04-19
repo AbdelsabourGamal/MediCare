@@ -14,7 +14,6 @@ from datetime import timedelta
 from pathlib import Path
 import os
 
-import rest_framework
 from dotenv import load_dotenv # type: ignore
 import environ # type: ignore
 # django-environ
@@ -38,7 +37,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['192.168.0.100', '127.0.0.1','5749-103-109-53-5.in.ngrok.io']
+ALLOWED_HOSTS = ['192.168.0.100', '127.0.0.1','5749-103-109-53-5.in.ngrok.io','10.0.2.2']
 # ALLOWED_HOSTS = ['mobile view', 'local host','ngrok -- keeps on changing']
 
 # Application definition
@@ -53,8 +52,10 @@ INSTALLED_APPS = [
     'hospital.apps.HospitalConfig',
     'hospital_admin.apps.HospitalAdminConfig',
     'doctor.apps.DoctorConfig',
-    'pharmacy.apps.PharmacyConfig',
     'sslcommerz.apps.SslcommerzConfig',
+    'paypal',
+    'api',
+    'pharmacy.apps.PharmacyConfig',
     'widget_tweaks',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -73,7 +74,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -154,7 +155,7 @@ PASSWORD_RESET_TIMEOUT = 60*60
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Dhaka'
+TIME_ZONE = 'Africa/Cairo'
 
 USE_I18N = True
 
@@ -179,6 +180,17 @@ STORE_ID = env('STORE_ID')
 STORE_PASSWORD = env('STORE_PASSWORD')
 STORE_NAME = env('STORE_NAME')
 
+
+### Paymob env variables
+#VARIABLE should be in capital letter.
+PAYMOB_API_KEY = env('PAYMOB_API_KEY')
+PAYMOB_INTEGRATION_ID = env('PAYMOB_INTEGRATION_ID')
+PAYMOB_HMAC_KEY = env('PAYMOB_HMAC_SECRET')
+# PAYMOB_IFRAME_ID = env('PAYMOB_IFRAME_ID')
+PAYMOB_BASE_URL = 'https://accept.paymob.com/api/'
+PAYMOB_MODE = 'sandbox' 
+PAYMOB_TEST_MODE = True 
+
 ###Mailtrap env Variables
 SMTP_HOST = env('SMTP_HOST')
 SMTP_PORT = env('SMTP_PORT')
@@ -194,7 +206,7 @@ EMAIL_HOST_USER = SMTP_USER
 EMAIL_HOST_PASSWORD = SMTP_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-
+DEFAULT_FROM_EMAIL = SMTP_USER
 
 
 # Default primary key field type
@@ -202,7 +214,6 @@ EMAIL_USE_SSL = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'hospital.User'
-
 
 # SESSION AGE 45 Minutes
 # SESSION_COOKIE_AGE = 5*60

@@ -181,9 +181,9 @@
                                   <td>{{appointment.appointment_type}}</td>
                                   
                                   {% if appointment.appointment_type == 'checkup' %}
-                                  <td>{{appointment.doctor.consultation_fee}} BDT</td>
+                                  <td>{{appointment.doctor.consultation_fee}} EGP</td>
                                   {% else %}
-                                  <td>{{appointment.doctor.report_fee}} BDT</td>
+                                  <td>{{appointment.doctor.report_fee}} EGP</td>
                                   {% endif %}
                                   <td>
                                     {% if appointment.appointment_status == 'pending' %}
@@ -200,21 +200,21 @@
                                     {% if appointment.payment_status == 'pending' %}
                                     <span class="badge badge-pill bg-warning-light">Pending</span>
                                     {% endif %}
-                                    {% if appointment.payment_status == 'VALID' %}
+                                    {% if appointment.payment_status == 'confirmed' %}
                                     <span class="badge badge-pill bg-success-light">Paid</span>
                                     {% endif %}
                                   </td>
-
                                   <td >
                                     <div class="table-action">
+                                      {% if appointment.payment_status == 'pending' and appointment.appointment_status == 'confirmed'%}
                                       <a
-                                        href="{% url 'ssl-payment-request' pk=appointment.patient.patient_id id=appointment.id %}"
+                                        href="{% url 'paypal_payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
                                         class="btn btn-sm bg-success-light"
                                       >
                                         <i class="fas fa-dollar-sign"></i> Pay
                                         Now
                                       </a>
-                                      
+                                      {% endif %}
                                     </div>
                                   </td>
                                 </tr>
@@ -378,8 +378,7 @@
                                   <th>Tranx ID</th>
                                   <th>Tranx Date</th>
                                   <th>Amount</th>
-                                  <th>Card Type</th>
-                                  <th>Card Issuer</th>
+                                  <th>Payment Type</th>
                                   <th>Payment Status</th>
                       
                                 </tr>
@@ -407,11 +406,10 @@
                                   </td>
                                   <td>{{payment.transaction_id}}</td>
                                   <td>{{payment.transaction_date}}</td>
-                                  <td>{{payment.currency_amount}} BDT</td>
-                                  <td>{{payment.card_type}}</td>
-                                  <td>{{payment.card_issuer}}</td>
+                                  <td>{{payment.currency_amount}} EGP</td>
+                                  <td>{{payment.payment_type}}</td>
                                   <td>
-                                    {% if payment.status == 'VALID' %}
+                                    {% if payment.status == 'confirmed' %}
                                     <span class="badge badge-pill bg-success-light">Success</span>
                                     {% else %}
                                     <span class="badge badge-pill bg-warning-light">Pending</span>
@@ -445,28 +443,6 @@
       {% include 'footer.html' %}
       <!-- /Footer -->
     </div>
-
-    <!-- /Main Wrapper -->
-    <!-- <div class="modal fade" id="delete_modal" aria-hidden="true" role="dialog">
-      <div class="modal-dialog modal-dialog-centered text-center" role="document" >
-        <div class="modal-content">
-        	<div class="modal-header">
-            <h5 class="modal-title">Delete</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-content p-2">
-              <h4 class="modal-title">Delete</h4>
-              <p class="mb-4">Are you sure want to delete?</p>
-              <button type="button" class="btn btn-primary">Save </button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <!-- jQuery -->
     <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></>
@@ -508,9 +484,5 @@ document.addEventListener("DOMContentLoaded", function () {
     </script>
   {% endif %}
 
-
-
   </body>
-
-  
 </html>

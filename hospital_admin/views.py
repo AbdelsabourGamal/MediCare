@@ -14,7 +14,7 @@ from django.db.models import Q
 from pharmacy.models import Medicine, Pharmacist
 from doctor.models import Doctor_Information, Prescription, Prescription_test, Report, Appointment, Experience , Education,Specimen,Test
 from pharmacy.models import Order, Cart
-from sslcommerz.models import Payment
+# from sslcommerz.models import Payment
 from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditHospitalForm, EditEmergencyForm,AdminForm , PharmacistCreationForm 
 
 from .models import Admin_Information,specialization,service,hospital_department, Clinical_Laboratory_Technician, Test_Information
