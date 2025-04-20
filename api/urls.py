@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-
 from rest_framework_simplejwt.views import ( # type: ignore
     TokenObtainPairView,
     TokenRefreshView,
@@ -36,9 +35,9 @@ urlpatterns = [
     path('prescription_medicine/', views.PatientPrescriptionMedicine.as_view()),
     path('prescription_test/', views.PatientPrescriptionTest.as_view()),
     path('report/', views.PatientReport.as_view()),
-    # path('payment/', views.PatientPayment.as_view()),
+    path('payment/', views.PatientPayment.as_view()),
 
-    # path('all_prescription_data/', views.CombinedDataView.as_view()),
+    path('all_prescription_data/', views.CombinedDataView.as_view()),
 
-
+    path('hospital_department/', views.HospitalDepartment.as_view()), 
 ]

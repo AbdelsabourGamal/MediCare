@@ -3,8 +3,8 @@ from rest_framework import serializers
 from traitlets import default
 from hospital.models import Hospital_Information, Patient, User 
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
-from hospital_admin.models import Admin_Information
-# from sslcommerz.models import Payment
+from hospital_admin.models import Admin_Information,hospital_department
+from paypal.models import Paymentpal
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.tokens import RefreshToken  # type: ignore
 from django.contrib.auth import authenticate
@@ -119,7 +119,7 @@ class LoginSerializer(serializers.Serializer):
         refresh = RefreshToken.for_user(user)
 
         return {
-            'refresh': str(refresh),
+            # 'refresh': str(refresh),
             'access': str(refresh.access_token),
             'user': {
                 'id': user.id, # type: ignore
@@ -194,10 +194,11 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
-"""
+
+
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Payment
+        model = Paymentpal
         fields = '__all__'
 
 class CombinedDataSerializer(serializers.Serializer):
@@ -207,4 +208,8 @@ class CombinedDataSerializer(serializers.Serializer):
     reports = ReportSerializer(many=True)
     payments = PaymentSerializer(many=True)
 
-"""
+
+class HospitalDepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = hospital_department
+        fields = '__all__'

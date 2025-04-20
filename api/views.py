@@ -6,13 +6,13 @@ from doctor.views import patient_id
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.response import Response
-from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer
+from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer, HospitalDepartmentSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
 from hospital.models import Hospital_Information, Patient, User ,BlacklistedAccess
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
-# from sslcommerz.models import Payment
-from hospital_admin.models import Admin_Information
+from paypal.models import Paymentpal
+from hospital_admin.models import Admin_Information,hospital_department
 from rest_framework import generics,status
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
@@ -20,7 +20,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 @api_view(['GET'])
 def getRoutes(request):
     # Specify which urls (routes) to accept
@@ -108,23 +108,25 @@ class LoginView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
+            # access = serializer.validated_data.refresh.access_token
+            # print(access)
+            # OutstandingToken.objects.create(token=str(access)) 
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        
+
         return Response({
             "message": "Invalid username or password",
             "code": "400"
         }, status=status.HTTP_400_BAD_REQUEST)
 
-
 class PasswordResetView(APIView):
     permission_classes = [AllowAny]
-    
+
     def post(self, request):
         serializer = PasswordResetSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
-        email = serializer.validated_data['email']
+        email = serializer.validated_data['email'] # type: ignore
         try:
             user = User.objects.get(email=email)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
@@ -177,7 +179,6 @@ class LogoutView(APIView):
             BlacklistedToken.objects.create(token=str(access)) 
             return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
 
-        
 #################################################################################################################################
 
 class getHospitals(generics.ListAPIView):
@@ -191,25 +192,23 @@ class GetOneHospital(generics.RetrieveAPIView):
     serializer_class = HospitalSerializer
     lookup_field = 'pk'
     authentication_classes = [JWTAuthentication]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class GetDoctors(generics.ListAPIView):
     queryset = Doctor_Information.objects.all()
     serializer_class = DoctorSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class GetOneDoctor(generics.RetrieveAPIView):
     queryset = Doctor_Information.objects.all()
     serializer_class = DoctorSerializer
     lookup_field = 'pk'
     authentication_classes = [JWTAuthentication]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class PatientProfile(generics.RetrieveUpdateAPIView):
-    # queryset = Patient.objects.all()
     serializer_class = PatientProfileSerializer
-    # lookup_field = 'pk'
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -271,9 +270,9 @@ class PatientReport(generics.ListAPIView):
 
     def get_queryset(self): # type: ignore
         return Report.objects.filter(patient__user=self.request.user)
-"""
+
 class PatientPayment(generics.ListAPIView):
-    queryset = Payment.objects.all()
+    queryset = Paymentpal.objects.all()
     serializer_class = PaymentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -291,9 +290,8 @@ class CombinedDataView(APIView):
         prescriptions_medicine = Prescription_medicine.objects.filter(prescription__patient__user=user)
         prescriptions_test = Prescription_medicine.objects.filter(prescription__patient__user=user)
         reports = Report.objects.filter(patient__user=user)
-        payments = Payment.objects.filter(patient__user=user)
+        payments = Paymentpal.objects.filter(patient__user=user)
 
-        # استخدام Serializer لتحويل البيانات إلى JSON
         data = {
             "prescriptions": PrescriptionSerializer(prescriptions, many=True).data,
             "prescriptions_medicine": PrescriptionMedicineSerializer(prescriptions_medicine, many=True).data,
@@ -303,4 +301,9 @@ class CombinedDataView(APIView):
         }
 
         return Response(data)
-"""
+
+class HospitalDepartment(generics.ListAPIView):
+    queryset = hospital_department.objects.all()
+    serializer_class = HospitalDepartmentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
