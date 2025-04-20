@@ -1,8 +1,11 @@
+import datetime
 from attr import field
 from rest_framework import serializers
 from traitlets import default
 from hospital.models import Hospital_Information, Patient, User 
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
+
 from hospital_admin.models import Admin_Information,hospital_department
 from paypal.models import Paymentpal
 from hospital_admin.views import appointment_list

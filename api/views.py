@@ -1,15 +1,14 @@
 from django.contrib.auth.tokens import default_token_generator
+from datetime import datetime
 import uuid
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
-from doctor.views import patient_id
-from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.response import Response
 from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer, HospitalDepartmentSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
-from hospital.models import Hospital_Information, Patient, User ,BlacklistedAccess
+from hospital.models import Hospital_Information, Patient, User 
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
 from paypal.models import Paymentpal
 from hospital_admin.models import Admin_Information,hospital_department
@@ -21,14 +20,13 @@ from django.conf import settings
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+
 @api_view(['GET'])
 def getRoutes(request):
     # Specify which urls (routes) to accept
     
     routes = [
         # to test built-in authentication - JSON web tokens have an expiration date
-        {'POST': '/api/users/token'},
-        {'POST': '/api/users/token/refresh'},
 
         {'patient_register': '/api/patient_register'},
         {'doctor_register': '/api/doctor_register'},
@@ -46,7 +44,7 @@ def getRoutes(request):
         {'doctors': '/api/doctor/'},
         {'doctor': '/api/doctor/id'},
 
-        {'patient_profile': '/api/patient_profile/id'},
+        {'patient_profile': '/api/patient_profile/'},
 
         {'appointment': '/api/appointment'},
         {'prescription': '/api/prescription'},
@@ -56,6 +54,7 @@ def getRoutes(request):
         {'payment': '/api/payment'},
         {'all_prescription_data': '/api/all_prescription_data'},
 
+        {'hospital_department': '/api/hospital_department'},
     ]
     return Response(routes)
 
@@ -108,9 +107,6 @@ class LoginView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            # access = serializer.validated_data.refresh.access_token
-            # print(access)
-            # OutstandingToken.objects.create(token=str(access)) 
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
         return Response({
@@ -165,19 +161,38 @@ class ChangePasswordView(generics.UpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     def post(self, request):
-        refresh_token = request.data.get("refresh")
-        if not refresh_token:
-            return Response({"error": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
-        refresh = RefreshToken(refresh_token)
-        refresh.blacklist()
+        try:
+            auth_header = request.headers.get('Authorization')
+            if auth_header and auth_header.startswith('Bearer '):
+                access_token = auth_header.split(' ')[1]
+                token = AccessToken(access_token)
+                
+                outstanding_token, created = OutstandingToken.objects.get_or_create(
+                    jti=token['jti'],
+                    defaults={
+                        'token': str(token),
+                        'created_at': datetime.fromtimestamp(token['iat']), # type: ignore
+                        'expires_at': datetime.fromtimestamp(token['exp']), # type: ignore
+                        'user': request.user
+                    }
+                )
 
-        access = request.auth
-        if access:
-            BlacklistedToken.objects.create(token=str(access)) 
-            return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
+                BlacklistedToken.objects.get_or_create(token=outstanding_token)
+
+            return Response(
+                {"detail": "Successfully logged out and all tokens have been invalidated"},
+                status=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            return Response(
+                {"error": f"An error occurred during logout: {str(e)}"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 #################################################################################################################################
 
