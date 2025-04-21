@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 from doctor.views import patient_id
-# from django.contrib.auth.models import User
-# from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm, PatientForm, PasswordResetForm
 from hospital.models import Hospital_Information, User, Patient 
 from doctor.models import Test, testCart, testOrder
@@ -670,4 +668,3 @@ def got_online(sender, user, request, **kwargs):
 def got_offline(sender, user, request, **kwargs):   
     user.login_status = False
     user.save()
-    

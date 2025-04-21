@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'hospital.apps.HospitalConfig',
     'hospital_admin.apps.HospitalAdminConfig',
     'doctor.apps.DoctorConfig',
-    'sslcommerz.apps.SslcommerzConfig',
     'paypal',
     'api',
     'pharmacy.apps.PharmacyConfig',
@@ -49,17 +48,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'debug_toolbar',
-
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
     'rest_framework_simplejwt.authentication.JWTAuthentication',
 ],
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-# ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+],
 }
 
 SIMPLE_JWT = {
@@ -83,7 +80,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'api.middleware.JWTAuthMiddleware',
 
 ]
@@ -92,7 +88,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-ROOT_URLCONF = 'healthstack.urls'
+ROOT_URLCONF = 'medicare.urls'
 
 TEMPLATES = [
     {
@@ -112,7 +108,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'healthstack.wsgi.application'
+WSGI_APPLICATION = 'medicare.wsgi.application'
 
 
 # Database
@@ -162,19 +158,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
+MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-### SSLCOMMERZ env variables
-#VARIABLE should be in capital letter.
-STORE_ID = env('STORE_ID')
-STORE_PASSWORD = env('STORE_PASSWORD')
-STORE_NAME = env('STORE_NAME')
 
 
 ### Paymo env variables
@@ -182,7 +173,6 @@ PAYMOB_API_KEY = env('PAYMOB_API_KEY')
 PAYMOB_INTEGRATION_ID = env('PAYMOB_INTEGRATION_ID')
 PAYMOB_HMAC_KEY = env('PAYMOB_HMAC_SECRET')
 
-PAYMOB_BASE_URL = 'https://accept.paymob.com/api/'
 PAYMOB_MODE = 'sandbox' 
 PAYMOB_TEST_MODE = True 
 
@@ -201,7 +191,6 @@ EMAIL_HOST_USER = SMTP_USER
 EMAIL_HOST_PASSWORD = SMTP_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-# DEFAULT_FROM_EMAIL = SMTP_USER
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

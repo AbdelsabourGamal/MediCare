@@ -86,7 +86,7 @@ def payment_complete(request):
                 transaction_id=data.get('paymentID'),
                 consulation_fee=appointment.doctor.consultation_fee,
                 currency_amount=appointment.doctor.consultation_fee,
-                transaction_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                transaction_date=datetime.now().strftime("%Y-%m-%d %H:%M"),
                 invoice_number=generate_random_invoice(),
                 currency="USD",
                 payment_type="appointment",

@@ -30,16 +30,6 @@ class PatientForm(forms.ModelForm):
         fields = ['name', 'age', 'phone_number', 'blood_group',
                   'featured_image', 'history', 'nid', 'dob', 'address']
 
-        # widgets = {
-        #     'name': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'age': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'blood_group': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'featured_image': forms.FileInput(attrs={'class': 'upload'}),
-        #     'history': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'nid': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'dob': forms.TextInput(attrs={'class': 'form-control'}),
-        # }
 
     def __init__(self, *args, **kwargs):
         super(PatientForm, self).__init__(*args, **kwargs)

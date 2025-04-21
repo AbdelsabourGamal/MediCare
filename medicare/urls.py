@@ -1,4 +1,4 @@
-"""healthstack URL Configuration
+"""medicare URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
 Examples:
@@ -33,14 +33,13 @@ urlpatterns = [
     path('doctor/', include('doctor.urls')),
     path('api/', include('api.urls', namespace="api")),
     path('hospital_admin/', include('hospital_admin.urls',)),
-    path('sslcommerz/', include('sslcommerz.urls')),
+    # path('sslcommerz/', include('sslcommerz.urls')),
     path('paypal/', include('paypal.urls')),
     path('pharmacy/', include('pharmacy.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
+    # path('__debug__/', include('debug_toolbar.urls')),
     
     # For forgot password views and reset password views
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="reset_password.html"),name="reset-password"),
-    # path('reset_password/', auth_views.PasswordResetView.as_view(),name="reset-password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="reset_password_sent.html"),name="password_reset_done"),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="reset.html"),name="password_reset_confirm"),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="reset_password_complete.html"),name="password_reset_complete"),
@@ -49,12 +48,6 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# if settings.debug:
-#     import debug_toolbar
-#     urlpatterns = [
-#         path('__debug__/', include(debug_toolbar.urls)),
-#     ] + urlpatterns
 
 """
 Forgot password views
