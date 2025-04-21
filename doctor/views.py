@@ -47,7 +47,7 @@ def generate_random_string():
     return string_var
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def doctor_change_password(request,pk):
     doctor = Doctor_Information.objects.get(user_id=pk)
     user = User.objects.get(username=doctor.username)
@@ -73,7 +73,7 @@ def doctor_change_password(request,pk):
     return render(request, 'doctor-change-password.html',context)
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def schedule_timings(request):
     doctor = Doctor_Information.objects.get(user=request.user)
     context = {'doctor': doctor}
@@ -81,7 +81,7 @@ def schedule_timings(request):
     return render(request, 'schedule-timings.html', context)
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def patient_id(request):
     doctor = Doctor_Information.objects.get(user=request.user)
     query = request.GET.get('search_query')
@@ -167,7 +167,7 @@ def doctor_login(request):
     return render(request, 'doctor-login.html')
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def doctor_dashboard(request):
         if request.user.is_authenticated:    
@@ -193,7 +193,7 @@ def doctor_dashboard(request):
 
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def appointments(request):
         if request.user.is_authenticated:    
@@ -210,7 +210,7 @@ def appointments(request):
 
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def accept_appointment(request, pk):
     appointment = Appointment.objects.get(id=pk)
     appointment.appointment_status = 'confirmed'
@@ -256,7 +256,7 @@ def accept_appointment(request, pk):
     return redirect('doctor:doctor-dashboard')
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def reject_appointment(request, pk):
     appointment = Appointment.objects.get(id=pk)
     appointment.appointment_status = 'cancelled'
@@ -289,16 +289,8 @@ def reject_appointment(request, pk):
     return redirect('doctor:doctor-dashboard')
 
 
-#         end_year = doctor.end_year
-#         end_year = re.sub("'", "", end_year)
-#         end_year = end_year.replace("[", "")
-#         end_year = end_year.replace("]", "")
-#         end_year = end_year.replace(",", "")
-#         end_year_array = end_year.split()       
-#         experience = zip(work_place_array, designation_array, start_year_array, end_year_array)
-
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="login")
 def doctor_profile(request, pk):
     # request.user --> get logged in user
     if request.user.is_patient:
@@ -316,7 +308,7 @@ def doctor_profile(request, pk):
     return render(request, 'doctor-profile.html', context)
 
 @csrf_exempt
-@login_required(login_url="doctor-login") # type: ignore
+@login_required(login_url="doctor:doctor-login") # type: ignore
 def delete_education(request, pk):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
@@ -328,7 +320,7 @@ def delete_education(request, pk):
         return redirect('doctor:doctor-profile-settings')
 
 @csrf_exempt  
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def delete_experience(request, pk):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
@@ -340,7 +332,7 @@ def delete_experience(request, pk):
         return redirect('doctor:doctor-profile-settings')
       
 @csrf_exempt      
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def doctor_profile_settings(request):
     # profile_Settings.js
     if request.user.is_doctor:
@@ -416,12 +408,12 @@ def doctor_profile_settings(request):
         redirect('doctor:doctor-logout')
                
 @csrf_exempt    
-@login_required(login_url="doctor-login")      
+@login_required(login_url="doctor:doctor-login")      
 def booking_success(request):
     return render(request, 'booking-success.html')
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def booking(request, pk):
     patient = request.user.patient
     doctor = Doctor_Information.objects.get(doctor_id=pk)
@@ -483,7 +475,7 @@ def booking(request, pk):
     return render(request, 'booking.html', context)
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def my_patients(request):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
@@ -501,7 +493,7 @@ def my_patients(request):
 #     return render(request, 'patient_profile.html')
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def patient_profile(request, pk):
     if request.user.is_doctor:
         # doctor = Doctor_Information.objects.get(user_id=pk)
@@ -517,7 +509,7 @@ def patient_profile(request, pk):
 
 
 @csrf_exempt
-@login_required(login_url="doctor-login")
+@login_required(login_url="doctor:doctor-login")
 def create_prescription(request,pk):
         if request.user.is_doctor:
             doctor = Doctor_Information.objects.get(user=request.user)

@@ -223,7 +223,7 @@ def appointment_list(request):
     return render(request, 'hospital_admin/appointment-list.html')
 
 @csrf_exempt
-@login_required(login_url='admin_login')
+@login_required(login_url='login')
 def hospital_profile(request,pk):
     doctor = Doctor_Information.objects.all()
     hospitals = Hospital_Information.objects.get(hospital_id=pk)

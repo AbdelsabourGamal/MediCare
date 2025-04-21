@@ -1,5 +1,5 @@
-site_name: HealthStack
-docs_dr: HEATH_DOC
+site_name: MediCare
+docs_dr: MediCare_DOC
 nav:
     - Welcome: index.md
     - Homepage: hospital.md
