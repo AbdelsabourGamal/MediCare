@@ -10,6 +10,7 @@ class JWTAuthMiddleware:
     API_EXCEPTIONS = [
         '/api/',
         '/api/patient_register/',
+        '/api/doctor_register/', 
         '/api/password_reset/', 
     ]
 

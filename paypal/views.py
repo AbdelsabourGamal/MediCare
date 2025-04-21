@@ -8,6 +8,11 @@ import random
 import string
 from datetime import datetime
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
 # Create your views here.
 def paypal_payment(request,id):
     appointment = Appointment.objects.get(id=id)
@@ -33,50 +38,62 @@ def generate_random_string():
     string_var = "PAYPAL_TEST_" + string_var
     return string_var
 
+
 @csrf_exempt
 @login_required(login_url="login")
 def paypal_payment_request(request, pk, id):
-    if request.user.is_patient :
+    if request.user.is_patient:
         patient = Patient.objects.get(patient_id=pk)
         appointment = Appointment.objects.get(id=id)
 
-        if appointment.payment_status == "pending":
-            invoice_number = generate_random_invoice()
-
-            appointment.payment_status = "confirmed"
-            appointment.save()
-
-            payment = Paymentpal()
-
-            payment.patient = patient
-            payment.appointment = appointment
-            payment.name = patient.username
-            payment.email = patient.email
-            payment.phone = patient.phone_number
-            payment.address = patient.address
-            payment.city = "Qena"
-            payment.country = "Egypt"
-            payment.transaction_id = generate_random_string()
-
-            payment.consulation_fee = appointment.doctor.consultation_fee
-            payment.currency_amount = appointment.doctor.consultation_fee
-
-            payment.transaction_date = datetime.now()
-            payment.invoice_number = invoice_number
-
-            payment.urrency = "USD"
-            
-            payment.payment_type = "appointment"
-            payment.status = "confirmed"
-            payment.save()
-
-        else:
+        if appointment.payment_status == "confirmed":
             return redirect('patient-dashboard')
     else:
         return redirect('login')
 
     context = {
-        "appointment":appointment,
+        "appointment": appointment,
         "patient": patient,
     }
     return render(request, 'payment.html', context)
+
+
+
+@csrf_exempt
+def payment_complete(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            
+            patient_id = data.get('patient_id')
+            appointment_id = data.get('appointment_id')
+            
+            patient = Patient.objects.get(patient_id=patient_id)
+            appointment = Appointment.objects.get(id=appointment_id)
+            
+            appointment.payment_status = "confirmed"
+            appointment.save()
+
+            Paymentpal.objects.create(
+                patient=patient,
+                appointment=appointment,
+                name=patient.username,
+                email=patient.email,
+                phone=patient.phone_number,
+                address=patient.address,
+                city="Qena",
+                country="Egypt",
+                transaction_id=data.get('paymentID'),
+                consulation_fee=appointment.doctor.consultation_fee,
+                currency_amount=appointment.doctor.consultation_fee,
+                transaction_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                invoice_number=generate_random_invoice(),
+                currency="USD",
+                payment_type="appointment",
+                status="confirmed",
+            )
+
+            return JsonResponse({'status': 'success', 'message': 'Payment saved successfully!'})
+        
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)

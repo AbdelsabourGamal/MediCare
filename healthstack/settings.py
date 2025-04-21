@@ -201,7 +201,7 @@ EMAIL_HOST_USER = SMTP_USER
 EMAIL_HOST_PASSWORD = SMTP_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = SMTP_USER
+# DEFAULT_FROM_EMAIL = SMTP_USER
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

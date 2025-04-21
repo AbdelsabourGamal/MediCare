@@ -38,12 +38,6 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <!-- Main Wrapper -->
@@ -155,7 +149,7 @@
                                   <td>
                                     <h2 class="table-avatar">
                                       <a
-                                        href="doctor-profile.html"
+                                        href="{% url 'doctor:doctor-profile' pk=appointment.doctor.doctor_id %}"
                                         class="avatar avatar-sm mr-2"
                                       >
                                         <img
@@ -181,9 +175,9 @@
                                   <td>{{appointment.appointment_type}}</td>
                                   
                                   {% if appointment.appointment_type == 'checkup' %}
-                                  <td>{{appointment.doctor.consultation_fee}} EGP</td>
+                                  <td>{{appointment.doctor.consultation_fee}} USD</td>
                                   {% else %}
-                                  <td>{{appointment.doctor.report_fee}} EGP</td>
+                                  <td>{{appointment.doctor.report_fee}} USD</td>
                                   {% endif %}
                                   <td>
                                     {% if appointment.appointment_status == 'pending' %}
@@ -211,9 +205,16 @@
                                         href="{% url 'paypal_payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
                                         class="btn btn-sm bg-success-light"
                                       >
-                                        <i class="fas fa-dollar-sign"></i> Pay
-                                        Now
+                                        <i class="fas fa-dollar-sign"></i> Pay Now
                                       </a>
+                                      {% elif appointment.payment_status == 'confirmed' %}
+                                        <button class="btn btn-sm bg-secondary-light" disabled>
+                                          <i class="fas fa-check-circle"></i> Paid
+                                        </button>
+                                        {% elif appointment.appointment_status == 'pending' %}
+                                        <button class="btn btn-sm bg-secondary-light" disabled>
+                                          <i class="fas fa-clock"></i> Pending
+                                        </button>
                                       {% endif %}
                                     </div>
                                   </td>
@@ -259,7 +260,7 @@
                                   <td>
                                     <h2 class="table-avatar">
                                       <a
-                                        href="doctor-profile.html"
+                                        href="{% url 'doctor:doctor-profile' pk=prescription.doctor.doctor_id %}"
                                         class="avatar avatar-sm mr-2"
                                       >
                                         <img
@@ -268,7 +269,7 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="doctor-profile.html"
+                                      <a href="{% url 'doctor:doctor-profile' pk=prescription.doctor.doctor_id %}"
                                         >Dr. {{prescription.doctor}}<span>{{prescription.doctor.department_name }}</span></a
                                       >
                                     </h2>
@@ -328,7 +329,7 @@
                                   <td>
                                     <h2 class="table-avatar">
                                       <a
-                                        href="doctor-profile.html"
+                                        href="{% url 'doctor:doctor-profile' pk=report.doctor.doctor_id %}"
                                         class="avatar avatar-sm mr-2"
                                       >
                                         <img
@@ -390,7 +391,7 @@
                                   <td>
                                     <h2 class="table-avatar">
                                       <a
-                                        href="doctor-profile.html"
+                                        href="{% url 'doctor:doctor-profile' pk=payment.appointment.doctor.doctor_id %}"
                                         class="avatar avatar-sm mr-2"
                                       >
                                         <img
@@ -399,14 +400,14 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="doctor-profile.html"
+                                      <a href="{% url 'doctor:doctor-profile' pk=payment.appointment.doctor.doctor_id %}"
                                         >{{payment.appointment.doctor.name}} <span>{{payment.appointment.doctor.department}}</span></a
                                       >
                                     </h2>
                                   </td>
                                   <td>{{payment.transaction_id}}</td>
                                   <td>{{payment.transaction_date}}</td>
-                                  <td>{{payment.currency_amount}} EGP</td>
+                                  <td>{{payment.currency_amount}} USD</td>
                                   <td>{{payment.payment_type}}</td>
                                   <td>
                                     {% if payment.status == 'confirmed' %}
