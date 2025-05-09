@@ -13,7 +13,6 @@ class Paymentpal(models.Model):
     
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
     appointment = models.ForeignKey(Appointment, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
     test_order = models.ForeignKey(testOrder, on_delete=models.SET_NULL, null=True, blank=True)
     prescription = models.ForeignKey(Prescription, on_delete=models.SET_NULL, null=True, blank=True)
     

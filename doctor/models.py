@@ -185,8 +185,8 @@ class Prescription_medicine(models.Model):
         return str(self.prescription)
 
 class Prescription_test(models.Model):
-    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, null=True, blank=True)
     test_id = models.AutoField(primary_key=True)
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE, null=True, blank=True)
     test_name = models.CharField(max_length=200, null=True, blank=True)
     test_description = models.TextField(null=True, blank=True)
     test_info_id = models.CharField(max_length=200, null=True, blank=True)
@@ -225,6 +225,7 @@ class testOrder(models.Model):
     # id
     orderitems = models.ManyToManyField(testCart)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    prescription_test = models.ForeignKey(Prescription_test, on_delete=models.CASCADE, null=True, blank=True)
     ordered = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(max_length=200, blank=True, null=True)

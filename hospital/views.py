@@ -5,7 +5,7 @@ from doctor.views import patient_id
 from .forms import CustomUserCreationForm, PatientForm, PasswordResetForm
 from hospital.models import Hospital_Information, User, Patient 
 from doctor.models import Test, testCart, testOrder
-from hospital_admin.models import hospital_department, specialization, service, Test_Information
+from hospital_admin.models import Admin_Information, hospital_department, specialization, service, Test_Information
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -309,9 +309,11 @@ def multiple_hospital(request):
             hospitals = Hospital_Information.objects.all()
             
             hospitals, search_query = searchHospitals(request)
-            
-            context = {'doctor': doctor, 'hospitals': hospitals, 'search_query': search_query}
+
+
+            context = {'doctor': doctor, 'hospitals': hospitals, 'admin': admin, 'search_query': search_query}
             return render(request, 'multiple-hospital.html', context)
+
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
@@ -331,7 +333,7 @@ def hospital_profile(request, pk):
             departments = hospital_department.objects.filter(hospital=hospitals)
             specializations = specialization.objects.filter(hospital=hospitals)
             services = service.objects.filter(hospital=hospitals)
-
+            print("patient")
             context = {'patient': patient, 'doctors': doctors, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
             return render(request, 'hospital-profile.html', context)
 
@@ -478,16 +480,13 @@ def view_report(request,pk):
         redirect('logout') 
 
 
-def test_cart(request):
-    return render(request, 'test-cart.html')
-
 @csrf_exempt
 @login_required(login_url="login")
 def test_single(request,pk):
      if request.user.is_authenticated and request.user.is_patient:
          
         patient = Patient.objects.get(user=request.user)
-        Perscription_test = Perscription_test.objects.get(test_id=pk)
+        Perscription_test = Prescription_test.objects.get(test_id=pk)
         carts = testCart.objects.filter(user=request.user, purchased=False)
         
         context = {'patient': patient, 'carts': carts, 'Perscription_test': Perscription_test}
@@ -532,8 +531,6 @@ def test_add_to_cart(request, pk, pk2):
 @login_required(login_url="login")
 def test_cart(request, pk):
     if request.user.is_authenticated and request.user.is_patient:
-        # prescription = Prescription.objects.filter(prescription_id=pk)
-        
         prescription = Prescription.objects.filter(prescription_id=pk)
         
         patient = Patient.objects.get(user=request.user)
@@ -618,7 +615,7 @@ def render_to_pdf(template_src, context_dict={}):
 def prescription_pdf(request,pk):
  if request.user.is_patient:
     patient = Patient.objects.get(user=request.user)
-    prescription = Prescription.objects.get(prescription_id=32)
+    prescription = Prescription.objects.get(prescription_id=pk)
     prescription_medicine = Prescription_medicine.objects.filter(prescription=prescription)
     prescription_test = Prescription_test.objects.filter(prescription=prescription)
     # current_date = datetime.date.today()

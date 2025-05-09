@@ -228,11 +228,15 @@ def hospital_profile(request,pk):
     doctor = Doctor_Information.objects.all()
     hospitals = Hospital_Information.objects.get(hospital_id=pk)
 
+    admin = Admin_Information.objects.get(user=request.user)
+
+
+    
     departments = hospital_department.objects.filter(hospital=hospitals)
     specializations = specialization.objects.filter(hospital=hospitals)
     services = service.objects.filter(hospital=hospitals)
 
-    context = {'doctor': doctor, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
+    context = {'admin':admin, 'doctor': doctor, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
     return render(request, 'hospital-profile.html', context)
 
 @csrf_exempt

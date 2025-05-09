@@ -4,9 +4,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('pay/<int:id>/', views.paypal_payment, name='paypal_payment'),
-    path('paypal_payment_request/<int:pk>/<int:id>/', views.paypal_payment_request, name='paypal_payment_request'),
-    path('payment-complete/', views.payment_complete, name='payment-complete'), # type: ignore
+    path('payment_request/<int:pk>/<int:id>/', views.paypal_payment_request, name='payment_request'),
+    path('payment_complete/', views.payment_complete, name='payment_complete'), # type: ignore
+    path('payment_request_medicine/<int:pk>/<int:id>/<int:pk2>/', views.paypal_payment_request_medicine, name='payment_request_medicine'),
+    path('medicine_payment_complete/', views.medicine_payment_complete, name='medicine_payment_complete'),
+
+
+
+
+
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

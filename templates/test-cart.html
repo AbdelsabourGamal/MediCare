@@ -131,7 +131,6 @@
 														<td class="price">{{test.item.test_info_price}}</td>
                                                       </tr>
 													  {% endfor %}
-                                                   
                                                   </tbody>
                                                 </table>
                                               </div>
@@ -140,13 +139,15 @@
                                           <div class="row justify-content-end">
                                             <div class="col col-lg-4 col-md-6 mt-5 cart-wrap ftco-animate">
                                               <div class="cart-total mb-3">
-                                                <h3><b>Cart Totals: </b><span>{{ test_order.get_totals }} Tk.</span></h3>
+                                                <h3><b>Cart Totals: </b><span>{{ test_order.get_totals }} USD.</span></h3>
                                                 
                                                 <hr>
                                                 
                                               </div>
-                                              	<p class="text-center"><a href="{% url 'ssl-payment-request-test' pk=test_order.user.patient.patient_id id=test_order.id pk2=prescription_id %}" class="btn btn-primary py-3 px-4">Proceed to
-                                                  Checkout</a></p>
+											  {% comment %} {% if  %} {% endcomment %}
+                                              	<p class="text-center"><a href="{% url 'payment_request_medicine' pk=patient.patient_id id=test_order.id pk2=test_order.prescription_test.test_id %}" class="btn btn-primary py-3 px-4">
+													Proceed to Checkout</a></p>
+												  {% comment %} {% endif %} {% endcomment %}
 												<p class="text-center"><a href="" class="btn btn-info py-3 px-4">Back to Prescription</a></p>
 													
 												  

@@ -202,7 +202,7 @@
                                     <div class="table-action">
                                       {% if appointment.payment_status == 'pending' and appointment.appointment_status == 'confirmed'%}
                                       <a
-                                        href="{% url 'paypal_payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
+                                        href="{% url 'payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
                                         class="btn btn-sm bg-success-light"
                                       >
                                         <i class="fas fa-dollar-sign"></i> Pay Now

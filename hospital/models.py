@@ -77,10 +77,3 @@ class Patient(models.Model):
     def __str__(self):
         return str(self.user.username) # type: ignore
 
-
-class BlacklistedAccess(models.Model):
-    token = models.CharField(max_length=500, unique=True)
-    blacklisted_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.token
