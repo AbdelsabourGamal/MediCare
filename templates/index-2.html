@@ -16,23 +16,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
-    />
-
-    <!-- Fortawesome CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
-
-    <!-- Main CSS -->
     <link
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
@@ -67,200 +59,180 @@
         </div>
       </search>
 
-      <!-- Clinic and Specialties -->
-      <section class="section section-specialties" id="clinics">
-        <div class="container-fluid">
-          <div class="section-header text-center">
-            <h2>Our Clinics</h2>
-            <p class="sub-title"></p>
+      <!-- Clinics Section -->
+      <section id="clinics" class="section section-clinics">
+        <div class="container">
+          <div class="text-center mb-4">
+            <h2 class="section-title">Our Clinics</h2>
+            <p class="section-subtitle">
+              Explore our range of specialist clinics
+            </p>
           </div>
-          <div class="row justify-content-center">
-            <div class="col-md-9">
-              <!-- Slider -->
-              <div class="specialties-slider slider">
-                <!-- Slider Item -->
-                <div class="specialty-item text-center">
-                  <div class="specialty-img">
+
+          
+              <div
+                class="clinics-container"
+              >
+                <!-- Clinic Item -->
+                <div class="clinic-item">
+                  <div class="clinic-img">
                     <img
                       src="{% static 'HealthStack-System/images/Normal/specialties/specialties-01.png' %}"
                       class="img-fluid"
-                      alt="Specialty"
+                      alt="Urology Clinic"
                     />
-                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
-                  <p>Urology</p>
+                  <p class="clinic-name ">Urology</p>
                 </div>
-                <!-- /Slider Item -->
 
-                <!-- Slider Item -->
-                <div class="specialty-item text-center">
-                  <div class="specialty-img">
+                <!-- Clinic Item -->
+                <div class="clinic-item">
+                  <div class="clinic-img">
                     <img
                       src="{% static 'HealthStack-System/images/Normal/specialties/specialties-02.png' %}"
                       class="img-fluid"
-                      alt="Specialty"
+                      alt="Neurology Clinic"
                     />
-                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
-                  <p>Neurology</p>
+                  <p class="clinic-name ">Neurology</p>
                 </div>
-                <!-- /Slider Item -->
 
-                <!-- Slider Item -->
-                <div class="specialty-item text-center">
-                  <div class="specialty-img">
+                <!-- Clinic Item -->
+                <div class="clinic-item">
+                  <div class="clinic-img">
                     <img
                       src="{% static 'HealthStack-System/images/Normal/specialties/specialties-03.png' %}"
                       class="img-fluid"
-                      alt="Specialty"
+                      alt="Orthopedic Clinic"
                     />
-                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
-                  <p>Orthopedic</p>
+                  <p class="clinic-name ">Orthopedic</p>
                 </div>
-                <!-- /Slider Item -->
 
-                <!-- Slider Item -->
-                <div class="specialty-item text-center">
-                  <div class="specialty-img">
+                <!-- Clinic Item -->
+                <div class="clinic-item">
+                  <div class="clinic-img">
                     <img
                       src="{% static 'HealthStack-System/images/Normal/specialties/specialties-04.png' %}"
                       class="img-fluid"
-                      alt="Specialty"
+                      alt="Cardiology Clinic"
                     />
-                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
-                  <p>Cardiologist</p>
+                  <p class="clinic-name ">Cardiologist</p>
                 </div>
-                <!-- /Slider Item -->
 
-                <!-- Slider Item -->
-                <div class="specialty-item text-center">
-                  <div class="specialty-img">
+                <!-- Clinic Item -->
+                <div class="clinic-item">
+                  <div class="clinic-img">
                     <img
                       src="{% static 'HealthStack-System/images/Normal/specialties/specialties-05.png' %}"
                       class="img-fluid"
-                      alt="Specialty"
+                      alt="Dentistry Clinic"
                     />
-                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                   </div>
-                  <p>Dentist</p>
+                  <p class="clinic-name ">Dentist</p>
                 </div>
-                <!-- /Slider Item -->
               </div>
-              <!-- /Slider -->
+            
+          </div>
+        
+      </section>
+
+
+      <!-- Doctors Section -->
+      <section class="section section-doctors">
+        <div class="container">
+          <div class="text-center mb-4">
+            <h2 class="section-title">Our Doctors</h2>
+            <p class="section-subtitle">You can book doctors from any hospital here.</p>
+          </div>
+
+          <div class="doctors-container">
+            {% for doctor in doctors %}
+            <div class="doctor">
+              <div class="doctor-img">
+                <a href="{% url 'doctor:doctor-profile' doctor.pk %}">
+                  <img
+                    src="{{ doctor.featured_image.url }}"
+                    alt="{{ doctor.name }}"
+                    class="img-fluid"
+                  />
+                </a>
+              </div>
+
+              <div class="doctor-name">{{ doctor.name }}</div>
+              <p class="text-muted">
+                {{ doctor.department_name.hospital_department_name }}
+              </p>
+
+              <ul>
+                <li><i class="fas fa-map-marker-alt me-2"></i> {{ doctor.hospital_name }}</li>
+                <li><i class="far fa-clock me-2"></i> {{ doctor.visiting_hour }}</li>
+                <li>
+                  <i class="far fa-money-bill-alt me-2"></i> Consultation Fee: 
+                  {{ doctor.consultation_fee }} EGP
+                
+                </li>
+              </ul>
             </div>
+            {% endfor %}
           </div>
         </div>
       </section>
-      <!-- Clinic and specialties -->
+      
 
-      <!-- Popular Section -->
-      <section class="section section-doctor">
-        <div class="container-fluid">
-          <div class="section-header">
-            <h2>Book Our Doctor</h2>
-            <div class="content">
-              You can book doctors from any hospital from here.
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="doctor-slider slider">
-                {% for doctor in doctors %}
-                <!-- Doctor Widget -->
-                <div class="profile-widget">
-                  <div class="doc-img">
-                    <a href="#">
-                      <img
-                        class="img-fluid"
-                        alt="User Image"
-                        src="{{ doctor.featured_image.url }}"
-                      />
-                    </a>
-                    <a href="javascript:void(0)" class="fav-btn">
-                      <i class="far fa-bookmark"></i>
-                    </a>
-                  </div>
-                  <div class="pro-content">
-                    <h3 class="title">
-                      <a href="{% url 'doctor:doctor-profile' doctor.pk %}"
-                        >{{doctor.name}}</a
-                      >
-                      <i class="fas fa-check-circle verified"></i>
-                    </h3>
-                    <p class="specialty">
-                      {{ doctor.department_name.hospital_department_name }}
-                    </p>
-                    {% comment %}
-                    <div class="rating">
-                      <i class="fas fa-star filled"></i>
-                      <i class="fas fa-star filled"></i>
-                      <i class="fas fa-star filled"></i>
-                      <i class="fas fa-star filled"></i>
-                      <i class="fas fa-star filled"></i>
-                      <span class="d-inline-block average-rating">(17)</span>
-                    </div>
-                    {% endcomment %}
-                    <ul class="available-info">
-                      <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        {{doctor.hospital_name}}
-                      </li>
-                      <li>
-                        <i class="far fa-clock"></i> {{ doctor.visiting_hour }}
-                      </li>
-                      <li>
-                        <i class="far fa-money-bill-alt"></i> Consulation fee:
-                        {{ doctor.consultation_fee }} BDT
-                        <i
-                          class="fas fa-info-circle"
-                          data-toggle="tooltip"
-                          title="Lorem Ipsum"
-                        ></i>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- /Doctor Widget -->
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- /Popular Section -->
-
-      <!-- Available Features -->
-      <section class="section section-features">
-        <div class="container-fluid">
-          <div class="section-header">
-            <h2 class="mt-2">Available Hospitals</h2>
-            <p>
+      <!-- Our Hospitals -->
+      <section class="section section-hospitals">
+        <div class="container">
+          <div class="text-center mb-4">
+            <h2 class="section-title">Our Hospitals</h2>
+            <p class="section-subtitle">
               Here You can access multiple hospitals. You can book your
               appointment from your doctor & can collect all hospital
               information from here.
             </p>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="features-slider slider">
-                <!-- Slider Item -->
-                {% for hospital in hospitals %}
-                <div class="feature-item text-center">
-                  <img
-                    src="{{ hospital.featured_image.url }}"
-                    class="img-fluid"
-                    alt="Feature"
-                  />
-                  <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
-                    >{{hospital.name}}</a
-                  >
-                </div>
-                {% endfor %}
-                <!-- /Slider Item -->
-              </div>
+          <div id="hospitalCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              {% for hospital in hospitals %}
+              <button type="button" data-bs-target="#hospitalCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}">
+              </button>
+              {% endfor %}
             </div>
+            <div class="carousel-inner">
+              {% for hospital in hospitals %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div>
+                  <div class="text-center position-relative">
+                    <img
+                      src="{{ hospital.featured_image.url }}"
+                      alt="{{ hospital.name }}"
+                      class="img-fluid"
+                    />
+                    
+                      <a
+                        href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
+                        class="position-absolute"
+                      >
+                        {{ hospital.name }}
+                      </a>
+                    
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#hospitalCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#hospitalCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
         </div>
       </section>
@@ -272,28 +244,11 @@
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
-    />
-
-    <!-- Slick JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/slick.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
   </body>
-
-  <!-- doccure/index.html  30 Nov 2019 04:12:03 GMT -->
 </html>

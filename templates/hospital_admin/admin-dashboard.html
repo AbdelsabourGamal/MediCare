@@ -196,7 +196,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for hospital in hospitals|slice:5%}
+                        {% for hospital in hospitals%}
                         <tr>
                           <td>
                             <h2 class="table-avatar">
@@ -208,7 +208,7 @@
                                   src="{{hospital.featured_image.url}}"
                                   alt="User Image"
                               /></a>
-                              <a href="../hospital-profile/{{hospital.hospital_id}}">{{hospital.name}}</a>
+                              <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}">{{hospital.name}}</a>
                             </h2>
                           </td>
                           <td>{{hospital.address}}</td>
@@ -259,7 +259,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for doctor in doctors|slice:5%}
+                        {% for doctor in doctors%}
                         <tr>
                           <td>
                             <h2 class="table-avatar">
@@ -307,13 +307,11 @@
 												</tr>
 											</thead>
 											<tbody>
-                        {% for patient in patients|slice:5%}
+                        {% for patient in patients%}
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															{% if patient.featured_image %}
-                              <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{patient.featured_image.url}}" alt="User Image"></a>
-                              {% endif %}
+															<a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{patient.featured_image.url}}" alt="User Image"></a>
 															<a href="">{{patient.name}}</a>
 														</h2>
 													</td>
@@ -354,7 +352,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for p in pharmacists|slice:5 %}
+                        {% for p in pharmacists %}
                         <tr>
                           <td>
                             <h2 class="table-avatar">
@@ -403,7 +401,7 @@
 												</tr>
 											</thead>
 											<tbody>
-                        {% for lab_worker in lab_workers|slice:5%}
+                        {% for lab_worker in lab_workers%}
 												<tr>
 													<td>
 														<h2 class="table-avatar">
@@ -511,7 +509,7 @@
     </script>
   {% endif %}
 
-
+    
 
   </body>
 

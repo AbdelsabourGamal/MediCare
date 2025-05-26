@@ -1,40 +1,36 @@
 {% load static %}
 <!DOCTYPE html> 
 <html lang="en">
-	
-<!-- doccure/my-patients.html  30 Nov 2019 04:12:09 GMT -->
+
 <head>
 		<meta charset="utf-8">
-		<title>HealthStack</title>
+		<title>MediCare</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 		
 		<!-- Favicons -->
 		<link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
 		
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}">
-		
-		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}">
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}">
-		
-		<!-- Main CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}">
-		
-		<!-- Department CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/department.css' %}">
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+		<!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
+    />
+
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+    />
 	
 	</head>
 	<body>
-
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
-		
 			<!-- Header -->
 			<header class="header">
 				
@@ -50,47 +46,26 @@
 			
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
+				<nav aria-label="breadcrumb" class="page-breadcrumb">
+					<ol class="breadcrumb">
+						{% if user.is_authenticated and user.is_patient %}
+						<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
+						{% endif %}
 
-						<div class="col-md-6 col-6">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									{% if user.is_authenticated and user.is_patient %}
-									<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-									{% endif %}
-
-									{% if user.is_authenticated and user.is_doctor %}
-									<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
-									{% endif %}
-									<li class="breadcrumb-item active" aria-current="page">Hospital Departments</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Hospital Departments</h2>
-						</div>
-
-						{% comment %} <div class="col-md-6 col-6 text-right">
-							<div class="top-nav-search">
-								<form action="#" method="GET">
-									<input type="text" class="form-control" placeholder="Search department" name="search_query" value="{{search_query}}">
-									<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-								</form>
-							</div>
-						</div> {% endcomment %}
-						
-
-					</div>
-				</div>
+						{% if user.is_authenticated and user.is_doctor %}
+						<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
+						{% endif %}
+						<li class="breadcrumb-item active" aria-current="page">Hospital Departments</li>
+					</ol>
+				</nav>
 			</div>
 			<!-- /Breadcrumb -->
 			
 			<!-- Page Content -->
-			<div class="content">
+			<div class="hospital departments">
 				<div class="container-fluid">
-
 					<div class="row">
-						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-						
+						<div class="col-md-5 col-lg-4 col-xl-3">
 							<!-- Profile Sidebar -->
 							<div>
                                
@@ -107,38 +82,23 @@
 							
 						</div>
 						<div class="col-md-7 col-lg-8 col-xl-9">
-							<h1 class="card-title" style="text-align: center;">All Departments</h1>
-							<hr>
-							<div class="row row-grid">
-								
-								
+							<h1 class="card-title">All Departments</h1>
+							<div class="departments-container">
 								{% for department in departments %}
-								<div class="col-12 col-md-6 col-lg-4 d-flex">
-									<div class="card flex-fill card1">
-										<a href="#"></a>
-										<img alt="Card Image"style="height: 200px;border-radius: 15px 15px 0px 0px" src="{{department.featured_image.url}}" class="card-img-top">
-										<div class="card-header" style="border-radius: 15px">
-											<h3 class="card-title mb-0" style="text-align: center;">{{department.hospital_department_name}}</h3>
-										</div>
-										<div class="card-read-more">
+									<div class="department">
+										<img alt="Department Image"src="{{department.featured_image.url}}" class="card-img-top">
+										<h3 class="department-name">{{department.hospital_department_name}}</h3>
+										<div class="read-more">
 											<a href="{% url 'hospital-doctor-list' pk=department.hospital_department_id %}" class="btn btn-link btn-block">
-												Explore
+												Explore Department
 											</a>
 										</div>
-										
 									</div>
-								</div>
 								{% endfor %}
-								
-								
-								
 							</div>
-
 						</div>
 					</div>
-
 				</div>
-
 			</div>		
 			<!-- /Page Content -->
    
@@ -149,24 +109,11 @@
 		</div>
 		<!-- /Main Wrapper -->
 	  
-		<!-- jQuery -->
-		<script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-		
-		<!-- Bootstrap Core JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-		
-		<!-- Sticky Sidebar JS -->
-        <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-        <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-		
-		<!-- Custom JS -->
-		<script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+		<!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
-		<!-- Searchbar JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
-		
-	</body>
-
-<!-- doccure/my-patients.html  30 Nov 2019 04:12:09 GMT -->
 </html>

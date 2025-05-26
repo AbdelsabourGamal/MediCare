@@ -205,8 +205,6 @@ class CombinedDataSerializer(serializers.Serializer):
     prescriptions = PrescriptionSerializer(many=True)
     prescriptions_medicine = PrescriptionMedicineSerializer(many=True)
     prescriptions_test = PrescriptionTestSerializer(many=True)
-    reports = ReportSerializer(many=True)
-    payments = PaymentSerializer(many=True)
 
 
 class HospitalDepartmentSerializer(serializers.ModelSerializer):

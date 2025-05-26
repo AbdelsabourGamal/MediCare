@@ -21,7 +21,7 @@
   <div class="dashboard-widget">
     <nav class="dashboard-menu sidebar">
       <ul>
-        <li class="active">
+        <li>
           <a href="{% url 'patient-dashboard' %}">
             <i class="fas fa-columns"></i>
             <span>Dashboard</span>
@@ -50,7 +50,7 @@
         </li>
 
         <li>
-          <a href="{% url 'doctor:doctor-test-list'%}" target="_blank">
+          <a href="{% url 'doctor:doctor-test-list'%}">
             <i class="fas fa-hourglass-start"></i>
             <span>Test Information</span>
           </a>
@@ -78,3 +78,4 @@
     </nav>
   </div>
 </div>
+<script src="{% static 'HealthStack-System/js/Normal/active-link.js' %}"></script>

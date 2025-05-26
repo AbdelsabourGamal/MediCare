@@ -5,29 +5,28 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-	<title>HealthStack</title>
+	<title>MediCare</title>
 	
 	<!-- Favicons -->
 	<link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
 	
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}">
-	
-	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}">
-	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}">
+	<!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
+    />
 
-	<!-- Main CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}">
-		
-	<link rel="stylesheet"href="{% static 'HealthStack-System/css/Normal/hospital.css' %}">
-	<link rel="stylesheet"href="{% static 'HealthStack-System/css/Normal/search2.css' %}">
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+    />
 
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
 	
 	</head>
 	<body>
@@ -37,7 +36,6 @@
 		
 			<!-- Header -->
 			<header class="header">
-
 				{% if user.is_authenticated and user.is_patient %}
 				{% include 'patient_navbar.html' %}
 				{% endif %}
@@ -45,52 +43,38 @@
 				{% if user.is_authenticated and user.is_doctor %}
 				{% include 'doctor-navbar.html' %}
 				{% endif %}
-
 			</header>
 			<!-- /Header -->
-			
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-6 col-6">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									{% if user.is_authenticated and user.is_patient %}
-									<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-									{% endif %}
-
-									{% if user.is_authenticated and user.is_doctor %}
-									<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
-									{% endif %}
-									<li class="breadcrumb-item active" aria-current="page">Hospitals</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Hospitals</h2>
-						</div>
-						<div class="col-md-6 col-6 text-right">
-							
-							<div class="top-nav-search">
-								<form action="{% url 'multiple-hospital' %}" method="GET">
-									<input type="text" class="form-control" placeholder="Search hospital" name="search_query" value="{{search_query}}">
-									<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+				<nav aria-label="breadcrumb" class="page-breadcrumb">
+					<ol class="breadcrumb">
+						{% if user.is_authenticated and user.is_patient %}
+						<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
+						{% endif %}
+						{% if user.is_authenticated and user.is_doctor %}
+						<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
+						{% endif %}
+						<li class="breadcrumb-item active" aria-current="page">Hospitals</li>
+					</ol>
+				</nav>
 			</div>
 			<!-- /Breadcrumb -->
 			
 			<!-- Page Content -->
-			<div class="content">
+			<div class="patient multiple-hospital">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+						<div class="top-nav-search">
+							<form action="{% url 'multiple-hospital' %}" method="GET">
+								<input type="text" class="form-control" placeholder="Search hospital" name="search_query" value="{{search_query}}">
+								<button class="btn" type="submit"><i class="fa fa-search"></i></button>
+							</form>
+						</div>
+						<div class="col-md-12 col-lg-4 col-xl-3 ">
 						
 							<!-- Profile Sidebar -->
 							<div>
-								
 								{% if user.is_authenticated and user.is_patient %}
 								{% include 'patient-sidebar.html' %}
 								{% endif %}
@@ -100,26 +84,26 @@
 								{% endif %}
 							
 							
-							</div>
+						</div>
 							<!-- /Profile Sidebar -->
 							
 						</div>
 						
-						<div class="col-md-7 col-lg-8 col-xl-9">
-							<section class="wrapper" style="height: 0px;">
-								<div class="container-fostrap" style="padding-top: 0px;">
-									<h1 class="card-title" style="text-align: center;font-size: 45px;">All Hospitals</h1>
-									<hr>	
+						<div class="col-md-12 col-lg-8 col-xl-9">
+							<section class="wrapper">
+								<div class="container-fostrap">
+									<h1 class="card-title">All Hospitals</h1>
+										
 
 									<div class="content">
 										<div class="container">
-											<div class="row">
+											
 												{% for hospital in hospitals %}
 
-												<div class="col-xs-12 col-sm-4">
+												
 													<div class="card">
-														<a class="img-card" href="#">
-														<img src="{{hospital.featured_image.url}}" />
+														<a class="img-card" href="{% url 'hospital-profile' pk=hospital.hospital_id %}">
+														<img src="{{hospital.featured_image.url}}" class="img-fluid"/>
 													  </a>
 														<div class="card-content">
 															<h4 class="card-title">
@@ -127,17 +111,13 @@
 															  </a>
 															</h4>   
 														</div>
-														<div class="card-read-more">
-															<a href=" ../hospital-profile/{{hospital.hospital_id}}/ " class="btn btn-link btn-block">
-																Explore
-															</a>
-														</div>
+														
 													</div>
-												</div>
+												
 												{% endfor %}
 
 												
-											</div>
+											
 										</div>
 										
 									</div>
@@ -162,24 +142,13 @@
 		</div>
 		<!-- /Main Wrapper -->
 	  
-		<!-- jQuery -->
-		<script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-		
-		<!-- Bootstrap Core JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-		
-		<!-- Sticky Sidebar JS -->
-        <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-        <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-		
-		<!-- Custom JS -->
-		<script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-		<!-- Searchbar JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
+		<!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 		
 	</body>
 
-<!-- doccure/change-password.html  30 Nov 2019 04:12:18 GMT -->
 </html>

@@ -19,17 +19,13 @@
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
     <!-- FontAwesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -47,22 +43,14 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-12 col-12">
-              <nav aria-label="breadcrumb" class="page-breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a href="{% url 'hospital_home' %}">Home</a>
-                  </li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    About Us
-                  </li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="index-2.html">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">About Us</li>
+          </ol>
+        </nav>
       </div>
       <!-- /Breadcrumb -->
 
@@ -98,26 +86,9 @@
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-
     <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
-    />
-
-    <!-- Slick JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/slick.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    
   </body>
 </html>

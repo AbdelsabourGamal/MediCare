@@ -16,20 +16,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
-
-    <!-- Fontawesome CSS -->
+    
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -39,7 +34,7 @@
     />
   </head>
 
-  <body class="account-page">
+  <body>
     <!-- Main Wrapper -->
     <div class="main-wrapper">
       <!-- Header -->
@@ -47,7 +42,7 @@
       <!-- /Header -->
 
       <!-- Register Page -->
-      <div class="register-page">
+      <div class="page doctor-register">
         <div class="container-fluid">
           <!-- Image Container -->
           <div class="img-container">
@@ -107,15 +102,13 @@
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
 
     <!-- Toast Notifications for Messages -->
     <!-- {% if messages %}

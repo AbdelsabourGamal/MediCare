@@ -8,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -17,32 +17,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
-    />
-
-    <!-- Datetimepicker CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap-datetimepicker.min.css' %}"
-    />
-
-    <!-- Select2 CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/select2/css/select2.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -50,14 +33,10 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/Normal/bootstrap-datepicker.css' %}"
+    />
   </head>
   <body>
     <!-- Main Wrapper -->
@@ -68,145 +47,243 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-12 col-12">
-              <nav aria-label="breadcrumb" class="page-breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Profile Settings
-                  </li>
-                </ol>
-              </nav>
-              <h2 class="breadcrumb-title">Profile Settings</h2>
-            </div>
-          </div>
-        </div>
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'patient-dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Profile Settings
+            </li>
+          </ol>
+        </nav>
       </div>
       <!-- /Breadcrumb -->
 
       <!-- Page Content -->
-      <div class="content">
+      <div class="patient profile-setting">
         <div class="container-fluid">
           <div class="row">
             <!-- Profile Sidebar -->
-            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+            <div class="col-md-5 col-lg-4 col-xl-3">
               <div>{% include 'patient-sidebar.html' %}</div>
             </div>
             <!-- /Profile Sidebar -->
 
             <div class="col-md-7 col-lg-8 col-xl-9">
-							<div class="card">
-								<div class="card-body">
-									
-									<!-- Profile Settings Form -->
-									<form action="{% url 'profile-settings' %}" method="POST" enctype="multipart/form-data">
+              <div class="card">
+                <div class="card-body">
+                  <!-- Profile Settings Form -->
+
+                  <form
+                    action="{% url 'profile-settings' %}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
                     {% csrf_token %}
-										<div class="row form-row">
-											<div class="col-12 col-md-12">
-												<div class="form-group">
-													<div class="change-avatar">
-														<div class="profile-img">
-															<img src="{{patient.featured_image.url}}" alt="User Image">
-														</div>
-														<div class="upload-img">
-															<div class="change-photo-btn">
-																<span><i class="fa fa-upload"></i> Upload Photo</span>
-																<input type="file" class="upload" name="featured_image">
-															</div>
-															<small class="form-text text-muted">Allowed JPG, GIF or PNG. Max size of 2MB</small>
-														</div>
-													</div>
-												</div>
-											</div>     
+                    <div class="row form-row">
+                      <div class="col-12 col-md-12">
+                        <div class="form-group">
+                          <div class="change-avatar">
+                            <div class="upload-img">
+                              <div class="change-photo-btn">
+                                <span
+                                  ><i class="fa fa-upload"></i> Upload
+                                  Photo</span
+                                >
+                                <input
+                                  type="file"
+                                  class="upload"
+                                  name="featured_image"
+                                />
+                              </div>
+                              <small class="form-text text-muted"
+                                >Allowed JPG, GIF or PNG. Max size of 2MB</small
+                              >
+                            </div>
+                            <div class="profile-img">
+                              <img
+                                src="{{patient.featured_image.url}}"
+                                alt="User Image"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div class="col-12 col-md-6">
                         <div class="form-group">
-                          <label>Username <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" readonly value="{{patient.username}}" >
+                          <label
+                            >Username <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            readonly
+                            value="{{patient.username}}"
+                          />
                         </div>
-											</div>
+                      </div>
 
                       <div class="col-12 col-md-6">
                         <div class="form-group">
-                          <label>Email <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" readonly value="{{patient.email}}" >
+                          <label
+                            >Email <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            readonly
+                            value="{{patient.email}}"
+                          />
                         </div>
-											</div>  
+                      </div>
 
                       <div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>Name</label>
-													<input type="text" class="form-control" value="{{ patient.name }}" name="name">
-												</div>
-											</div>
-							
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>Date of Birth</label>
-														<input type="text" class="form-control datetimepicker" value="{{patient.dob}}" name="dob">
-												</div>
-											</div>
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>Blood Group</label>
-													<select class="form-control select" name="blood_group">
-                            <option value="{{patient.blood_group}}">{{patient.blood_group}}</option>
-														<option value="A-">A-</option>
-														<option value="A+">A+</option>
-														<option value="B-">B-</option>
-														<option value="B+">B+</option>
-														<option value="AB-">AB-</option>
-														<option value="AB+">AB+</option>
-														<option value="O-">O-</option>
-														<option value="O+">O+</option>
-													</select>
-												</div>
-											</div>
-										
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>Mobile</label>
-													<input type="text" value="{{patient.phone_number}}" class="form-control" name="phone_number">
-												</div>
-											</div>
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-												<label>Address</label>
-													<input type="text" class="form-control" value="{{patient.address}}" name="address">
-												</div>
-											</div>
+                        <div class="form-group">
+                          <label>Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value="{{ patient.name }}"
+                            name="name"
+                          />
+                        </div>
+                      </div>
+
                       <div class="col-12 col-md-6">
-												<div class="form-group">
-												<label>Age</label>
-													<input type="text" class="form-control" value="{{patient.age}}" name="age">
-												</div>
-											</div>
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>NID</label>
-													<input type="text" class="form-control" value="{{patient.nid}}" name="nid">
-												</div>
-											</div>
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>History</label>
-													<input type="text" class="form-control" value="{{patient.history}}" name="history">
-												</div>
-											</div>
-										</div>
-										<div class="submit-section">
-											<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
-										</div>
-									</form>
-									<!-- /Profile Settings Form -->
-									
-								</div>
-							</div>
-						</div>
+                        <div class="form-group custom-datepicker-container">
+                          <label for="dob">Date of Birth</label>
+                          <div class="datepicker-wrapper">
+                            <input
+                              type="text"
+                              class="form-control custom-datepicker"
+                              placeholder="Select Date"
+                              value="{{patient.dob}}"
+                              name="dob"
+                              id="dob"
+                            />
+                            <div class="datepicker-icon">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <rect
+                                  x="3"
+                                  y="4"
+                                  width="18"
+                                  height="18"
+                                  rx="2"
+                                  ry="2"
+                                ></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="blood_group">Blood Group</label>
+                          <div class="select-wrapper">
+                            <select
+                              class="form-control custom-select"
+                              name="blood_group"
+                              id="blood_group"
+                            >
+                              <option value="{{patient.blood_group}}">
+                                {{patient.blood_group}}
+                              </option>
+                              <option value="A-">A-</option>
+                              <option value="A+">A+</option>
+                              <option value="B-">B-</option>
+                              <option value="B+">B+</option>
+                              <option value="AB-">AB-</option>
+                              <option value="AB+">AB+</option>
+                              <option value="O-">O-</option>
+                              <option value="O+">O+</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Mobile</label>
+                          <input
+                            type="text"
+                            value="{{patient.phone_number}}"
+                            class="form-control"
+                            name="phone_number"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Address</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value="{{patient.address}}"
+                            name="address"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Age</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value="{{patient.age}}"
+                            name="age"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>NID</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value="{{patient.nid}}"
+                            name="nid"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>History</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            value="{{patient.history}}"
+                            name="history"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="submit-section">
+                      <button type="submit" class="btn btn-primary submit-btn">
+                        Save Changes
+                      </button>
+                    </div>
+                  </form>
+                  <!-- /Profile Settings Form -->
+                </div>
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
       <!-- /Page Content -->
@@ -216,30 +293,41 @@
       <!-- /Footer -->
     </div>
     <!-- /Main Wrapper -->
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/material_blue.min.css"
+    />
 
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+    <!-- Initialize Flatpickr -->
+    <script>
+      $(document).ready(function () {
+        $(".custom-datepicker").flatpickr({
+          dateFormat: "Y-m-d",
+          maxDate: "today",
+          disableMobile: false,
+          animate: true,
+          yearRange: "1900:2025",
+          showMonths: 1,
+        });
 
-    <!-- Select2 JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/select2/js/select2.min.js' %}"></script>
-
-    <!-- Datetimepicker JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/moment.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap-datetimepicker.min.js' %}"></script>
-
-    <!-- Sticky Sidebar JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- Searchbar JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
+        // Add click handler for the calendar icon
+        $(".datepicker-icon").click(function () {
+          $(this).prev(".custom-datepicker").focus();
+        });
+      });
+    </script>
   </body>
-
-  <!-- doccure/profile-settings.html  30 Nov 2019 04:12:18 GMT -->
 </html>

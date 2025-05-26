@@ -303,16 +303,12 @@ class CombinedDataView(APIView):
 
         prescriptions = Prescription.objects.filter(patient__user=user)
         prescriptions_medicine = Prescription_medicine.objects.filter(prescription__patient__user=user)
-        prescriptions_test = Prescription_medicine.objects.filter(prescription__patient__user=user)
-        reports = Report.objects.filter(patient__user=user)
-        payments = Paymentpal.objects.filter(patient__user=user)
+        prescriptions_test = Prescription_test.objects.filter(prescription__patient__user=user)
 
         data = {
             "prescriptions": PrescriptionSerializer(prescriptions, many=True).data,
             "prescriptions_medicine": PrescriptionMedicineSerializer(prescriptions_medicine, many=True).data,
-            "prescriptions_test": PrescriptionTestSerializer(prescriptions_test, many=True).data,
-            "reports": ReportSerializer(reports, many=True).data,
-            "payments": PaymentSerializer(payments, many=True).data,
+            "prescriptions_test": PrescriptionTestSerializer(prescriptions_test, many=True).data
         }
 
         return Response(data)

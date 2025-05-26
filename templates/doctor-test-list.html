@@ -1,14 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/doctor-dashboard.html  30 Nov 2019 04:12:03 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -17,20 +16,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
-
-    <!-- Fontawesome CSS -->
+    
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -38,12 +32,6 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
   {% if user.is_authenticated %}
@@ -63,33 +51,24 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-12 col-12">
-              <nav aria-label="breadcrumb" class="page-breadcrumb">
-                <ol class="breadcrumb">
-                  {% if user.is_authenticated and user.is_patient %}
-									<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-									{% endif %}
-
-									{% if user.is_authenticated and user.is_doctor %}
-									<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
-									{% endif %}
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Test
-                  </li>
-                  
-                </ol>
-              </nav>
-              <h2 class="breadcrumb-title">INFORMATION</h2>
-            </div>
-          </div>
-        </div>
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            {% if user.is_authenticated and user.is_patient %}
+            <li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
+            {% endif %}
+            {% if user.is_authenticated and user.is_doctor %}
+            <li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">
+              Test Information
+            </li>
+          </ol>
+        </nav>
       </div>
       <!-- /Breadcrumb -->
 
       <!-- Page Content -->
-      <div class="content">
+      <div class="patient test-info">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
@@ -111,7 +90,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <h2 class="mb-4 text-center"><b>Test Information</b></h2>
+                  <h2 class="mb-4 text-center">Test Information</h2>
                   <div class="appointment-tab">
                     <!-- Appointment Tab -->
 
@@ -125,7 +104,7 @@
                               <table
                                 class="table table-hover table-center mb-0 text-center"
                               >
-                                <thead style="font-size: 30px;">
+                                <thead>
                                   <tr>
                                     <th>Test Name</th>
                                     <th>Test ID</th>
@@ -166,26 +145,13 @@
   {% else %} 
   <p> You are not logged in </p> 
   {% endif %}
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Sticky Sidebar JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-
-    <!-- Circle Progress JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/circle-progress.min.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- Searchbar JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
   </body>
 
-  <!-- doccure/doctor-dashboard.html  30 Nov 2019 04:12:09 GMT -->
 </html>

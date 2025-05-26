@@ -8,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -17,20 +17,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -38,29 +33,10 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <!-- Booking CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/booking.css' %}"
+      href="{% static 'HealthStack-System/css/Normal/bootstrap-datepicker.css' %}"
     />
-    
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/timedropper.css' %}"
-    />
-    <link href="{% static 'HealthStack-System/css/Normal/date_dropper.css' %}" rel="stylesheet"/>   
-    <link href="{% static 'HealthStack-System/css/Normal/my_style.css' %}" rel="stylesheet"/>
-
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-    <!-- datedropper -->
-    <!-- <script src="{% static 'HealthStack-System/js/Normal/datedropper-jquery.js' %}"></script> -->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <!-- Main Wrapper -->
@@ -71,190 +47,145 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-12 col-12">
-              <nav aria-label="breadcrumb" class="page-breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Booking
-                  </li>
-                </ol>
-              </nav>
-              <h2 class="breadcrumb-title">Booking</h2>
-            </div>
-          </div>
-        </div>
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'patient-dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Booking</li>
+          </ol>
+        </nav>
       </div>
       <!-- /Breadcrumb -->
 
       <!-- Page Content -->
-      <div class="content">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="booking-doc-info">
-                    <a href="doctor-profile.html" class="booking-doc-img">
-                      <img
-                        src="{{ doctor.featured_image.url }}"
-                        alt="User Image"
-                      />
-                    </a>
-                    <div class="booking-info">
-                      <h4>
-                        <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">{{doctor.name}}</a>
-                      </h4>
-                      <div class="rating">
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star"></i>
-                        <span class="d-inline-block average-rating">35</span>
+      <div class="patient booking">
+        <div class="container-fluid">
+          <!-- Doctor Info Section -->
+          <div class="booking-doc-info">
+            <a href="doctor-profile.html" class="booking-doc-img">
+              <img src="{{ doctor.featured_image.url }}" alt="User Image" />
+            </a>
+            <div class="booking-info">
+              <h4>
+                <a href="{% url 'doctor:doctor-profile' pk=doctor.doctor_id %}">
+                  {{ doctor.name }}
+                </a>
+              </h4>
+              <p class="text-muted mb-0">
+                <i class="fas fa-map-marker-alt"></i>
+                {{ doctor.hospital_name }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Appointment Scheduler Section -->
+          <div class="schedule widget-boxed">
+            <div class="widget-boxed-header">
+              <h4>
+                <i class="fa fa-calendar"></i>
+                Schedule an Appointment
+              </h4>
+            </div>
+
+            <!-- Appointment Form -->
+            <form
+              method="post"
+              action="{% url 'doctor:booking' pk=doctor.doctor_id %}"
+            >
+              {% csrf_token %}
+              <div class="agent-contact-form-sidebar">
+                <div class="row">
+                  <div class="col-lg-6 col-md-12 book">
+                    <div class="form-group custom-datepicker-container">
+                      <label for="dob">Appointment Date</label>
+                      <div class="datepicker-wrapper">
+                        <input
+                          type="text"
+                          class="form-control custom-datepicker"
+                          name="appoint_date"
+                          id="reservation-date"
+                          placeholder="Select Date"
+                        />
+                        <div class="datepicker-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <rect
+                              x="3"
+                              y="4"
+                              width="18"
+                              height="18"
+                              rx="2"
+                              ry="2"
+                            ></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                          </svg>
+                        </div>
                       </div>
-                      <p class="text-muted mb-0">
-                        <i class="fas fa-map-marker-alt"></i>
-                        {{doctor.hospital_name}}
-                      </p>
                     </div>
                   </div>
+
+                  <!-- Appointment Time -->
+                  <div class="col-lg-6 col-md-12 book2">
+                    <label for="reservation-time">Appointment Time</label>
+                    <!-- Added for accessibility -->
+                    <input
+                      type="number"
+                      name="appoint_time"
+                      id="reservation-time"
+                      class="form-control"
+                      min="00"
+                      max="23"
+                      step="1"
+                      placeholder="From 0 to 23"
+                    />
+                  </div>
+
+                  <!-- Appointment Type -->
+                  <div class="col-lg-6 col-md-12">
+                    <div class="form-group">
+                      <label>Appointment Type</label>
+                      <select
+                        class="form-control select"
+                        name="appointment_type"
+                      >
+                        <option value="checkup">Checkup</option>
+                        <option value="report">Report</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Message -->
+                  <div class="col-lg-12 col-md-12">
+                    <label>Message</label>
+                    <textarea
+                      placeholder="Write Your Message Here"
+                      name="message"
+                      class="form-control"
+                    ></textarea>
+                    <!-- Added class for consistency -->
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit-section mt-3">
+                  <button type="submit" class="btn btn-primary submit-btn">
+                    Submit Request
+                  </button>
                 </div>
               </div>
-
-              <!-- Schedule Widget -->
-              <div class="card">
-                <!-- <div class="card-body">
-                  <div class="booking-doc-info">
-                    
-
-                    <form
-                      action="#"
-                      method="POST"
-                      enctype="multipart/form-data"
-                    >
-                      {% csrf_token %}
-
-                      <div class="row form-row">
-                        <div class="col-12 col-md-12">
-                          <div class="form-group">
-                            <div class="change-avatar"></div>
-                          </div>
-                        </div>
-
-                        <div class="col-8 col-md-8">
-                          <div class="form-group">
-                            <label>Appointment Date</label>
-                            <input
-                              type="date"
-                              class="form-control"
-                              name="date"
-                            />
-                          </div>
-                        </div>
-
-                        <div class="col-8 col-md-8">
-                          <div class="form-group">
-                            <label>Appointment Time</label>
-                            <input
-                              type="time"
-                              class="form-control"
-                              name="time"
-                            />
-                          </div>
-                        </div>
-
-                        <div class="col-8 col-md-4">
-                          <div class="form-group">
-                            <label>Appointment Type</label>
-                            <select
-                              class="form-control select"
-                              name="appointment_type"
-                            >
-                              <option value="checkup">checkup</option>
-                              <option value="report">report</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="submit-section">
-                        <button
-                          type="submit"
-                          class="btn btn-primary submit-btn"
-                        >
-                          Save Changes
-                        </button>
-                      </div>
-                      
-                    </form>
-                    
-                  </div>
-                </div> -->
-                <!-- /Schedule Header -->
-
-                <div class="schedule widget-boxed mt-33 mt-0">
-                  <div class="widget-boxed-header">
-                      <h4><i class="fa fa-calendar pr-3 padd-r-10"></i>Schedule an Appointment</h4>
-                  </div>
-
-                  <form method="post" action="{% url 'doctor:booking' pk=doctor.doctor_id %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                      <div class="agent-contact-form-sidebar">
-                          <div class="row">
-                              <div class="col-lg-6 col-md-12 book">
-                                  <label>Appointment Date</label>
-                                  <!-- <input type="date" name="appoint_date" id="reservation-date" data-lang="en" data-large-mode="true" data-min-year="2021" data-max-year="2025" data-id="datedropper-0" data-theme="my-style" class="form-control" > -->
-                                  <input type="date" name="appoint_date" id="reservation-date" data-large-mode="true" data-lock="from" data-theme="my-style" class="form-control"/>
-                                  
-                                </div>
-                              <div class="col-lg-6 col-md-12 book2">
-                                  <label>Appointment Time</label>
-                                  <input type="text" name="appoint_time" id="reservation-time" class="form-control" readonly="">
-                              </div>
-                              <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                  <label>Appointment Type</label>
-                                  <select
-                                    class="form-control select"
-                                    name="appointment_type"
-                                  >
-                                    <option value="checkup">checkup</option>
-                                    <option value="report">report</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-lg-12 col-md-12" style="padding-bottom: 10px;">
-                                <label>Message</label>
-                                <textarea placeholder="Message" name="message"></textarea>
-                              </div>
-
-                          </div>
-                          <div class="submit-section">
-                            <button
-                              type="submit"
-                              class="btn btn-primary submit-btn"
-                            >
-                              Submit Request
-                            </button>
-                          </div>
-                      </div>
-                  </form>
-
-              </div>
-              </div>
-
-              <!-- /Schedule Widget Payment button -->
-
-              <!-- Submit Section -->
-              <!-- <div class="submit-section proceed-btn text-right">
-                <a href="#" class="btn btn-primary submit-btn"
-                  >Proceed to Pay</a
-                >
-              </div> -->
-              <!-- /Submit Section -->
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -266,65 +197,40 @@
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/material_blue.min.css"
+    />
 
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- booking js -->
-    <script src="{% static 'HealthStack-System/js/Normal/timedropper.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/date_dropper.js' %}"></script>
-
-    <!-- Date Dropper Script-->
+    <!-- Initialize Flatpickr -->
     <script>
-      $('#reservation-date').dateDropper();
-    </script>
-  <!-- Time Dropper Script-->
-    <script>
-      this.$('#reservation-time').timeDropper({
-          setCurrentTime: false,
-          meridians: true,
-          primaryColor: "blue",
-          borderColor: "blue",
-          minutesInterval: '15'
-      });
-    </script>
+      $(document).ready(function () {
+        $(".custom-datepicker").flatpickr({
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          disableMobile: false,
+          animate: true,
+          yearRange: "1900:2025",
+          showMonths: 1,
+        });
 
-    <script>
-      $(document).ready(function() {
-          $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-              disableOn: 700,
-              type: 'iframe',
-              mainClass: 'mfp-fade',
-              removalDelay: 160,
-              preloader: false,
-              fixedContentPos: false
-          });
-      });
-    </script>
-
-    <script>
-      $('.slick-carousel').each(function() {
-          var slider = $(this);
-          $(this).slick({
-              infinite: true,
-              dots: false,
-              arrows: false,
-              centerMode: true,
-              centerPadding: '0'
-          });
-
-          $(this).closest('.slick-slider-area').find('.slick-prev').on("click", function() {
-              slider.slick('slickPrev');
-          });
-          $(this).closest('.slick-slider-area').find('.slick-next').on("click", function() {
-              slider.slick('slickNext');
-          });
+        // Add click handler for the calendar icon
+        $(".datepicker-icon").click(function () {
+          $(this).prev(".custom-datepicker").focus();
+        });
       });
     </script>
   </body>

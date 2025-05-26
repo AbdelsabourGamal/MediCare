@@ -1,414 +1,116 @@
-(function ($) {
-  "use strict";
-
-  // Stick Sidebar
-
-  if ($(window).width() > 767) {
-    if ($(".theiaStickySidebar").length > 0) {
-      $(".theiaStickySidebar").theiaStickySidebar({
-        // Settings
-        additionalMarginTop: 30,
-      });
-    }
+var loader_script =
+  '<div id="pre-loader">' +
+  '<div class="spinner-border text-primary" role="status">' +
+  '<span class="sr-only">Loading...</span>' +
+  "</div>" +
+  "</div>";
+window.start_loader = function () {
+  if ($("body>#pre-loader").length <= 0) {
+    $("body").append(loader_script);
   }
-
-  // Sidebar
-  if ($(window).width() <= 991) {
-    var Sidemenu = function () {
-      this.$menuItem = $(".main-nav a");
-    };
-
-    function init() {
-      var $this = Sidemenu;
-      $(".main-nav a").on("click", function (e) {
-        if ($(this).parent().hasClass("has-submenu")) {
-          e.preventDefault();
-        }
-        if (!$(this).hasClass("submenu")) {
-          $("ul", $(this).parents("ul:first")).slideUp(350);
-          $("a", $(this).parents("ul:first")).removeClass("submenu");
-          $(this).next("ul").slideDown(350);
-          $(this).addClass("submenu");
-        } else if ($(this).hasClass("submenu")) {
-          $(this).removeClass("submenu");
-          $(this).next("ul").slideUp(350);
-        }
-      });
-      $(".main-nav li.has-submenu a.active")
-        .parents("li:last")
-        .children("a:first")
-        .addClass("active")
-        .trigger("click");
-    }
-
-    // Sidebar Initiate
-
-    var Sidemenu1 = function () {
-      this.$menuItem = $(".sidebar-menu a");
-    };
-
-    function init() {
-      var $this = Sidemenu1;
-      $(".sidebar-menu a").on("click", function (e) {
-        if ($(this).parent().hasClass("submenu")) {
-          e.preventDefault();
-        }
-        if (!$(this).hasClass("subdrop")) {
-          $("ul", $(this).parents("ul:first")).slideUp(350);
-          $("a", $(this).parents("ul:first")).removeClass("subdrop");
-          $(this).next("ul").slideDown(350);
-          $(this).addClass("subdrop");
-        } else if ($(this).hasClass("subdrop")) {
-          $(this).removeClass("subdrop");
-          $(this).next("ul").slideUp(350);
-        }
-      });
-      $(".sidebar-menu ul li.submenu a.active")
-        .parents("li:last")
-        .children("a:first")
-        .addClass("active")
-        .trigger("click");
-    }
-
-    init();
+};
+window.end_loader = function () {
+  var loader = $("body>#pre-loader");
+  if (loader.length > 0) {
+    loader.remove();
   }
+};
 
-  // Textarea Text Count
-
-  var maxLength = 100;
-  $("#review_desc").on("keyup change", function () {
-    var length = $(this).val().length;
-    length = maxLength - length;
-    $("#chars").text(length);
-  });
-
-  // Select 2
-
-  if ($(".select").length > 0) {
-    $(".select").select2({
-      minimumResultsForSearch: -1,
-      width: "100%",
-    });
-  }
-
-  // Date Time Picker
-
-  if ($(".datetimepicker").length > 0) {
-    $(".datetimepicker").datetimepicker({
-      format: "DD/MM/YYYY",
-      icons: {
-        up: "fas fa-chevron-up",
-        down: "fas fa-chevron-down",
-        next: "fas fa-chevron-right",
-        previous: "fas fa-chevron-left",
-      },
-    });
-  }
-
-  // Fancybox Gallery
-
-  if ($(".clinic-gallery a").length > 0) {
-    $(".clinic-gallery a").fancybox({
-      buttons: ["thumbs", "close"],
-    });
-  }
-
-  // Floating Label
-
-  if ($(".floating").length > 0) {
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-  }
-
-  // Mobile menu sidebar overlay
-
-  $("body").append('<div class="sidebar-overlay"></div>');
-  $(document).on("click", "#mobile_btn", function () {
-    $("main-wrapper").toggleClass("slide-nav");
-    $(".sidebar-overlay").toggleClass("opened");
-    $("html").addClass("menu-opened");
-    return false;
-  });
-
-  $(document).on("click", ".sidebar-overlay", function () {
-    $("html").removeClass("menu-opened");
-    $(this).removeClass("opened");
-    $("main-wrapper").removeClass("slide-nav");
-  });
-
-  $(document).on("click", "#menu_close", function () {
-    $("html").removeClass("menu-opened");
-    $(".sidebar-overlay").removeClass("opened");
-    $("main-wrapper").removeClass("slide-nav");
-  });
-
-  // Mobile Menu
-
-  /*if($(window).width() <= 991){
-		mobileSidebar();
-	} else {
-		$('html').removeClass('menu-opened');
-	}*/
-
-  /*function mobileSidebar() {
-		$('.main-nav a').on('click', function(e) {
-			$('.dropdown-menu').each(function() {
-			  if($(this).hasClass('show')) {
-				  $(this).slideUp(350);
-			  }
-			});
-			if(!$(this).next('.dropdown-menu').hasClass('show')) {
-				$(this).next('.dropdown-menu').slideDown(350);
-			}
-			
-		});
-	}*/
-
-  // Tooltip
-
-  if ($('[data-toggle="tooltip"]').length > 0) {
-    $('[data-toggle="tooltip"]').tooltip();
-  }
-
-  // Add More Hours
-
-  $(".hours-info").on("click", ".trash", function () {
-    $(this).closest(".hours-cont").remove();
-    return false;
-  });
-
-  $(".add-hours").on("click", function () {
-    var hourscontent =
-      '<div class="row form-row hours-cont">' +
-      '<div class="col-12 col-md-10">' +
-      '<div class="row form-row">' +
-      '<div class="col-12 col-md-6">' +
-      '<div class="form-group">' +
-      "<label>Start Time</label>" +
-      '<select class="form-control">' +
-      "<option>-</option>" +
-      "<option>12.00 am</option>" +
-      "<option>12.30 am</option>" +
-      "<option>1.00 am</option>" +
-      "<option>1.30 am</option>" +
-      "</select>" +
-      "</div>" +
-      "</div>" +
-      '<div class="col-12 col-md-6">' +
-      '<div class="form-group">' +
-      "<label>End Time</label>" +
-      '<select class="form-control">' +
-      "<option>-</option>" +
-      "<option>12.00 am</option>" +
-      "<option>12.30 am</option>" +
-      "<option>1.00 am</option>" +
-      "<option>1.30 am</option>" +
-      "</select>" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
-      "</div>";
-
-    $(".hours-info").append(hourscontent);
-    return false;
-  });
-
-  // Content div min height set
-
-  function resizeInnerDiv() {
-    var height = $(window).height();
-    var header_height = $(".header").height();
-    var footer_height = $(".footer").height();
-    var setheight = height - header_height;
-    var trueheight = setheight - footer_height;
-    $(".content").css("min-height", trueheight);
-  }
-
-  if ($(".content").length > 0) {
-    resizeInnerDiv();
-  }
-
-  $(window).resize(function () {
-    if ($(".content").length > 0) {
-      resizeInnerDiv();
-    }
-    /*if($(window).width() <= 991){
-			mobileSidebar();
-		} else {
-			$('html').removeClass('menu-opened');
-		}*/
-  });
-
-  // Slick Slider
-
-  if ($(".specialties-slider").length > 0) {
-    $(".specialties-slider").slick({
-      dots: true,
-      autoplay: false,
-      infinite: true,
-      variableWidth: true,
-      prevArrow: false,
-      nextArrow: false,
-    });
-  }
-
-  if ($(".doctor-slider").length > 0) {
-    $(".doctor-slider").slick({
-      dots: false,
-      autoplay: false,
-      infinite: true,
-      variableWidth: true,
-    });
-  }
-  if ($(".features-slider").length > 0) {
-    $(".features-slider").slick({
-      dots: true,
-      infinite: true,
-      centerMode: true,
-      slidesToShow: 3,
-      speed: 500,
-      variableWidth: true,
-      arrows: false,
-      autoplay: false,
-      responsive: [
-        {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 1,
-          },
-        },
-      ],
-    });
-  }
-
-  // Date Time Picker
-
-  if ($(".datepicker").length > 0) {
-    $(".datepicker").datetimepicker({
-      viewMode: "years",
-      showTodayButton: true,
-      format: "DD-MM-YYYY",
-      // minDate:new Date(),
-      widgetPositioning: {
-        horizontal: "auto",
-        vertical: "bottom",
-      },
-    });
-  }
-
-  // Chat
-
-  var chatAppTarget = $(".chat-window");
-  (function () {
-    if ($(window).width() > 991) chatAppTarget.removeClass("chat-slide");
-
-    $(document).on(
-      "click",
-      ".chat-window .chat-users-list a.media",
-      function () {
-        if ($(window).width() <= 991) {
-          chatAppTarget.addClass("chat-slide");
-        }
-        return false;
-      }
-    );
-    $(document).on("click", "#back_user_list", function () {
-      if ($(window).width() <= 991) {
-        chatAppTarget.removeClass("chat-slide");
-      }
-      return false;
-    });
-  })();
-
-  // Circle Progress Bar
-
-  function animateElements() {
-    $(".circle-bar1").each(function () {
-      var elementPos = $(this).offset().top;
-      var topOfWindow = $(window).scrollTop();
-      var percent = $(this).find(".circle-graph1").attr("data-percent");
-      var animate = $(this).data("animate");
-      if (elementPos < topOfWindow + $(window).height() - 30 && !animate) {
-        $(this).data("animate", true);
-        $(this)
-          .find(".circle-graph1")
-          .circleProgress({
-            value: percent / 100,
-            size: 400,
-            thickness: 30,
-            fill: {
-              color: "#da3f81",
-            },
-          });
-      }
-    });
-    $(".circle-bar2").each(function () {
-      var elementPos = $(this).offset().top;
-      var topOfWindow = $(window).scrollTop();
-      var percent = $(this).find(".circle-graph2").attr("data-percent");
-      var animate = $(this).data("animate");
-      if (elementPos < topOfWindow + $(window).height() - 30 && !animate) {
-        $(this).data("animate", true);
-        $(this)
-          .find(".circle-graph2")
-          .circleProgress({
-            value: percent / 100,
-            size: 400,
-            thickness: 30,
-            fill: {
-              color: "#68dda9",
-            },
-          });
-      }
-    });
-    $(".circle-bar3").each(function () {
-      var elementPos = $(this).offset().top;
-      var topOfWindow = $(window).scrollTop();
-      var percent = $(this).find(".circle-graph3").attr("data-percent");
-      var animate = $(this).data("animate");
-      if (elementPos < topOfWindow + $(window).height() - 30 && !animate) {
-        $(this).data("animate", true);
-        $(this)
-          .find(".circle-graph3")
-          .circleProgress({
-            value: percent / 100,
-            size: 400,
-            thickness: 30,
-            fill: {
-              color: "#1b5a90",
-            },
-          });
-      }
-    });
-  }
-
-  if ($(".circle-bar").length > 0) {
-    animateElements();
-  }
-  $(window).scroll(animateElements);
-})(jQuery);
+// Navbar Slider
 
 document.addEventListener("DOMContentLoaded", function () {
-  const lis = document.querySelectorAll(".dashboard-menu ul li");
+  const mobileBtn = document.getElementById("mobile_btn");
+  const menuWrapper = document.querySelector(".main-menu-wrapper");
+  const menuClose = document.getElementById("menu_close");
 
-  lis.forEach((li) => {
-    li.addEventListener("click", function () {
-      // Remove 'active' from all li elements
-      lis.forEach((item) => item.classList.remove("active"));
+  // Show menu on mobile button click
+  mobileBtn.addEventListener("click", function (e) {
+    e.stopPropagation(); // prevent bubbling
+    menuWrapper.classList.add("menu-visible");
+  });
 
-      // Add 'active' to the clicked li
-      this.classList.add("active");
-    });
+  // Close menu on close icon click
+  menuClose.addEventListener("click", function () {
+    menuWrapper.classList.remove("menu-visible");
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function (e) {
+    if (
+      menuWrapper.classList.contains("menu-visible") &&
+      !menuWrapper.contains(e.target) &&
+      !mobileBtn.contains(e.target)
+    ) {
+      menuWrapper.classList.remove("menu-visible");
+    }
+  });
+
+  // Remove class on window resize > 992px
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 992) {
+      menuWrapper.classList.remove("menu-visible");
+    }
   });
 });
 
-const lis = document.querySelectorAll(".dashboard-menu ul li");
+// Active Link
 
-lis.backgroundColor = "red";
+document.addEventListener("DOMContentLoaded", function () {
+  const currentPath = window.location.pathname.replace(/\/+$/, "");
+  const links = document.querySelectorAll(".sidebar li a");
+
+  links.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+
+    const temp = document.createElement("a");
+    temp.href = href;
+
+    if (!temp.pathname) return;
+
+    const linkPath = temp.pathname.replace(/\/+$/, "");
+
+    if (linkPath === currentPath) {
+      const li = link.closest("li");
+      if (li) {
+        li.classList.add("active");
+      }
+    }
+  });
+});
+
+// Table Tabs Handling
+document.querySelectorAll(".tab-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", function () {
+    const targetId = this.getAttribute("data-pat-tab");
+
+    // Hide all tab panes
+    document.querySelectorAll(".tab-pane").forEach((tab) => {
+      tab.classList.remove("show", "active");
+    });
+
+    // Show the selected tab pane
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.classList.add("show", "active");
+    }
+  });
+});
+
+// Hospital Carousel
+
+const hospitalCarousel = document.querySelector("#hospitalCarousel");
+const carousel = new bootstrap.Carousel(hospitalCarousel, {
+  interval: 2000,
+  ride: "carousel",
+});
+
+// Show Password
+function showPass() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}

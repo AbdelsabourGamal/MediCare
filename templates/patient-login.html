@@ -16,26 +16,14 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-
-    <!-- Fontawesome CSS -->
+    
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -45,15 +33,14 @@
     />
   </head>
 
-  <body class="account-page">
-    <!-- Main Wrapper -->
+  <body>
     <div class="main-wrapper">
       <!-- Header -->
       <header class="header">{% include 'navbar_home.html' %}</header>
       <!-- /Header -->
 
       <!-- Login Page -->
-      <div class="login-page">
+      <div class="page patient-login">
         <div class="container-fluid">
           <!-- Image Container -->
           <div class="img-container">
@@ -69,14 +56,12 @@
             <!-- Login Header -->
             <div class="login-header">
               <h3>Login as <span>Patient</span></h3>
-              <a href="{% url 'doctor:doctor-login' %}">Are you a Doctor?</a>
+              <a href="{% url 'doctor:doctor-login' %}">Are you a Doctor ?</a>
             </div>
 
             <!-- Login Form -->
             <form method="POST" action="{% url 'login' %}">
               {% csrf_token %}
-
-              <!-- Include Message Alerts -->
               {% include 'message.html' %}
 
               <!-- Username Field -->
@@ -106,7 +91,7 @@
                 <div class="show-and-forget">
                   <div class="show-pass">
                     <p>Show Password</p>
-                    <input type="checkbox" onclick="myFunction11()" />
+                    <input type="checkbox" onclick="showPass()" />
                   </div>
                   <div class="forget-pass">
                     <a class="forgot-link" href="{% url 'reset-password' %}">
@@ -117,10 +102,7 @@
               </div>
 
               <!-- Login Button -->
-              <button
-                class="btn btn-primary btn-block btn-lg login-btn"
-                type="submit"
-              >
+              <button class="btn btn-primary w-100 btn-lg login-btn" type="submit">
                 Login
               </button>
 
@@ -147,18 +129,12 @@
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- Checkbox JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/Checkbox.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
     <!-- Toast Notifications for Messages -->
     {% if messages %}
@@ -171,16 +147,5 @@
     </script>
     {% endif %}
 
-    <!-- Show Password JS -->
-    <script>
-      function myFunction11() {
-        var x = document.getElementById("myInput");
-        if (x.type === "password") {
-          x.type = "text";
-        } else {
-          x.type = "password";
-        }
-      }
-    </script>
   </body>
 </html>

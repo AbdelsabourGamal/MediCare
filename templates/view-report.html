@@ -4,7 +4,7 @@
   <!-- doccure/login.html  30 Nov 2019 04:12:20 GMT -->
   <head>
     <meta charset="utf-8" />
-    <title>HealthStack</title>
+    <title>MediCare</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
@@ -17,20 +17,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -38,227 +33,206 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
+  </head>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">
+        {% if user.is_authenticated and user.is_patient %} {% include 'patient_navbar.html' %} {% endif %}
+      </header>
+      <!-- /Header -->
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            {% if user.is_authenticated and user.is_patient %}
+            <li class="breadcrumb-item"><a href="">View Report</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">
+              Report Result
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <!-- /Breadcrumb -->
 
-		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-	
-	</head>
-	<body>
+      <!-- Page Content -->
+      <div class="patient view-report">
+        <div class="container-fluid">
+          <div class="row g-4">
+            <!-- Profile Sidebar -->
+            <div class="col-md-12 col-lg-4 col-xl-3">
+              <div>{% include 'patient-sidebar.html' %}</div>
+            </div>
+            <!-- / Profile Sidebar -->
+            <div class="col-md-12 col-lg-8 col-xl-9">
+              <div class="invoice-content">
+                <div class="report-header">
+                  <div>
+                    <h2>Medical Report</h2>
+                    <div class="report-date">
+                      <i class="fas fa-calendar-alt me-2"></i>
+                      <span
+                        >{% for report in report %}{{report.delivery_date}}{% endfor %}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="report-id-badge">
+                    {% for report in report %}Report #{{report.report_id}}{% endfor %}
+                  </div>
+                </div>
 
-		<!-- Main Wrapper -->
-		<div class="main-wrapper">
-		
-			<!-- Header -->
-			<header class="header">	{% if user.is_authenticated and user.is_patient %}
-                                    {% include 'patient_navbar.html' %}
-                                    {% endif %}
-				</header>
-			<!-- /Header -->
-			
-			<!-- Breadcrumb -->
-			<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-12 col-12">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-                                    {% if user.is_authenticated and user.is_patient %}
-									<li class="breadcrumb-item"><a href="">View Report</a></li>
-                                    {% endif %}
-									<li class="breadcrumb-item active" aria-current="page">Report Result</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Report Result</h2>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /Breadcrumb -->
-			
-			<!-- Page Content -->
-			<div class="content">
-				<div class="container-fluid">
+                <div class="invoice-item">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <p class="invoice-details">
+                        {% for report in report %}
+                        <span class="label-info">Report ID:</span
+                        >{{report.report_id}} <br />
+                        <span class="label-info">Patient ID:</span>
+                        {{patient.patient_id}} <br />
+                        <span class="label-info">Date:</span>
+                        {{report.delivery_date}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-					<div class="row">
-                         <!-- Profile Sidebar -->
-                                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-                                    <div>{% include 'patient-sidebar.html' %}</div>
-                                </div>
-                            <!-- / Profile Sidebar -->
-						<div class="col-md-7 col-lg-8 col-xl-9">
-							<div class="invoice-content">
-								<div class="invoice-item">
-									<div class="row">
-                    
-										<div class="col-md-6">
-											<div class="invoice-logo">
-												<img src="{% static 'HealthStack-System/images/Normal/FullLogo_Transparent_NoBuffer.png'%}" alt="logo">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<p class="invoice-details">
+                <!-- Invoice Item -->
+                <div class="invoice-item">
+                  <div class="row g-4">
+                    <div class="col-md-6 mb-4">
+                      <div class="info-card">
+                        <div class="invoice-info">
+                          <strong class="customer-text"
+                            >Doctor Information</strong
+                          >
+                          <p class="invoice-details">
+                            <span class="label-info">Name:</span>
+                            {{report.doctor.name}} <br />
+                            <span class="label-info">Department:</span>
+                            {{report.doctor.department_name}}<br />
+                            <span class="label-info">Email:</span>
+                            {{report.doctor.email}} <br />
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <div class="info-card">
+                        <div class="invoice-info">
+                          <strong class="customer-text"
+                            >Patient Information</strong
+                          >
+                          <p class="invoice-details">
+                            <span class="label-info">Name:</span>
+                            {{patient.name}} <br />
+                            <span class="label-info">Address:</span>
+                            {{report.patient.address}}<br />
+                            <span class="label-info">Email:</span>
+                            {{report.patient.email}} <br />
+                            <span class="label-info">Phone:</span>
+                            {{report.patient.phone_number}}<br />
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-												{% for report in report %}
-												<strong>Report ID:</strong>{{report.report_id}} <br>
-												<strong>Patient ID:</strong> {{patient.patient_id }} <br>
-												<strong>Date:</strong> {{report.delivery_date}}
-											</p>
-										</div>
-									</div>
-								</div>
-								
-								<!-- Invoice Item -->
-								<div class="invoice-item">
-									<div class="row">
-										<div class="col-md-6">
-											<div class="invoice-info">
-												<strong class="customer-text">Doctor Information:</strong>
-                        
-												<p class="invoice-details invoice-details-two">
+                <h4 class="section-title">Specimen Details</h4>
+                <div class="invoice-item invoice-table-wrap">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                          <thead class="table-light">
+                            <tr>
+                              <th>Specimen Information</th>
+                              <th>Specimen ID</th>
+                              <th>Collection Date/Time</th>
+                              <th>Receiving Date/Time</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for s in specimen %}
+                            <tr>
+                              <th>
+                                <span class="specimen-badge"
+                                  >{{s.specimen_type}}</span
+                                >
+                              </th>
+                              <th>{{s.specimen_id}}</th>
+                              <th>{{s.collection_date}}</th>
+                              <th>{{s.receiving_date}}</th>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-													<b>Name: </b>{{report.doctor.name}} <br>
-													<b>Department: </b>{{report.doctor.department_name}}<br>
-													<b>Email: </b>{{report.doctor.email}} <br>
+                <h4 class="section-title mt-4">Test Results</h4>
+                <div class="invoice-item invoice-table-wrap">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                          <thead class="table-light">
+                            <tr>
+                              <th>Test Name</th>
+                              <th>Result</th>
+                              <th>Unit</th>
+                              <th>Referred value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for t in test %}
+                            <tr>
+                              <th>{{t.test_name}}</th>
+                              <th>{{t.result}}</th>
+                              <th>{{t.unit}}</th>
+                              <th>{{t.referred_value}}</th>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-												</p>
-                        
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="invoice-info invoice-info2">
-												<strong class="customer-text">Patient Information:</strong>
-												<p class="invoice-details">
-													<b>Name: </b>{{patient.name}} <br>
-													<b>Address: </b>{{report.patient.address}}<br>
-													<b>Email: </b>{{report.patient.email}} <br>
-													<b>Phone Number: </b>{{report.patient.phone_number}}<br>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="invoice-item invoice-table-wrap">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="table-responsive">
-												<table class="table table-bordered text-center">
-													<thead >
-														<tr style="background-color: rgb(84, 147, 199)">
-															<th style="border: 2px dotted;">Specimen Information</th>
-															<th style="border: 2px dotted;">Specimen ID</th>
-															<th style="border: 2px dotted;">Collection Date/Time</th>
-															<th style="border: 2px dotted;">Receiving Date/Time</th>
-														</tr>
-														{% for s in specimen %}
-														<tr>
-														
-															<th style="border: 2px dotted;">{{s.specimen_type}}</th>
-															<th style="border: 2px dotted;">{{s.specimen_id}}</th>
-															<th style="border: 2px dotted;">{{s.collection_date}}</th>
-															<th style="border: 2px dotted;">{{s.receiving_date}}</th>
-	
-														</tr>
-														{% endfor %}
-													</tbody>
-												</table>
-											</div>
-										</div>
-										
-									</div>
-								</div>
-
-           
-                  				<br>
-                  				<div class="invoice-item invoice-table-wrap">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="table-responsive">
-												<table class="invoice-table table table-bordered text-center">
-													<thead>
-														<tr style="background-color: rgb(84, 147, 199);">
-															<th style="border: 2px dotted;">Test Name</th>
-                              								<th style="border: 2px dotted;">Result</th>
-															<th style="border: 2px dotted;">Unit</th>
-                             								<th style="border: 2px dotted;">Referred value</th>
-	
-														</tr>
-                            							{% for t in test %}
-                            							<tr>
-                              								<th style="border: 2px dotted;">{{t.test_name}}</th>
-                              								<th style="border: 2px dotted;">{{t.result}}</th>
-															<th style="border: 2px dotted;">{{t.unit}}</th>
-                              								<th style="border: 2px dotted;">{{t.referred_value}}</th>
-														</tr>
-														{% endfor %}
-													</tbody>
-												</table>
-
-                       
-
-                        
-
-											</div>
-										</div>
-										
-									</div>
-								</div>
-                                
-								<!-- /Invoice Item -->
-                                
-								
-								<!-- Invoice Information -->
-								<div class="other-info">
-									<h4><b>Other Information:</b></h4>
-									<p>{{report.other_information}}</p>
-                  
-
-                  <button class="btn btn-sm bg-primary-light"> <a target="_blank" href="{% url 'pres_pdf' pk=report.report_id %}" > Download Report </a></button>
+                <!-- Invoice Information -->
+                <div class="other-info mt-4">
+                  <h4 class="mb-3"><b>Other Information:</b></h4>
+                  <p>{{report.other_information}}</p>
+                  <button class="btn btn-download mt-3">
+                    <i class="fas fa-download me-2"></i>
+                    <a target="_blank" href="">Download Report</a>
+                  </button>
                   {% endfor %}
-
-                  
-								</div>
-								<!-- /Invoice Information -->
-							  
-							</div>
-        
-						</div>
-					</div>
-
-				</div>
-        
-
-			</div>		
-			<!-- /Page Content -->
-
-      
+                </div>
+                <!-- /Invoice Information -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Content -->
       <!-- Footer -->
       {% include 'footer.html' %}
       <!-- /Footer -->
-      
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Sticky Sidebar JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- Searchbar JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
   </body>
-
-  <!-- doccure/patient-dashboard.html  30 Nov 2019 04:12:16 GMT -->
 </html>

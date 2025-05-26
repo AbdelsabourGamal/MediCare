@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/patient-dashboard.html  30 Nov 2019 04:12:16 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
@@ -17,20 +16,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
-
-    <!-- Fontawesome CSS -->
+    
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -38,6 +32,7 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
+
   </head>
   <body>
     <!-- Main Wrapper -->
@@ -48,9 +43,8 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center"> 
-            <div class="col-md-12 col-12">
+        
+          
               <nav aria-label="breadcrumb" class="page-breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
@@ -62,15 +56,15 @@
                 </ol>
               </nav>
               {% include 'message.html' %}
-            </div>
+            
 
-          </div>
-        </div>
+          
+        
       </div>
       <!-- /Breadcrumb -->
       
       <!-- Page Content -->
-      <div class="p-dashboard">
+      <div class="patient dashboard">
         <div class="container-fluid">
           <div class="row">
             <!-- Profile Sidebar -->
@@ -89,7 +83,7 @@
                         <a
                           class="nav-link active"
                           href="#pat_appointments"
-                          data-toggle="tab"
+                          data-bs-toggle="tab"
                           >Appointments</a
                         >
                       </li>
@@ -97,7 +91,7 @@
                         <a
                           class="nav-link"
                           href="#pat_prescriptions"
-                          data-toggle="tab"
+                          data-bs-toggle="tab"
                           >Prescriptions</a
                         >
                       </li>
@@ -105,7 +99,7 @@
                         <a
                           class="nav-link"
                           href="#pat_medical_records"
-                          data-toggle="tab"
+                          data-bs-toggle="tab"
                           ><span class="med-records">Medical Records</span></a
                         >
                       </li>
@@ -113,7 +107,7 @@
                         <a
                           class="nav-link"
                           href="#pat_billing"
-                          data-toggle="tab"
+                          data-bs-toggle="tab"
                           >Billing</a
                         >
                       </li>
@@ -175,44 +169,45 @@
                                   <td>{{appointment.appointment_type}}</td>
                                   
                                   {% if appointment.appointment_type == 'checkup' %}
-                                  <td>{{appointment.doctor.consultation_fee}} USD</td>
+                                  <td>{{appointment.doctor.consultation_fee}} EGP</td>
                                   {% else %}
-                                  <td>{{appointment.doctor.report_fee}} USD</td>
+                                  <td>{{appointment.doctor.report_fee}} EGP</td>
                                   {% endif %}
                                   <td>
                                     {% if appointment.appointment_status == 'pending' %}
-                                    <span class="badge badge-pill bg-warning-light">Pending</span>
+                                    <span class="badge text-bg-warning">Pending</span>
                                     {% endif %}
                                     {% if appointment.appointment_status == 'confirmed' %}
-                                    <span class="badge badge-pill bg-success-light">Confirm</span>
+                                    <span class="badge text-bg-success">Confirm</span>
                                     {% endif %}
                                     {% if appointment.appointment_status == 'cancelled' %}
-                                    <span class="badge badge-pill bg-danger-light">Cancelled</span>
+                                    <span class="badge text-bg-danger">Cancelled</span>
                                     {% endif %}
                                   </td>
                                   <td class="text-center">
                                     {% if appointment.payment_status == 'pending' %}
-                                    <span class="badge badge-pill bg-warning-light">Pending</span>
+                                    <span class="badge text-bg-warning">Pending</span>
                                     {% endif %}
                                     {% if appointment.payment_status == 'confirmed' %}
-                                    <span class="badge badge-pill bg-success-light">Paid</span>
+                                    <span class="badge text-bg-success">Paid</span>
                                     {% endif %}
                                   </td>
                                   <td >
                                     <div class="table-action">
                                       {% if appointment.payment_status == 'pending' and appointment.appointment_status == 'confirmed'%}
                                       <a
-                                        href="{% url 'payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
-                                        class="btn btn-sm bg-success-light"
+                                        href="{% url 'paypal_payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
+                                        class="btn btn-sm btn-outline-info pay"
                                       >
-                                        <i class="fas fa-dollar-sign"></i> Pay Now
+                                        <i class="fas fa-dollar-sign"></i> Pay
+                                        Now
                                       </a>
                                       {% elif appointment.payment_status == 'confirmed' %}
-                                        <button class="btn btn-sm bg-secondary-light" disabled>
+                                        <button class="btn btn-sm btn-outline-info" disabled>
                                           <i class="fas fa-check-circle"></i> Paid
                                         </button>
                                         {% elif appointment.appointment_status == 'pending' %}
-                                        <button class="btn btn-sm bg-secondary-light" disabled>
+                                        <button class="btn btn-sm btn-outline-info" disabled>
                                           <i class="fas fa-clock"></i> Pending
                                         </button>
                                       {% endif %}
@@ -238,8 +233,6 @@
                                 <tr>
                                   <th>Prescription ID</th>
                                   <th>Doctor Name</th>
-
-                                  <!-- <th>Attachment</th> -->
                                   <th>Doctor</th>
                                   <th>Action</th>
                                 </tr>
@@ -251,12 +244,6 @@
                                     <a href="javascript:void(0);">{{prescription.prescription_id}}</a>
                                   </td>
                                   <td>{{prescription.doctor.name }}</td>
-                                  
-
-                                  <!-- <td><a href="#">dental-test.pdf</a></td> -->
-
-                               
-
                                   <td>
                                     <h2 class="table-avatar">
                                       <a
@@ -278,7 +265,7 @@
                                     <div class="table-action">
                                       <a
                                         href="{% url 'prescription-view' pk=prescription.prescription_id%}"
-                                        class="btn btn-sm bg-info-light"
+                                        class="btn btn-sm btn-outline-info"
                                       >
                                         <i class="far fa-eye"></i> View
                                       </a>
@@ -304,11 +291,6 @@
                                 <tr>
                                   <th>Report ID</th>
                                   <th>Delivery Date</th>
-
-                                  <!-- <th>Attachment</th> -->
-
-                                 
-
                                   <th>Doctor</th>
                                   <th>Action</th>
                                 </tr>
@@ -320,11 +302,6 @@
                                     <a href="javascript:void(0);">{{report.report_id}}</a>
                                   </td>
                                   <td>{{report.delivery_date }}</td>
-                                  
-
-                                  <!-- <td><a href="#">dental-test.pdf</a></td> -->
-
-                               
 
                                   <td>
                                     <h2 class="table-avatar">
@@ -347,12 +324,12 @@
                                     <div class="table-action">
                                       <a
                                         href="{% url 'view-report' pk=report.report_id%}"
-                                        class="btn btn-sm bg-info-light"
+                                        class="btn btn-sm btn-outline-info"
                                       >
                                         <i class="far fa-eye"></i> View
                                       </a>
-                                      <a href="{% url 'delete-report' pk=report.report_id %}" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-sm bg-danger-light" >
-                                        <i class="fas fa-trash"></i> Delete <td>
+                                      <a href="{% url 'delete-report' pk=report.report_id %}" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-sm btn-outline-danger" >
+                                        <i class="fas fa-trash"></i> Delete
                                       </a>
                                       
                                     </div>
@@ -379,9 +356,9 @@
                                   <th>Tranx ID</th>
                                   <th>Tranx Date</th>
                                   <th>Amount</th>
-                                  <th>Payment Type</th>
+                                  <th>Card Type</th>
+                                  <th>Card Issuer</th>
                                   <th>Payment Status</th>
-                      
                                 </tr>
                               </thead>
                               <tbody>
@@ -407,22 +384,19 @@
                                   </td>
                                   <td>{{payment.transaction_id}}</td>
                                   <td>{{payment.transaction_date}}</td>
-                                  <td>{{payment.currency_amount}} USD</td>
-                                  <td>{{payment.payment_type}}</td>
+                                  <td>{{payment.currency_amount}} BDT</td>
+                                  <td>{{payment.card_type}}</td>
+                                  <td>{{payment.card_issuer}}</td>
                                   <td>
-                                    {% if payment.status == 'confirmed' %}
-                                    <span class="badge badge-pill bg-success-light">Success</span>
+                                    {% if payment.status == 'VALID' %}
+                                    <span class="badge text-bg-success">Success</span>
                                     {% else %}
-                                    <span class="badge badge-pill bg-warning-light">Pending</span>
+                                    <span class="badge text-bg-warning">Pending</span>
                                     {% endif %}
                                   </td>
                             
                                 </tr>
                                 {% endfor %}
-                          
-                             
-
-
                               </tbody>
                             </table>
                           </div>
@@ -444,46 +418,26 @@
       {% include 'footer.html' %}
       <!-- /Footer -->
     </div>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Sticky Sidebar JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
-    <!-- Searchbar JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const lis = document.querySelectorAll(".dashboard-menu ul li");
-
-  lis.forEach((li) => {
-    li.addEventListener("click", function () {
-      // Remove 'active' from all li elements
-      lis.forEach((item) => item.classList.remove("active"));
-
-      this.classList.add("active");
-    });
-  });
-});
-
+    
+  
+</script>
+    
     {% if messages %}
-    <script>
-        {% for message in messages %}
-            $(document).ready(function () {
-                $('.toast').toast('show');
-            });
-        {% endfor %}
-    </script>
-  {% endif %}
-
+      <script>
+          {% for message in messages %}
+              $(document).ready(function () {
+                  $('.toast').toast('show');
+              });
+          {% endfor %}
+      </script>
+    {% endif %}
+    
   </body>
 </html>

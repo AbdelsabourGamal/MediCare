@@ -2,49 +2,39 @@
 <!DOCTYPE html> 
 <html lang="en">
 	
-<!-- doccure/doctor-profile.html  30 Nov 2019 04:12:16 GMT -->
 <head>
 		<meta charset="utf-8">
-		<title>HealthStack</title>
+		<title>MediCare</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 		
 		<!-- Favicons -->
 		<link type="image/x-icon" href=" {% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
 		
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}">
-		
-		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}">
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}">
-	
-		<!-- Fancybox CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.css'%}">
-		
-		<!-- Main CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}">
+		<!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
+    />
 
-		<style>
-			th, td {
-			border: 1px solid white;
-	 		border-radius: 10px;
-			 /* #96D4D4 */
-	 		background-color: #b3eafc;
-	 		height: 50px;
-	 		color: black;
-			width: 1000px;
-			text-align: center;
-		}
-		</style>
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+    />
+
+
 	
 	</head>
 	<body>
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
-		
 			<!-- Header -->
-			<header class="header">
-				
+			<header class="header">	
 				{% if user.is_authenticated and user.is_patient %}
 				{% include 'patient_navbar.html' %}
 				{% endif %}
@@ -52,20 +42,10 @@
 				{% if user.is_authenticated and user.is_doctor %}
 				{% include 'doctor-navbar.html' %}
 				{% endif %}
-			
-				{% if user.is_authenticated and user.is_hospital_admin %}
-				{% include 'hospital_admin/hospital-admin-navbar.html' %}
-				{% endif %}
 			</header>
 			<!-- /Header -->
-
-				
-			
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-12 col-12">
 							<nav aria-label="breadcrumb" class="page-breadcrumb">
 								<ol class="breadcrumb">
 									{% if user.is_authenticated and user.is_patient %}
@@ -78,22 +58,16 @@
 									<li class="breadcrumb-item active" aria-current="page">Hospital Profile</li>
 								</ol>
 							</nav>
-							<h2 class="breadcrumb-title">Hospital Profile</h2>
-						</div>
-					</div>
-				</div>
 			</div>
 			<!-- /Breadcrumb -->
 			
 			<!-- Page Content -->
-			<div class="content">
+			<div class="hospital hospital-profile">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-						
+						<div class="col-md-5 col-lg-4 col-xl-3 ">
 							<!-- Profile Sidebar -->
 							<div>
-								
 								{% if user.is_authenticated and user.is_patient %}
 								{% include 'patient-sidebar.html' %}
 								{% endif %}
@@ -101,37 +75,23 @@
 								{% if user.is_authenticated and user.is_doctor %}
 								{% include 'doctor-sidebar.html' %}
 								{% endif %}
-							
-							
-							
 							</div>
 							<!-- /Profile Sidebar -->
-							
 						</div>
-						
 						<div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="card">
 								<div class="card-body">
 									<div class="doctor-widget">
 										<div class="doc-info-left">
 											<div class="row">
-											<div class="col-lg-6 col-md-6" style=" display: flex;justify-content: left;width: 65%;">
+											<div class="col-lg-6 col-md-6" >
 											<div class="doctor-img">
-												<img src="{{hospitals.featured_image.url}}" style="height: 250px; width: 280px; margin: auto; " alt="User Image">
+												<img src="{{hospitals.featured_image.url}}" alt="User Image">
 											</div>
 											</div>
 											<div class="doc-info-cont col-md-6 col-lg-6">
 												<h4 class="doc-name">{{hospitals.name}}</h4>
 												<p class="doc-specialty">{{hospitals.hospital_type}} Hospital</p>
-												
-												{% comment %} <div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(35)</span>
-												</div> {% endcomment %}
 												<div class="clinic-details">
 													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> {{hospitals.address}}</p>
 
@@ -161,7 +121,7 @@
 												</div>
 
 												<div class="clinic-services">
-													<span>childrens special</span>
+													<span>children special</span>
 													<span>Always available emergency doctors</span>
 													
 												</div>
@@ -170,40 +130,20 @@
 											</div>
 										</div>
 										<div class="doc-info-right col-md-6" >
-											<div class="clini-infos">
+											<div class="clinic-infos">
 												<ul>
-													{% comment %} <li><i class="far fa-thumbs-up"></i> 99%</li>
-													<li><i class="far fa-comment"></i> 35 Feedback</li> {% endcomment %}
 													<li><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</li>
-												
 												</ul>
-											</div>
-											<div class="doctor-action">
-												<a href="javascript:void(0)" class="btn btn-white fav-btn">
-													<i class="far fa-bookmark"></i>
-												</a>
-												<a href="chat.html" class="btn btn-white msg-btn">
-													<i class="far fa-comment-alt"></i>
-												</a>
-												<a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
-													<i class="fas fa-phone"></i>
-												</a>
-												
-											</div>
-											
+											</div>		
 											<div class="clinic-booking">
 												<a class="apt-btn" href="{% url 'hospital-department-list' pk=hospitals.hospital_id %}">Department & Doctor List</a>
 											</div>
 											<br>
-											
-				
 											{% if user.is_authenticated and user.is_doctor %}
 											<div class="clinic-booking">
 												<a class="apt-btn" href="{% url 'hospital-doctor-register' pk=hospitals.hospital_id %}">Register</a>
 											</div>
 											{% endif %}
-											
-											
 										</div>
 									</div>
 								</div>
@@ -218,13 +158,13 @@
 									<nav class="user-tabs mb-4">
 										<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
 											<li class="nav-item">
-												<a class="nav-link active" href="#doc_overview" data-toggle="tab">Overview</a>
+												<a class="nav-link active" href="#doc_overview" data-bs-toggle="tab">Overview</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="#doc_locations" data-toggle="tab">Locations and Contact</a>
+												<a class="nav-link" href="#doc_locations" data-bs-toggle="tab">Locations and Contact</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="#doc_emergency" data-toggle="tab">Emergency Info</a>
+												<a class="nav-link" href="#doc_emergency" data-bs-toggle="tab">Emergency Info</a>
 											</li>
 											
 											
@@ -233,12 +173,12 @@
 									<!-- /Tab Menu -->
 									
 									<!-- Tab Content -->
-									<div class="tab-content pt-0">
+									<div class="tab-content">
 									
 										<!-- Overview Content -->
 										<div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
 											<div class="row">
-												<div class="col-md-12 col-lg-9">
+												<div class="col-md-12 col-lg-12">
 												
 													<!-- About Details -->
 													<div class="widget about-widget">
@@ -246,8 +186,6 @@
 														<p>{{hospitals.description}}</p>
 													</div>
 													<!-- /About Details -->
-												
-
 													<!-- Awards Details -->
 													<div class="widget awards-widget">
 														<h4 class="widget-title">Departments</h4>
@@ -255,13 +193,10 @@
 															<ul class="experience-list">
 																{% for department in departments %}
 																<li>
-																	<div class="experience-user">
-																		<div class="before-circle"></div>
-																	</div>
 																	<div class="experience-content">
 																		<div class="timeline-content">
 																			
-																			<h4 class="exp-title">{{department.hospital_department_name}}</h4>
+																			<h4 class="exp-title mb-0">{{department.hospital_department_name}}</h4>
 							
 																		</div>
 																	</div>
@@ -274,7 +209,7 @@
 													<!-- /Awards Details -->
 													
 													<!-- Services List -->
-													<div class="service-list">
+													<div class="widget service-list">
 														<h4>Services</h4>
 														<ul class="clearfix">
 															{% for service in services %}
@@ -286,7 +221,7 @@
 													<!-- /Services List -->
 													
 													<!-- Specializations List -->
-													<div class="service-list">
+													<div class="widget service-list">
 														<h4>Specializations</h4>
 														<ul class="clearfix">
 															{% for specialization in specializations %}
@@ -307,15 +242,11 @@
 										
 											<!-- Location List -->
 											<div class="location-list">
-												<div class="row">
-												
-													<!-- Clinic Content -->
-													<div class="col-md-4">
 														<div class="clinic-content">
 															<h4 class="clinic-name"><a href="#">{{hospitals.name}}</a></h4>
 															<p class="doc-specialty">{{hospital.hospital_type}}</p>
 															
-															<div class="clinic-details mb-0">
+															<div class="clinic-details ">
 																<h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> {{hospitals.address}} <br><a href="javascript:void(0);">Get Directions</a></h5>
 																<ul>
 																	<li>
@@ -341,11 +272,6 @@
 																</ul> 
 															</div>
 														</div>
-													</div>
-													<!-- /Clinic Content -->
-													
-													<!-- Clinic Timing -->
-													<div class="col-md-4">
 														<div class="clinic-timing">
 															<div>
 																<p class="timings-days">
@@ -366,16 +292,6 @@
 															</div>
 														</div>
 													</div>
-													<!-- /Clinic Timing -->
-													
-													
-													
-												</div>
-											</div>
-											<!-- /Location List -->
-											
-											
-		
 										</div>
 										<!-- /Locations Content -->
 											
@@ -383,7 +299,7 @@
 										<div role="tabpanel" id="doc_emergency" class="tab-pane fade show">
 											<div class="row">
 												<div class="col-md-12 col-lg-12">
-													<Table>
+														<Table>
 														<tr>
 															<td><b>General Bed</b></td>
 															<td>{{hospitals.general_bed_no}}</td>
@@ -393,19 +309,20 @@
 															<td>{{hospitals.regular_cabin_no}}</td>
 														</tr>
 														<tr>
-															<td><b>ICU</b></td>
+															<td><b>ICU</b> </td>
 															<td>{{hospitals.available_icu_no}}</td>
 														</tr>
 														<tr>
-															<td><b>Emergency Cabin</b></td>
+															<td><b>Emergency Cabin</b> </td>
 															<td>{{hospitals.emergency_cabin_no}}</td>
 														</tr>
 														<tr>
-															<td><b>VIP room</b></td>
+															<td><b>VIP room</b> </td>
 															<td>{{hospitals.vip_cabin_no}}</td>
 														</tr>
 														
 													</Table>
+													
 												</div>
 											</div>
 										</div>
@@ -426,110 +343,24 @@
 			
    
 			<!-- Footer -->
-			{% include 'footer.html' %}
+			
 			<!-- /Footer -->
 		   
 		</div>
+		{% include 'footer.html' %}
 		<!-- /Main Wrapper -->
 		
 
-		<!-- <div class="modal fade" id="edit_more_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				</div>
-				<div class="modal-body">
-				  ...
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				  <button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			  </div>
-			</div>
-		  </div> -->
-
-
-		<!-- Voice Call Modal -->
-		<!-- <div class="modal fade call-modal" id="voice_call">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						
-						<div class="call-box incoming-box">
-							<div class="call-wrapper">
-								<div class="call-inner">
-									<div class="call-user">
-										<img alt="User Image" src="assets/img/doctors/doctor-thumb-02.jpg" class="call-avatar">
-										<h4>Dr. Darren Elder</h4>
-										<span>Connecting...</span>
-									</div>							
-									<div class="call-items">
-										<a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
-										<a href="voice-call.html" class="btn call-item call-start"><i class="material-icons">call</i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-
-					</div>
-				</div>
-			</div>
-		</div> -->
-		<!-- /Voice Call Modal -->
 		
-		<!-- Video Call Modal -->
-		<!-- <div class="modal fade call-modal" id="video_call">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-					
-						
-						<div class="call-box incoming-box">
-							<div class="call-wrapper">
-								<div class="call-inner">
-									<div class="call-user">
-										<img class="call-avatar" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-										<h4>Dr. Darren Elder</h4>
-										<span>Calling ...</span>
-									</div>							
-									<div class="call-items">
-										<a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">call_end</i></a>
-										<a href="video-call.html" class="btn call-item call-start"><i class="material-icons">videocam</i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						
-					</div>
-				</div>
-			</div>
-		</div> -->
-		<!-- Video Call Modal -->
-		
+		<!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 	
-		<!-- jQuery -->
-		<script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-		
-		<!-- Bootstrap Core JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-		
-		
-		<!-- Fancybox JS -->
-		<script src="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.js'%}"></script>
-		
-		
-		<!-- Custom JS -->
-		<script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+
 		
 	</body>
 
-<!-- doccure/doctor-profile.html  30 Nov 2019 04:12:16 GMT -->
 </html>
