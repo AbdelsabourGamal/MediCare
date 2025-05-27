@@ -19,7 +19,7 @@
   </div>
   <div class="main-menu-wrapper">
     <div class="menu-header">
-      <a href="" class="menu-logo">
+      <a href="{% url 'hospital_home'%}" class="menu-logo">
         <img
           src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
           class="img-fluid"
@@ -39,13 +39,8 @@
         <a href="{% url 'patient-dashboard' %}">Dashboard</a>
       </li>
 
-      <li class="has-submenu">
-        <a href="#">Hospital <i class="fas fa-chevron-down"></i></a>
-        <ul class="submenu">
-          <li><a href="{% url 'multiple-hospital' %}">Hospital Info</a></li>
-          <li><a href="{% url 'search' %}">Search Doctor</a></li>
-        </ul>
-      </li>
+      <li><a href="{% url 'multiple-hospital' %}">Hospitals </a></li>
+      <li><a href="{% url 'search' %}">Search Doctor</a></li>
 
       <li>
         <a href="{% url 'pharmacy_shop' %}">Medical Shop</a>
@@ -60,7 +55,7 @@
           <img
             class="rounded-circle"
             src="{{patient.featured_image.url}}"
-            alt="Richard Wilson"
+            alt="Patient Image"
           />
         </span>
       </a>

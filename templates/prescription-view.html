@@ -69,7 +69,7 @@
             <div class="col-md-12 col-lg-8 col-xl-9">
                 <div class="invoice-content">
                     <div class="invoice-item">
-                        {% for prescription in prescription %}
+                        {% for prescription in prescriptions %}
                         <p class="invoice-details">
                             <strong>Prescription ID :</strong> {{prescription.prescription_id}} <br>
                             <strong>Patient ID :</strong> {{prescription.patient.patient_id}} <br>
@@ -162,6 +162,7 @@
                                                 <th>Description</th>
                                                 <th> Test id </th> 
                                                 <th> price</th> 
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -171,6 +172,15 @@
                                                 <td>{{pt.test_description}}</td>
                                                 <td>{{pt.test_info_id}}</td>
                                                 <td>{{pt.test_info_price}}</td>
+                                                {% if pt.test_info_pay_status == "confirmed" %}
+                                                    <td>
+                                                        <a href="#" class="btn btn-primary disabled" aria-disabled="true" tabindex="-1">Select</a>
+                                                    </td>
+                                                {% else %}
+                                                    <td>
+                                                        <a href="{% url 'test-add-to-cart' pk=pt.prescription.prescription_id pk2=pt.test_info_id %}" class="btn btn-primary">Select</a>
+                                                    </td>
+                                                {% endif %}
                                             </tr>
                                             {% endfor %}
                                         </tbody>

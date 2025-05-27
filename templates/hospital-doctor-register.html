@@ -1,14 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/search.html  30 Nov 2019 04:12:16 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>Medicare</title>
 
     <!-- Favicons -->
     <link
@@ -17,38 +16,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
-    />
-
-    <!-- Datetimepicker CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normalbootstrap-datetimepicker.min.css' %}"
-    />
-
-    <!-- Select2 CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/select2/css/select2.min.css'%}"
-    />
-
-    <!-- Fancybox CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.css'%}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -56,291 +32,293 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <link rel="stylesheet"href="{% static 'HealthStack-System/css/Normal/search2.css' %}">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
-    <style>
-
-    .drop-zone {
-      max-width: auto;
-      height: 200px;
-      padding: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-family: "Quicksand", sans-serif;
-      font-weight: 500;
-      font-size: 20px;
-      cursor: pointer;
-      color: #cccccc;
-      border: 4px dashed #8b8b8b;
-      border-radius: 10px;
-    }
-
-    .drop-zone--over {
-      border-style: solid;
-    }
-
-    .drop-zone__input {
-      display: none;
-    }
-
-    .drop-zone__thumb {
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      overflow: hidden;
-      background-color: #cccccc;
-      background-size: cover;
-      position: relative;
-    }
-
-    .drop-zone__thumb::after {
-      content: attr(data-label);
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 5px 0;
-      color: #ffffff;
-      background: rgba(0, 0, 0, 0.75);
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .center{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-
-
-    </style>
   </head>
   <body>
     <!-- Main Wrapper -->
-    <div class="main-wrapper">
-      <!-- Header -->
-      <header class="header">
-            {% if user.is_authenticated and user.is_patient %}
-		    {% include 'patient_navbar.html' %}
-	        {% endif %}
-				
-		    {% if user.is_authenticated and user.is_doctor %}
-			{% include 'doctor-navbar.html' %}
-			{% endif %}
-      </header>
-      <!-- /Header -->
+<div class="main-wrapper">
+  <!-- Header -->
+  <header class="header">
+      {% if user.is_authenticated and user.is_patient %}
+          {% include 'patient_navbar.html' %}
+      {% endif %}
+      
+      {% if user.is_authenticated and user.is_doctor %}
+          {% include 'doctor-navbar.html' %}
+      {% endif %}
+  </header>
+  <!-- /Header -->
 
-      <!-- Breadcrumb -->
-      <div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-6 col-6">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Hospital Doctor Register</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Hospital Doctor Register</h2>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-      <!-- /Breadcrumb -->
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar">
+      <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Hospital Doctor Register</li>
+          </ol>
+      </nav>
+  </div>
+  <!-- /Breadcrumb -->
 
-      <!-- Page Content -->
-      <div class="content">
-        <div class="container-fluid">
+  <!-- Page Content -->
+  
+  <div class="doctor hospital-register">
+      <div class="container-fluid">
           <div class="row">
-            <!-- Profile Sidebar -->
-            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-              <div>
-			    {% include 'doctor-sidebar.html' %}
-
+              <!-- Profile Sidebar -->
+              <div class="col-md-5 col-lg-4 col-xl-3">
+                  <div>
+                      {% include 'doctor-sidebar.html' %}
+                  </div>
               </div>
-            </div>
-            <!-- / Profile Sidebar -->
+              <!-- / Profile Sidebar -->
 
-            <div class="col-md-12 col-lg-8 col-xl-9">
-              <form action="{% url 'hospital-doctor-register' pk=hospitals.hospital_id %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title" style="text-align: center;">Hospital Registation</h2>
-                        <hr>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label class="col-form-label" style="font-size: 20px;">Choose Department</label>
-                                <div class="col-md-10">
-     
-                                    {% for department in departments %}
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" value="{{ department.hospital_department_id }}" name="department_radio"> {{ department.hospital_department_name }}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                    
-                                    
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="col-form-label" style="font-size: 20px;">Choose Specialization</label>
-                                <div class="col-md-10">
-
-                                    {% for specialization in specializations %}
-                                      
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" value="{{ specialization.specialization_id }}" name="specialization_radio" id="flexRadioDefault2">
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                          {{ specialization.specialization_name }}
-                                        </label>
+              <!-- Main Content -->
+              <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="registration-container">
+                  <header class="form-header">
+                      <h1>Hospital Registration</h1>
+                      <p>Complete your doctor registration process</p>
+                  </header>
+          
+                  <form action="{% url 'hospital-doctor-register' pk=hospitals.hospital_id %}" method="POST" enctype="multipart/form-data" class="registration-form">
+                      {% csrf_token %}
+                      
+                      <div class="form-content">
+                          <!-- Department and Specialization Selection -->
+                          <section class="form-section">
+                              <h2 class="section-title">Professional Information</h2>
+                              
+                              <div class="selection-grid">
+                                  <!-- Department Selection -->
+                                  <div class="selection-group">
+                                      <h3>Choose Department</h3>
+                                      <div class="radio-group" role="radiogroup" aria-labelledby="department-label">
+                                          {% for department in departments %}
+                                          <label class="radio-option">
+                                              <input type="radio" 
+                                                     value="{{ department.hospital_department_id }}" 
+                                                     name="department_radio"
+                                                     id="dept_{{ department.hospital_department_id }}"
+                                                     required>
+                                              <span class="radio-content">{{ department.hospital_department_name }}</span>
+                                              <span class="radio-indicator"></span>
+                                          </label>
+                                          {% endfor %}
                                       </div>
-                                      {% endfor %}
-                             
-                                </div>
-                            </div>                                       
-                        </div>
-
-                        <label class="col-form-label" style="font-size: 20px;text-align: center;">Drop Certificate</label>
-                        <div class="drop-zone">
-                            
-                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                            <input type="file" name="certificate_image" class="drop-zone__input">
-                        </div>
-
-                    </div>
-                </div>
-                <div class="submit-section submit-btn-bottom center">
-                    <button type="submit" class="btn btn-info submit-btn" style="min-width: 205px;">Submit</button>
-                </div>
-              </form>  
-                          
-            </div>
+                                      <div class="error-message" id="department-error">
+                                          Please select a department
+                                      </div>
+                                  </div>
+          
+                                  <!-- Specialization Selection -->
+                                  <div class="selection-group">
+                                      <h3>Choose Specialization</h3>
+                                      <div class="radio-group" role="radiogroup" aria-labelledby="specialization-label">
+                                          {% for specialization in specializations %}
+                                          <label class="radio-option">
+                                              <input type="radio" 
+                                                     value="{{ specialization.specialization_id }}" 
+                                                     name="specialization_radio"
+                                                     id="spec_{{ specialization.specialization_id }}"
+                                                     required>
+                                              <span class="radio-content">{{ specialization.specialization_name }}</span>
+                                              <span class="radio-indicator"></span>
+                                          </label>
+                                          {% endfor %}
+                                      </div>
+                                      <div class="error-message" id="specialization-error">
+                                          Please select a specialization
+                                      </div>
+                                  </div>
+                              </div>
+                          </section>
+          
+                          <!-- Certificate Upload Section -->
+                          <section class="form-section">
+                              <div class="upload-section">
+                                  <h2 class="upload-title">Upload Certificate</h2>
+                                  <div class="drop-zone" id="dropZone">
+                                      <span class="drop-zone__prompt">
+                                          Drop your certificate here or click to browse
+                                      </span>
+                                      <input type="file" 
+                                             name="certificate_image" 
+                                             class="drop-zone__input" 
+                                             id="certificateInput"
+                                             accept=".jpg,.jpeg,.png,.pdf"
+                                             required>
+                                  </div>
+                                  <div class="file-info" id="fileInfo"></div>
+                                  <div class="error-message" id="file-error">
+                                      Please upload a valid certificate file
+                                  </div>
+                              </div>
+                          </section>
+          
+                          <!-- Submit Section -->
+                          <section class="submit-section">
+                              <button type="submit" class="submit-btn" id="submitBtn">
+                                  Complete Registration
+                              </button>
+                          </section>
+                      </div>
+                  </form>
+              </div>
+              </div>
+              <!-- /Main Content -->
           </div>
-        </div>
       </div>
-      <!-- /Page Content -->
+  </div>
+  <!-- /Page Content -->
 
-     <!-- Footer -->
-     {% include 'footer.html' %}
-     <!-- /Footer -->
-    </div>
-    <!-- /Main Wrapper -->
+  <!-- Footer -->
+  {% include 'footer.html' %}
+  <!-- /Footer -->
+</div>
+<!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Sticky Sidebar JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
-
-    <!-- Select2 JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/select2/js/select2.min.js'%}"></script>
-
-    <!-- Datetimepicker JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/moment.min.js'%}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap-datetimepicker.min.js'%}"></script>
-
-    <!-- Fancybox JS -->
-    <script src="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.js'%}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
-
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
     <script>
-        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-      const dropZoneElement = inputElement.closest(".drop-zone");
+      document.addEventListener('DOMContentLoaded', function() {
+          const form = document.querySelector('.registration-form');
+          const dropZone = document.getElementById('dropZone');
+          const fileInput = document.getElementById('certificateInput');
+          const fileInfo = document.getElementById('fileInfo');
+          const submitBtn = document.getElementById('submitBtn');
 
-      dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
+          // File upload handling
+          dropZone.addEventListener('click', () => fileInput.click());
+
+          dropZone.addEventListener('dragover', (e) => {
+              e.preventDefault();
+              dropZone.classList.add('dragover');
+          });
+
+          dropZone.addEventListener('dragleave', () => {
+              dropZone.classList.remove('dragover');
+          });
+
+          dropZone.addEventListener('drop', (e) => {
+              e.preventDefault();
+              dropZone.classList.remove('dragover');
+              const files = e.dataTransfer.files;
+              if (files.length > 0) {
+                  fileInput.files = files;
+                  displayFileInfo(files[0]);
+              }
+          });
+
+          fileInput.addEventListener('change', (e) => {
+              if (e.target.files.length > 0) {
+                  displayFileInfo(e.target.files[0]);
+              }
+          });
+
+          function displayFileInfo(file) {
+              const maxSize = 5 * 1024 * 1024; // 5MB
+              const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+              
+              if (!allowedTypes.includes(file.type)) {
+                  showError('file-error', 'Please upload a valid image or PDF file');
+                  return;
+              }
+              
+              if (file.size > maxSize) {
+                  showError('file-error', 'File size must be less than 5MB');
+                  return;
+              }
+
+              fileInfo.innerHTML = `
+                  <strong>Selected:</strong> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)
+              `;
+              fileInfo.style.display = 'block';
+              hideError('file-error');
+          }
+
+          // Form validation
+          form.addEventListener('submit', function(e) {
+              let isValid = true;
+              
+              // Check department selection
+              const departmentRadios = document.querySelectorAll('input[name="department_radio"]');
+              const departmentSelected = Array.from(departmentRadios).some(radio => radio.checked);
+              
+              if (!departmentSelected) {
+                  showError('department-error', 'Please select a department');
+                  isValid = false;
+              } else {
+                  hideError('department-error');
+              }
+
+              // Check specialization selection
+              const specializationRadios = document.querySelectorAll('input[name="specialization_radio"]');
+              const specializationSelected = Array.from(specializationRadios).some(radio => radio.checked);
+              
+              if (!specializationSelected) {
+                  showError('specialization-error', 'Please select a specialization');
+                  isValid = false;
+              } else {
+                  hideError('specialization-error');
+              }
+
+              // Check file upload
+              if (!fileInput.files || fileInput.files.length === 0) {
+                  showError('file-error', 'Please upload a certificate');
+                  isValid = false;
+              } else {
+                  hideError('file-error');
+              }
+
+              if (!isValid) {
+                  e.preventDefault();
+                  return;
+              }
+
+              // Show loading state
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Processing...';
+          });
+
+          function showError(elementId, message) {
+              const errorElement = document.getElementById(elementId);
+              errorElement.textContent = message;
+              errorElement.style.display = 'block';
+          }
+
+          function hideError(elementId) {
+              const errorElement = document.getElementById(elementId);
+              errorElement.style.display = 'none';
+          }
+
+          // Enhanced radio button interactions
+          const radioOptions = document.querySelectorAll('.radio-option');
+          radioOptions.forEach(option => {
+              option.addEventListener('click', function() {
+                  const radio = this.querySelector('input[type="radio"]');
+                  const groupName = radio.name;
+                  
+                  // Remove selected state from other options in the same group
+                  document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                      r.closest('.radio-option').classList.remove('selected');
+                  });
+                  
+                  // Add selected state to current option
+                  this.classList.add('selected');
+                  radio.checked = true;
+                  
+                  // Hide error if exists
+                  const errorId = groupName.replace('_radio', '-error');
+                  hideError(errorId);
+              });
+          });
       });
-
-      inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-          updateThumbnail(dropZoneElement, inputElement.files[0]);
-        }
-      });
-
-      dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropZoneElement.classList.add("drop-zone--over");
-      });
-
-      ["dragleave", "dragend"].forEach((type) => {
-        dropZoneElement.addEventListener(type, (e) => {
-          dropZoneElement.classList.remove("drop-zone--over");
-        });
-      });
-
-      dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-
-        if (e.dataTransfer.files.length) {
-          inputElement.files = e.dataTransfer.files;
-          updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-        }
-
-        dropZoneElement.classList.remove("drop-zone--over");
-      });
-    });
-
-    /**
-     * Updates the thumbnail on a drop zone element.
-     *
-     * @param {HTMLElement} dropZoneElement
-     * @param {File} file
-     */
-    function updateThumbnail(dropZoneElement, file) {
-      let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-
-      // First time - remove the prompt
-      if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-        dropZoneElement.querySelector(".drop-zone__prompt").remove();
-      }
-
-      // First time - there is no thumbnail element, so lets create it
-      if (!thumbnailElement) {
-        thumbnailElement = document.createElement("div");
-        thumbnailElement.classList.add("drop-zone__thumb");
-        dropZoneElement.appendChild(thumbnailElement);
-      }
-
-      thumbnailElement.dataset.label = file.name;
-
-      // Show thumbnail for image files
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-        };
-      } else {
-        thumbnailElement.style.backgroundImage = null;
-      }
-    }
-
-    </script>
+  </script>
 
     </body>
 
-      <!-- doccure/search.html  30 Nov 2019 04:12:16 GMT -->
     </html>

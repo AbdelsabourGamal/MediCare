@@ -40,4 +40,4 @@ class Paymentpal(models.Model):
     card_issuer = models.CharField(max_length=255, null=True, blank=True)
     card_brand = models.CharField(max_length=255, null=True, blank=True)
     def __str__(self):
-        return str(self.name)
+        return f'{self.patient} {self.payment_type}'

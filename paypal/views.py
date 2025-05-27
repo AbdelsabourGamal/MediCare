@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
-from doctor.models import Appointment, Prescription_test, testOrder, Prescription
+from doctor.models import Appointment, Prescription_test, testOrder, testCart
 from hospital.models import Patient
+from hospital.views import test_cart
 from .models import Paymentpal
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -90,11 +91,10 @@ def payment_complete(request):
 
 @csrf_exempt
 @login_required(login_url="login")
-def paypal_payment_request_medicine(request, pk, id, pk2):
+def paypal_payment_request_test(request, pk, id):
     if request.user.is_patient:
         patient = Patient.objects.get(patient_id=pk)
         test_order = testOrder.objects.get(id=id)
-        prescription_test = Prescription_test.objects.get(test_id=pk2)
 
         if test_order.payment_status == "confirmed":
             return redirect('patient-dashboard')
@@ -104,27 +104,31 @@ def paypal_payment_request_medicine(request, pk, id, pk2):
     context = {
         "test_order": test_order,
         "patient": patient,
-        "prescription_test": prescription_test,
     }
-    return render(request, 'payment_medicine.html', context)
+    return render(request, 'payment_test.html', context)
 
 @csrf_exempt
-def medicine_payment_complete(request):
+def test_payment_complete(request):
     data = json.loads(request.body)
-    
+
     patient_id = data.get('patient_id')
     test_order_id = data.get('test_order_id')
-    prescription_test_id = data.get('prescription_test_id')
     
     patient = Patient.objects.get(patient_id=patient_id)
-    prescription_test = Prescription_test.objects.get(test_id=prescription_test_id)
     test_order = testOrder.objects.get(id=test_order_id)
-
+    prescription_test = test_order.prescription_test
+    test_cart = test_order.orderitems.all()
+    print(test_cart)
     try:
 
         prescription_test.test_info_pay_status = "confirmed"
         prescription_test.save()
+        
+        for cart_item in test_cart:
+            cart_item.purchased = True
+            cart_item.save()
 
+        test_order.prescription_test=prescription_test
         test_order.payment_status = "confirmed"
         test_order.ordered = True
         test_order.trans_ID = data.get('paymentID')
@@ -157,9 +161,6 @@ def medicine_payment_complete(request):
         return JsonResponse({'status': 'error', 'message': f'Invalid value: {str(ve)}'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
-    
-
-
 
 
 

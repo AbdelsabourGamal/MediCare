@@ -1,14 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/patient-profile.html  30 Nov 2019 04:12:09 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -17,20 +16,15 @@
       rel="icon"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
@@ -38,348 +32,252 @@
       rel="stylesheet"
       href="{% static 'HealthStack-System/css/Normal/style.css' %}"
     />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
-    <!-- Main Wrapper -->
     <div class="main-wrapper">
-       <!-- Header -->
-       <header class="header">{% include 'doctor-navbar.html' %}</header>
-       <!-- /Header -->
- 
-     
+      <!-- Header -->
+      <header class="header">{% include 'doctor-navbar.html' %}</header>
+      <!-- /Header -->
+      
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-12 col-12">
-              <nav aria-label="breadcrumb" class="page-breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a href="{% url 'hospital_home'%}">Home</a>
-                  </li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Add Prescription
-                  </li>
-                </ol>
-              </nav>
-              <h2 class="breadcrumb-title">Add Prescription</h2>
-            </div>
-          </div>
-        </div>
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'hospital_home'%}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Add Prescription
+            </li>
+          </ol>
+        </nav>
       </div>
       <!-- /Breadcrumb -->
-
+    
       <!-- Page Content -->
-      <div class="content">
+      
+      <div class="doctor add-prescription">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar dct-dashbd-lft">
-              <!-- Profile Widget -->
-              <div class="card widget-profile pat-widget-profile">
-                <div class="card-body">
-                  <div class="pro-widget-content">
-                    <div class="profile-info-widget">
-                      <a href="#" class="booking-doc-img">
-                        <img
-                          src="{{ patient.featured_image.url }}"
-                          alt="User Image"
-                        />
-                      </a>
-                      <div class="profile-det-info">
-                        <h3><a href="#">{{patient.name}}</a></h3>
-
-
-                        <div class="patient-details">
-                          <h5><b>ID :</b> {{ patient.patient_id }}</h5>
-                          <h5 class="mb-0">
-                            <i class="fas fa-map-marker-alt"></i>
-                            {{ patient.address }}
-                          </h5>
-                        </div>
-                      </div>
+            <div class="col-md-5 col-lg-4 col-xl-3 sidebar-column">
+              <div class="card patient-card shadow-sm">
+                <div class="card-body text-center">
+                  <div class="patient-avatar-container mx-auto mb-3">
+                    <img
+                      src="{{ patient.featured_image.url }}"
+                      alt="{{ patient.name }}"
+                      class="patient-avatar rounded-circle"
+                    />
+                  </div>
+    
+                  <h2 class="card-title patient-name">{{ patient.name }}</h2>
+    
+                  <div class="patient-meta mb-3">
+                    <div class="patient-id d-flex justify-content-center align-items-center gap-2">
+                      <span class="fw-medium">ID:</span>
+                      <span class="fw-semibold">{{ patient.patient_id }}</span>
+                    </div>
+                    <div class="patient-location d-flex justify-content-center align-items-center gap-2">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>{{ patient.address }}</span>
                     </div>
                   </div>
-                  <div class="patient-info">
-                    <ul>
-                      <li>Phone <span>{{patient.phone_number}}</span></li>
-                      <li>Age <span>{{patient.age}}</span></li>
-                      <li>Blood Group <span>{{patient.blood_group}}</span></li>
-                    </ul>
+    
+                  <div class="patient-details bg-light rounded-3 p-3">
+                    <div class="detail-item d-flex justify-content-between py-2 border-bottom">
+                      <span class="fw-medium">Phone</span>
+                      <span class="fw-semibold">+20{{ patient.phone_number }}</span>
+                    </div>
+                    <div class="detail-item d-flex justify-content-between py-2 border-bottom">
+                      <span class="fw-medium">Age</span>
+                      <span class="fw-semibold">{{ patient.age }}</span>
+                    </div>
+                    <div class="detail-item d-flex justify-content-between py-2">
+                      <span class="fw-medium">Blood Group</span>
+                      <span class="fw-semibold">{{ patient.blood_group }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-			<div class="col-md-7 col-lg-8 col-xl-9">
-				<div class="card">
-					<div class="card-header">
-						<h4 class="card-title mb-0">Add Prescription</h4>
-					</div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="biller-info">
-									<h4 class="d-block">{{doctor.name}}</h4>
-									<span class="d-block text-sm text-muted">{{doctor.department_name}}</span>
-									<span class="d-block text-sm text-muted">{{doctor.phone_number}}</span>
-									<span class="d-block text-sm text-muted">{{doctor.email}}</span>
-								</div>
-							</div>
-							<div class="col-sm-6 text-sm-right">
-								<div class="billing-info">
-          
-									<h4 class="d-block">{{current_date}}</h4>
-                  
-									<!-- <span class="d-block text-muted">#INV0001</span> -->
-								</div>
-							</div>
-						</div>
-						
-
-						
-						<!-- Prescription Item -->
-            <form  method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-            <div class="card card-table">
-              <div class="card-body">
-                  <h4 class="card-title"><b>Medicine List</b></h4>
-                  <div class="medicine-info">
-                      <div class="row form-row medicine-cont">
-                  
-                          <div class="col-12 col-md-10 col-lg-11">
-                              <div class="row form-row">
-									
-										
-                            <div class="col-12 col-md-6 col-lg-3">
-                              <div class="form-group">
-                                  <label>Medicine Name</label>
-                                  <input type="text" class="form-control" name="medicine_name" id="medicine_name">
-                              </div> 
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-3">
-                              <div class="form-group">
-                                  <label>Quantity</label>
-                                  <input type="text" class="form-control" name="quantity" id="quantity">
-                              </div> 
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-3">
-                              <div class="form-group">
-                                  <label>Frequency</label>
-                                  <input type="text" class="form-control" name="frequency" id="frequency">
-                              </div> 
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-3">
-                              <div class="form-group">
-                                  <label>Relation with meal</label>
-                                  <input type="text" class="form-control" name="relation_with_meal" id="relation_with_meal">
-                              </div> 
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                              <div class="form-group">
-                                  <label>Duration</label>
-                                  <input type="text" class="form-control" name="duration" id="duration">
-                              </div> 
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                              <div class="form-group">
-                                  <label>Instruction</label>
-                                  <input type="text" class="form-control" name="instruction" id="instruction">
-                              </div> 
-                            </div>
-								
-                  </div>
-              </div>
-
-              <div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
-
-          </div>
-          
-          
-      </div>
-      <div class="add-more">
-          <a href="javascript:void(0);" class="add-medicine"><i class="fa fa-plus-circle"></i> Add Medicine</a>
-      </div>
-  </div>
-  </div>
-						<!-- Prescription Item -->
-						<!-- tests Item -->
-						<div class="card card-table">
-							<div class="card-body">
-                <h4 class="card-title"><b>Test List</b></h4>
-								<div class="test-info">
-                  <div class="row form-row test-cont">
-              
-                      <div class="col-12 col-md-10 col-lg-11">
-                          <div class="row form-row">
-
-                              <div class="col-12 col-md-5 col-lg-5">
-                                  <div class="form-group">
-                                      <label>Test Name</label>
-                                      <input type="text" class="form-control" name="test_name" id="test_name">
-                                  </div> 
-                              </div>
-
-
-                              <div class="col-12 col-md-6 col-lg-6">
-                                  <div class="form-group">
-                                      <label>Description</label>
-                                      <input type="text" class="form-control" name="description" id="description">
-                                  </div> 
-                              </div>
-
-                              <div class="col-12 col-md-1 col-lg-1">
-                                <div class="form-group">
-                                    <label>ID</label>
-                                    <input type="number" class="form-control" name="id" id="id">
-                                </div> 
-                              </div>
-
-                      </div>
-                  </div>
-
-                  <div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
-
-                  </div>
+            
+            <div class="col-md-7 col-lg-8 col-xl-9">
+              <!-- Prescription Card -->
+              <div class="card prescription-card">
+                <div class="card-header">
+                    <h4 class="card-title">Add Prescription</h4>
                 </div>
-								<div class="add-more">
-									<a href="javascript:void(0);" class="add-test"><i class="fa fa-plus-circle"></i> Add Test</a>
-								</div>
-							</div>
-						</div>
-						<!-- /tests Item -->
-						<!-- /extra Item -->
-            <div class="card card-table">
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover table-center">
-                    <thead>
-                      <tr>
-                        <th style="min-width: 300px">Additional Information</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <input class="form-control" type="text" name="extra_information" id="extra_information" >
-                        </td>
-
-                      </tr>
-                    </tbody>
-                  </table>
+                
+                <div class="card-body">
+                    <!-- Doctor and Date Info -->
+                    <div class="row  mb-4">
+                        <div class="col-sm-6">
+                            <div class="doctor-info">
+                                <h4 class="doctor-name">{{ doctor.name }}</h4>
+                                <div class="doctor-meta">
+                                    <span class="d-block">{{ doctor.department_name }}</span>
+                                    <span class="d-block">{{ doctor.phone_number }}</span>
+                                    <span class="d-block">{{ doctor.email }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="prescription-date">
+                                <h4>Prescription Date <br>{{ current_date }}</h4>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Prescription Form -->
+                    <form method="POST" enctype="multipart/form-data" class="prescription-form">
+                        {% csrf_token %}
+                        
+                        <!-- Medicine Section -->
+                        <section class="medicine-section">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="section-title">Medicine List</h4>
+                                    
+                                    <div class="medicine-entry">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <!-- Medicine Fields -->
+                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
+                                                        <label>Medicine Name</label>
+                                                        <input type="text" class="form-control" name="medicine_name" required>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
+                                                        <label>Quantity</label>
+                                                        <input type="text" class="form-control" name="quantity" required>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
+                                                        <label>Frequency</label>
+                                                        <input type="text" class="form-control" name="frequency" required>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
+                                                        <label>Relation with meal</label>
+                                                        <input type="text" class="form-control" name="relation_with_meal">
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-6 col-lg-6 form-group">
+                                                        <label>Duration</label>
+                                                        <input type="text" class="form-control" name="duration" required>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-6 col-lg-6 form-group">
+                                                        <label>Instruction</label>
+                                                        <input type="text" class="form-control" name="instruction">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Delete Button -->
+                                            <div class="col-12 col-md-2 col-lg-1 d-flex align-items-end">
+                                                <button type="button" class="btn btn-danger btn-block delete-item">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Add Medicine Button -->
+                                    <div class="add-medicine">
+                                        <button type="button" class="btn btn-outline-primary add-item">
+                                            <i class="fa fa-plus-circle"></i> Add Medicine
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+        
+                        <!-- Test Section -->
+                        <section class="test-section">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="section-title">Test List</h4>
+                                    
+                                    <div class="test-entry">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <!-- Test Fields -->
+                                                    <div class="col-12 col-md-5 col-lg-5 form-group">
+                                                        <label>Test Name</label>
+                                                        <input type="text" class="form-control" name="test_name" required>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-5 col-lg-5 form-group">
+                                                        <label>Description</label>
+                                                        <input type="text" class="form-control" name="description">
+                                                    </div>
+                                                    
+                                                    <div class="col-12 col-md-2 col-lg-2 form-group">
+                                                        <label>ID</label>
+                                                        <input type="number" class="form-control" name="id" min="0">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Delete Button -->
+                                            <div class="col-12 col-md-2 col-lg-1">
+                                                <button type="button" class="btn btn-danger btn-block delete-item">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Add Test Button -->
+                                    <div class="add-test">
+                                        <button type="button" class="btn btn-outline-primary add-item">
+                                            <i class="fa fa-plus-circle"></i> Add Test
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+        
+                        <!-- Additional Information -->
+                        <section class="additional-info">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="section-title">Additional Information</h4>
+                                    <textarea class="form-control" name="extra_information" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </section>
+        
+                        <!-- Submit Button -->
+                        <div class="save-prescription">
+                            <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                                Save Prescription
+                            </button>
+                        </div>
+                    </form>
                 </div>
-              </div>
             </div>
-
-						<!-- /extra Item -->
-						<div class="row">
-							<div class="col-md-12">
-							  <div class="submit-section">
-                  <button type="submit" class="btn btn-primary submit-btn">
-                  Save
-                  </button>
-                  
-                </div>
-							</div>
-						</div>
-						
+            </div>
           </div>
         </div>
       </div>
-    </form>
-      <!-- /Page Content -->
-
+    
       <!-- Footer -->
       {% include 'footer.html' %}
       <!-- /Footer -->
     </div>
-    <!-- /Main Wrapper -->
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
-    <!-- Add Medical Records Modal -->
-    <div class="modal fade custom-modal" id="add_medical_records">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Medical Records</h3>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Date</label>
-                <input
-                  type="text"
-                  class="form-control datetimepicker"
-                  value="31-10-2019"
-                />
-              </div>
-              <div class="form-group">
-                <label>Description ( Optional )</label>
-                <textarea class="form-control"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Upload File</label>
-                <input type="file" class="form-control" />
-              </div>
-              <div class="submit-section text-center">
-                <button type="submit" class="btn btn-primary submit-btn">
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary submit-btn"
-                  data-dismiss="modal"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- /Add Medical Records Modal -->
-
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-
-    <!-- Slimscroll JS -->
-    <script src="{% static 'HealthStack-System/plugins/admin/slimscroll/jquery.slimscroll.min.js' %}"></script>
-
-    <!-- Datetimepicker JS -->
-    <!-- <script src="{% static 'HealthStack-System/js/Normal/moment.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap-datetimepicker.min.js' %}"></script> -->
-
-    <!-- Prescription Settings JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/prescription-settings.js' %}"></script>
-
-    	<!-- Datatables JS -->
-		<script src="{% static 'HealthStack-System/plugins/admin/datatables/jquery.dataTables.min.js'%}"></script> 
-		<script src="{% static 'HealthStack-System/plugins/admin/datatables/datatables.min.js'%}"></script>
-
-    <!-- Sticky Sidebar JS -->
-    <!-- <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
-    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script> -->
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
 	
   </body>
 
-  <!-- doccure/patient-profile.html  30 Nov 2019 04:12:13 GMT -->
+  
 </html>

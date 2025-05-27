@@ -153,19 +153,10 @@ class Test(models.Model):
 
         
 class Prescription(models.Model):
-    # medicine name, quantity, days, time, description, test, test_descrip
     prescription_id = models.AutoField(primary_key=True)
     doctor = models.ForeignKey(Doctor_Information, on_delete=models.CASCADE, null=True, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, blank=True)
     create_date = models.CharField(max_length=200, null=True, blank=True)
-    medicine_name = models.CharField(max_length=200, null=True, blank=True)
-    quantity = models.CharField(max_length=200, null=True, blank=True)
-    days = models.CharField(max_length=200, null=True, blank=True)
-    time = models.CharField(max_length=200, null=True, blank=True)
-    relation_with_meal = models.CharField(max_length=200, null=True, blank=True)
-    medicine_description = models.TextField(null=True, blank=True)
-    test_name = models.CharField(max_length=200, null=True, blank=True)
-    test_description = models.TextField(null=True, blank=True)
     extra_information = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -201,7 +192,7 @@ class Prescription_test(models.Model):
     """
 
     def __str__(self):
-        return str(self.prescription.prescription_id)
+        return f'{self.test_name} && {self.prescription}'
     
 # # test cart system
 class testCart(models.Model):

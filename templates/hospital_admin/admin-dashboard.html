@@ -1,518 +1,377 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Mirrored from dreamguys.co.in/demo/doccure/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:20 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
-    	<!-- Favicon -->
-
-    	<link rel="shortcut icon" type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"/>
-
-
-		
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-    </head>
-    <body>
-	
-	
-
-    <!-- Bootstrap CSS -->
+    <!-- Favicon -->
     <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/bootstrap.min.css'%}"
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
     />
 
-    <!-- Fontawesome CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/font-awesome.min.css'%}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}">
-   
-<!-- Feathericon CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/admin_assets/css/feathericon.min.css'%}"
-    />
-
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/admin/morris/morris.css'%}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css'%}"
+      href="{% static 'HealthStack-System/css/admin/style.css' %}"
     />
-
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
+
   <body>
     <!-- Main Wrapper -->
-        <div class="main-wrapper">
+    <div class="dashboard-wrapper">
       <!-- Header -->
-			<header class="header">{% include 'hospital_admin/hospital-admin-navbar.html' %}</header>            
-			<!-- /Header -->
-			
-			<!-- Sidebar -->
-			<aside class="sidebar" id="sidebar">
-				{% include 'hospital_admin/hospital-admin-sidebar.html' %} </aside>
-			<!-- /Sidebar -->
-			
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
-			
-                <div class="content container-fluid">
-					
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row">
-							<div class="col-sm-12">
-								<h3 class="page-title">Welcome Admin!</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item active">Dashboard</li>
-								</ul>
-                {% include 'message.html' %}
-							</div>
-						</div>
-					</div>
-					<!-- /Page Header -->
+      <header class="header">
+        {% include 'hospital_admin/hospital-admin-navbar.html' %}
+      </header>
+      <!-- /Header -->
 
-          <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="dash-widget-header">
-                    <span class="dash-widget-icon text-primary border-primary">
-                      <i class="fe fe-users"></i>
-                    </span>
-                    <div class="dash-count">
-                      <h3>{{total_doctor_count.count}}</h3>
-                    </div>
-                  </div>
-                  <div class="dash-widget-info">
-                    <h6 class="text-muted">Total Doctors</h6>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-primary w-50"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="dash-widget-header">
-                    <span class="dash-widget-icon text-success">
-                      <i class="fe fe-users"></i>
-                    </span>
-                    <div class="dash-count">
-                      <h3>{{total_patient_count.count}}</h3>
-                    </div>
-                  </div>
-                  <div class="dash-widget-info">
-                    <h6 class="text-muted">Total Patients</h6>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-success w-50"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="dash-widget-header">
-                    <span class="dash-widget-icon text-danger border-danger">
-                      <i class="fe fe-users"></i>
-                    </span>
-                    <div class="dash-count">
-                      <h3>{{total_hospital_count.count}}</h3>
-                    </div>
-                  </div>
-                  <div class="dash-widget-info">
-                    <h6 class="text-muted">Total Hospital</h6>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-danger w-50"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="dash-widget-header">
-                    <span class="dash-widget-icon text-warning border-warning">
-                      <i class="fe fe-users"></i>
-                    </span>
-                    <div class="dash-count">
-                      <h3>{{total_labworker_count.count}}</h3>
-                    </div>
-                  </div>
-                  <div class="dash-widget-info">
-                    <h6 class="text-muted">Total Lab Worker</h6>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-warning w-50"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          
-          <div class="row">
-            <div class="col-md-6 d-flex">
-              <!-- Recent Orders -->
-              <div class="card card-table flex-fill">
-                <div class="card-header">
-                  <h4 class="card-title"> Hospital List</h4>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
-                      <thead>
-                        <tr>
-                          <th>Hospital Name</th>
-                          <th>Address</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for hospital in hospitals%}
-                        <tr>
-                          <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="#"
-                                class="avatar avatar-sm mr-2"
-                                ><img
-                                  class="avatar-img rounded-circle"
-                                  src="{{hospital.featured_image.url}}"
-                                  alt="User Image"
-                              /></a>
-                              <a href="{% url 'hospital-profile' pk=hospital.hospital_id %}">{{hospital.name}}</a>
-                            </h2>
-                          </td>
-                          <td>{{hospital.address}}</td>
-                          <td>{{hospital.email}}</td>
-                          <td>{{hospital.phone_number}}</td>
+      <!-- Sidebar -->
 
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <!-- /Recent Orders -->
-            </div>
+      <aside class="sidebar" id="sidebar">
+        {% include 'hospital_admin/hospital-admin-sidebar.html' %}
+      </aside>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-            <div class="col-lg-6 col-sm-6">
-              <div class="card">
-                  <div class="card-header">
-                      <h4 class="card-title">Appointment Bar Chart</h4>
-                  </div>
-                  <div class="card-body">
-                      <canvas id="barChart_2"></canvas>
-                  </div>
-              </div>
-            </div>
+      <!-- /Sidebar -->
 
-            
-            
+      <!-- Dashboard Page -->
+      <div class="dashboard-container">
+        <!-- Page Header -->
+        <div class="page-header ">
+          <h1 class="page-title">Welcome Back Admin!</h1>
+          <div class="breadcrumb">Dashboard Overview</div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card ">
+            <div class="stat-header">
+              <div class="stat-icon primary">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <div class="stat-count">{{total_doctor_count.count}}</div>
+            </div>
+            <div class="stat-label">Total Doctors</div>
+            <div class="stat-progress">
+              <div class="stat-progress-bar primary"></div>
+            </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-6 d-flex">
-              <!-- Recent Orders -->
-              <div class="card card-table flex-fill">
-                <div class="card-header">
-                  <h4 class="card-title">Doctors List</h4>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
-                      <thead>
-                        <tr>
-                          <th>Doctor Name</th>
-                          <th>Department</th>
-                          <th>specialty</th>
-                          <th>Hospital</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for doctor in doctors%}
-                        <tr>
-                          <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="#"
-                                class="avatar avatar-sm mr-2"
-                                ><img
-                                  class="avatar-img rounded-circle"
-                                  src="{{doctor.featured_image.url}}"
-                                  alt="User Image"
-                              /></a>
-                              <a href="{%url 'admin-doctor-profile' pk=doctor.doctor_id%}">{{doctor.name}}</a>
-                            </h2>
-                          </td>
-                          <td>{{doctor.department}}</td>
-                          <td>{{doctor.specialty}}</td>
-                          <td>{{doctor.hospital}}</td>
+          <div class="stat-card ">
+            <div class="stat-header">
+              <div class="stat-icon success">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-count">{{total_patient_count.count}}</div>
+            </div>
+            <div class="stat-label">Total Patients</div>
+            <div class="stat-progress">
+              <div class="stat-progress-bar success"></div>
+            </div>
+          </div>
 
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
+          <div class="stat-card ">
+            <div class="stat-header">
+              <div class="stat-icon danger">
+                <i class="fas fa-hospital"></i>
+              </div>
+              <div class="stat-count">{{total_hospital_count.count}}</div>
+            </div>
+            <div class="stat-label">Total Hospitals</div>
+            <div class="stat-progress">
+              <div class="stat-progress-bar danger"></div>
+            </div>
+          </div>
+
+          <div class="stat-card ">
+            <div class="stat-header">
+              <div class="stat-icon warning">
+                <i class="fas fa-flask"></i>
+              </div>
+              <div class="stat-count">{{total_labworker_count.count}}</div>
+            </div>
+            <div class="stat-label">Lab Workers</div>
+            <div class="stat-progress">
+              <div class="stat-progress-bar warning"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hospital List and Chart -->
+        <div class="content-grid">
+          <div class="card ">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-hospital"></i>
+                Hospital Network
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Hospital Name</th>
+                      <th>Address</th>
+                      <th>Contact</th>
+                      <th>Phone Number</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for hospital in hospitals %}
+                    <tr>
+                      <td>
+                        <div class="user-avatar">
+                          <img
+                            class="avatar-img rounded-circle"
+                            src="{{hospital.featured_image.url}}"
+                            alt="Hospital Image"
+                            class="avatar"
+                          />
+                          <a
+                            href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
+                            class="user-name"
+                            >{{hospital.name}}</a
+                          >
+                        </div>
+                      </td>
+                      <td>{{hospital.address}}</td>
+                      <td>{{hospital.email}}</td>
+                      <td>{{hospital.phone_number}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card ">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-chart-bar"></i>
+                Appointment Analytics
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <div class="chart-placeholder">
+                  <div class="loading-animation"></div>
+                  <p>Interactive Chart Loading...</p>
+                  <small>Real-time appointment data visualization</small>
                 </div>
               </div>
-              <!-- /Recent Orders -->
             </div>
-
-            <div class="col-md-6 d-flex">
-						
-							<!-- Feed Activity -->
-							<div class="card  card-table flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Patients List</h4>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-										<table class="table table-hover table-center mb-0">
-											<thead>
-												<tr>													
-													<th>Patient Name</th>
-													<th>Phone</th>
-													<th>Email</th>
-													<th>Address</th>													
-												</tr>
-											</thead>
-											<tbody>
-                        {% for patient in patients%}
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{patient.featured_image.url}}" alt="User Image"></a>
-															<a href="">{{patient.name}}</a>
-														</h2>
-													</td>
-													<td>{{patient.phone_number}}</td>
-													<td>{{patient.email}}</td>
-													<td>{{patient.address}}</td>
-												</tr>
-                        {% endfor %}
-												
-												
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<!-- /Feed Activity -->
-							
-						</div>
-            
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-md-6 d-flex">
-              <!-- Recent Orders -->
-              <div class="card card-table flex-fill">
-                <div class="card-header">
-                  <h4 class="card-title">Pharmacist List</h4>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
-                      <thead>
-                        <tr>
-                          <th>Pharmacist Name</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for p in pharmacists %}
-                        <tr>
-                          <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="#"
-                                class="avatar avatar-sm mr-2"
-                                ><img
-                                  class="avatar-img rounded-circle"
-                                  src="{{p.featured_image.url}}"
-                                  alt="User Image"
-                              /></a>
-                              <a href="#">{{p.username}}</a>
-                            </h2>
-                          </td>
-                          <td>{{p.email}}</td>
-                          <td>{{p.phone_number}}</td>
-                          
-
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+        <!-- Doctors and Patients -->
+        <div class="content-grid">
+          <div class="card ">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-user-md"></i>
+                Medical Staff
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Doctor Name</th>
+                      <th>Department</th>
+                      <th>Specialty</th>
+                      <th>Hospital</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for doctor in doctors %}
+                    <tr>
+                      <td>
+                        <div class="user-avatar">
+                          <img
+                            class="avatar-img rounded-circle"
+                            src="{{doctor.featured_image.url}}"
+                            alt="Doctor Image"
+                            class="avatar"
+                          />
+                          <a
+                            href="{% url 'admin-doctor-profile' pk=doctor.doctor_id %}"
+                            class="user-name"
+                            >{{doctor.name}}</a
+                          >
+                        </div>
+                      </td>
+                      <td>{{doctor.department}}</td>
+                      <td>{{doctor.specialty}}</td>
+                      <td>{{doctor.hospital}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
               </div>
-              <!-- /Recent Orders -->
             </div>
-            
-
-            <div class="col-md-6 d-flex">
-						
-							<!-- Feed Activity -->
-							<div class="card  card-table flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Lab-Worker List</h4>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-										<table class="table table-hover table-center mb-0">
-											<thead>
-												<tr>													
-													<th>Lab-Worker Name</th>
-													<th>Phone</th>
-													<th>Email</th>
-													<th>Age</th>													
-												</tr>
-											</thead>
-											<tbody>
-                        {% for lab_worker in lab_workers%}
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{lab_worker.featured_image.url}}" alt="User Image"></a>
-															<a href="#">{{lab_worker.name}}</a>
-														</h2>
-													</td>
-													<td>{{lab_worker.phone_number}}</td>
-													<td>{{lab_worker.email}}</td>
-													<td>{{lab_worker.age}}</td>
-												</tr>
-                        {% endfor %}
-												
-												
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<!-- /Feed Activity -->
-							
-						</div>
           </div>
 
-          <div class="row">
-            
-
-          
+          <div class="card ">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-users"></i>
+                Patient Registry
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Patient Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Address</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                      <td>
+                        <div class="user-avatar">
+                          <img
+                            class="avatar-img rounded-circle"
+                            src="{{patient.featured_image.url}}"
+                            alt="Patient Image"
+                            class="avatar"
+                          />
+                          <a href="#" class="user-name">{{patient.name}}</a>
+                        </div>
+                      </td>
+                      <td>{{patient.phone_number}}</td>
+                      <td>{{patient.email}}</td>
+                      <td>{{patient.address}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          
+        </div>
+
+        <!-- Pharmacists and Lab Workers -->
+        <div class="content-grid">
+          <div class="card ">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-user-md"></i>
+                Pharmacist Staff
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Pharmacist Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for p in pharmacists %}
+                    <tr>
+                      <td>
+                        <div class="user-avatar">
+                          <img
+                            class="avatar-img rounded-circle"
+                            src="{{p.featured_image.url}}"
+                            alt="Pharmacist Image"
+                            class="avatar"
+                          />
+                          <a href="#" class="user-name">{{p.username}}</a>
+                        </div>
+                      </td>
+                      <td>{{p.email}}</td>
+                      <td>{{p.phone_number}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card ">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-users"></i>
+                Lab-Worker Staff
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>Lab-Worker Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Age</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for lab_worker in lab_workers %}
+                    <tr>
+                      <td>
+                        <div class="user-avatar">
+                          <img
+                            class="avatar-img rounded-circle"
+                            src="{{lab_worker.featured_image.url}}"
+                            alt="Lab-Worker Image"
+                            class="avatar"
+                          />
+                          <a href="#" class="user-name">{{lab_worker.name}}</a>
+                        </div>
+                      </td>
+                      <td>{{lab_worker.phone_number}}</td>
+                      <td>{{lab_worker.email}}</td>
+                      <td>{{lab_worker.age}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <!-- /Page Wrapper -->
     </div>
     <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/admin/jquery-3.2.1.min.js'%}"></script>
-
-
-    </body>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/admin/popper.min.js'%}"></script>
-    <script src="{% static 'HealthStack-System/js/admin/bootstrap.min.js'%}"></script>
-
-    <!-- Slimscroll JS -->
-
-    <script src="{% static 'HealthStack-System/plugins/admin/slimscroll/jquery.slimscroll.min.js'%}"></script>
-
-    <!-- <script src="{% static 'HealthStack-System/plugins/admin/raphael/raphael.min.js'%}"></script> -->
-
-    <!-- <script src=" {% static 'HealthStack-System/plugins/admin/morris/morris.min.js'%}"></script> -->
-    <!-- <script src="{% static 'HealthStack-System/js/admin/chart.morris.js'%}"></script> -->
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/js/admin/script.js'%}"></script>
-
-    <!-- Chart JS -->
-
-    <script>
-      var total_patient_count = "{{total_patient_count.count}}";
-      var total_labworker_count= "{{total_labworker_count.count}}";
-      var total_hospital_count= "{{total_hospital_count.count}}";
-      var total_pharmacist_count= "{{total_pharmacist_count.count}}";
-
-      var sat= "{{sat}}";
-      var sat_count= "{{sat_count}}";
-
-      var sun= "{{sun}}";
-      var sun_count= "{{sun_count}}";
-
-      var mon= "{{mon}}";
-      var mon_count= "{{mon_count}}";
-
-      var tues= "{{tues}}";
-      var tues_count= "{{tues_count}}";
-
-      var wed= "{{wed}}";
-      var wed_count= "{{wed_count}}";
-
-      var thurs= "{{thurs}}";
-      var thurs_count= "{{thurs_count}}";
-
-      var fri= "{{fri}}";
-      var fri_count= "{{fri_count}}";
-    </script>
-
-    <script src="{% static 'HealthStack-System/js/admin/Chart.bundle.min.js'%}"></script>
-
-    <script src="{% static 'HealthStack-System/js/admin/raphael.min.js'%}"></script>
-
-    <script src="{% static 'HealthStack-System/js/admin/morris.min.js'%}"></script>
-
-    <script src="{% static 'HealthStack-System/js/admin/morris-init.js'%}"></script>
-
-
-    {% if messages %}
-    <script>
-        {% for message in messages %}
-            $(document).ready(function () {
-                $('.toast').toast('show');
-            });
-        {% endfor %}
-    </script>
-  {% endif %}
-
-    
-
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
   </body>
-
-
-  <!-- Mirrored from dreamguys.co.in/demo/doccure/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:34 GMT -->
 </html>

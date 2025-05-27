@@ -11,7 +11,7 @@
     </a>
     <a href="{% url 'hospital_home'%}" class="navbar-brand logo">
       <img
-        src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}"
+        src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
         class="img-fluid"
         alt="Logo"
       />
@@ -21,7 +21,7 @@
     <div class="menu-header">
       <a href="{% url 'hospital_home'%}" class="menu-logo">
         <img
-          src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}"
+          src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
           class="img-fluid"
           alt="Logo"
         />
@@ -39,9 +39,9 @@
         <a href="{% url 'doctor:doctor-dashboard'%}">Dashboard</a>
       </li>
 
-      <li><a href="{% url 'multiple-hospital' %}" style="text-decoration: none;">Hospitals</a></li>
-
-
+      <li>
+        <a href="{% url 'multiple-hospital' %}">Hospitals</a>
+      </li>
       <li>
         <a href="{% url 'about-us'%}">About Us</a>
       </li>
@@ -55,13 +55,12 @@
   
     <!-- User Menu -->
     <li class="nav-item dropdown has-arrow logged-item">
-      <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+      <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
         <span class="user-img">
           <img
             class="rounded-circle"
             src="{{ doctor.featured_image.url }}"
-            width="31"
-            alt="Darren Elder"
+            alt="Doctor Image"
           />
         </span>
       </a>

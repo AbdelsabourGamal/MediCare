@@ -43,23 +43,16 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        
-          
               <nav aria-label="breadcrumb" class="page-breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
                     <a href="{% url 'hospital_home' %}">Home</a>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    Patient Dashboard
+                    Dashboard
                   </li>
                 </ol>
               </nav>
-              {% include 'message.html' %}
-            
-
-          
-        
       </div>
       <!-- /Breadcrumb -->
       
@@ -196,7 +189,7 @@
                                     <div class="table-action">
                                       {% if appointment.payment_status == 'pending' and appointment.appointment_status == 'confirmed'%}
                                       <a
-                                        href="{% url 'paypal_payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
+                                        href="{% url 'payment_request' pk=appointment.patient.patient_id id=appointment.id %}"
                                         class="btn btn-sm btn-outline-info pay"
                                       >
                                         <i class="fas fa-dollar-sign"></i> Pay
@@ -425,9 +418,6 @@
     <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
     <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
-    
-  
-</script>
     
     {% if messages %}
       <script>

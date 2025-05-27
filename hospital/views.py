@@ -311,7 +311,7 @@ def multiple_hospital(request):
             hospitals, search_query = searchHospitals(request)
 
 
-            context = {'doctor': doctor, 'hospitals': hospitals, 'admin': admin, 'search_query': search_query}
+            context = {'doctor': doctor, 'hospitals': hospitals, 'search_query': search_query}
             return render(request, 'multiple-hospital.html', context)
 
     else:
@@ -515,7 +515,9 @@ def test_add_to_cart(request, pk, pk2):
             # messages.info(request, "This test is added to your cart!")
             return redirect("prescription-view", pk=pk)
         else:
-            order = testOrder(user=request.user)
+            order = testOrder(user=request.user,
+                              prescription_test=item
+                              )
             order.save()
             order.orderitems.add(order_item[0])
             return redirect("prescription-view", pk=pk)
@@ -531,7 +533,7 @@ def test_add_to_cart(request, pk, pk2):
 @login_required(login_url="login")
 def test_cart(request, pk):
     if request.user.is_authenticated and request.user.is_patient:
-        prescription = Prescription.objects.filter(prescription_id=pk)
+        prescription = Prescription.objects.get(prescription_id=pk)
         
         patient = Patient.objects.get(user=request.user)
         prescription_test = Prescription_test.objects.all()
@@ -545,7 +547,7 @@ def test_cart(request, pk):
             return render(request, 'test-cart.html', context)
         else:
             # messages.warning(request, "You don't have any test in your cart!")
-            context = {'patient': patient,'prescription_test':prescription_test}
+            context = {'patient': patient,'prescription_test':prescription_test,'prescription':prescription}
             return render(request, 'prescription-view.html', context)
     else:
         logout(request)
@@ -592,11 +594,11 @@ def test_remove_cart(request, pk):
 def prescription_view(request,pk):
       if request.user.is_patient:
         patient = Patient.objects.get(user=request.user)
-        prescription = Prescription.objects.filter(prescription_id=pk)
-        prescription_medicine = Prescription_medicine.objects.filter(prescription__in=prescription)
-        prescription_test = Prescription_test.objects.filter(prescription__in=prescription)
+        prescriptions = Prescription.objects.filter(prescription_id=pk)
+        prescription_medicine = Prescription_medicine.objects.filter(prescription__in=prescriptions)
+        prescription_test = Prescription_test.objects.filter(prescription__in=prescriptions)
 
-        context = {'patient':patient,'prescription':prescription,'prescription_test':prescription_test,'prescription_medicine':prescription_medicine}
+        context = {'patient':patient,'prescriptions':prescriptions,'prescription_test':prescription_test,'prescription_medicine':prescription_medicine}
         return render(request, 'prescription-view.html',context)
       else:
          redirect('logout') 

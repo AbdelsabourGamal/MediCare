@@ -61,6 +61,7 @@
 			<!-- /Breadcrumb -->
 			
 			<!-- Page Content -->
+			
 			<div class="patient test-cart">
 				<div class="container-fluid">
 					<div class="row">
@@ -76,54 +77,59 @@
 							</div>
 							<!-- /Profile Sidebar -->
 						</div>
-						<div class="col-md-7 col-lg-8 col-xl-9">
-							<section class="wrapper">
-								<div class="container-fostrap">
+						<div class="col-md-12 col-lg-8 col-xl-9">
+							<div class="card">
+								<header>
 									<h1 class="card-title">Test Cart</h1>
-                                    <section class="ftco-section ftco-cart">
-                                        <div class="container">
-                                          <div class="row">
-                                            <div class="col-md-12 ftco-animate">
-                                              <div class="cart-list">
-                                                <table class="table">
-                                                  <thead class="thead-primary">
-                                                    <tr>
-													  <th>Order ID</th>
-													  <th></th>
-													  <th>Test ID</th>
-                                                      <th>Test Name</th>
-                                                      <th>Price</th>        
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
+								</header>
+									<div class="cart-content">
+										<div class="row">
+											<div class="col-12">
+												<div class="table-container">
+												<table class="table cart-table" role="table" aria-label="Test cart items">
+													<thead>
+													<tr>
+														<th scope="col" aria-label="Remove item">Remove</th>
+														<th scope="col">Test ID</th>
+														<th scope="col">Test Name</th>
+														<th scope="col">Price</th>        
+													</tr>
+													</thead>
+													<tbody>
 													{% for test in test_carts %}
-                                                      <tr>
-                                                        <td class="product-remove"><a href="{% url 'test-remove-cart' pk=test.item_id %}"><span class="icon-close"></span></a></td> 
+														<tr>
+														<td class="product-remove"><a href="{% url 'test-remove-cart' pk=test.item_id %}"><span class="icon-close" aria-hidden="true"></span></a></td> 
 														<td>{{test.item.test_info_id}}</td>
 														<td>{{test.item.test_name}}</td>
 														<td class="price">{{test.item.test_info_price}}</td>
-                                                      </tr>
-													  {% endfor %}
-                                                  </tbody>
-                                                </table>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="row justify-content-end">
-                                            <div class="col col-lg-4 col-md-6 mt-5 cart-wrap ftco-animate">
-                                              <div class="cart-total mb-3">
-                                                <h3><b>Cart Totals: </b><span>{{ test_order.get_totals }} Tk.</span></h3>
-                                                <hr>
-                                              </div>
-                                              	<p><a href="{% url 'ssl-payment-request-test' pk=test_order.user.patient.patient_id id=test_order.id pk2=prescription_id %}" class="btn btn-primary py-3 px-4">Proceed to
-                                                  Checkout</a></p>
-												<p><a href="" class="btn btn-info py-3 px-4">Back to Prescription</a></p>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </section>
-								</div>
-							</section>
+														</tr>
+														{% empty %}
+														<tr>
+															<td colspan="4" class="empty-cart">
+																<p>Your Test Cart is empty</p>
+															</td>
+														</tr>
+														{% endfor %}
+													</tbody>
+												</table>
+											</div>
+											</div>
+											<div class="col-12">
+												<div class="cart-total">
+													<h3>Cart Totals: <span>{{ test_order.get_totals }} EGP</span></h3>
+													<div class="cart-actions">
+														<a href="{% url 'payment_request_test' pk=patient.patient_id id=test_order.id %}" class="btn btn-primary" role="button">
+															Proceed to Checkout
+														</a>
+														<a href="{% url 'prescription-view' pk=prescription.prescription_id %}" class="btn btn-info" role="button">
+															Back to Prescription
+														</a>
+													</div>
+												</div>
+												</div>
+											</div>
+									</div>
+							</div>
 						</div>
 					</div>
 				</div>

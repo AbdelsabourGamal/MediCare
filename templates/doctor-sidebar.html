@@ -4,10 +4,7 @@
   <div class="widget-profile pro-widget-content">
     <div class="profile-info-widget">
       <a href="#" class="booking-doc-img">
-        <img
-          src="{{ doctor.featured_image.url }}"
-          alt="User Image"
-        />
+        <img src="{{ doctor.featured_image.url }}" alt="User Image" />
       </a>
       <div class="profile-det-info">
         <h3>{{ doctor.name }}</h3>
@@ -21,7 +18,7 @@
   <div class="dashboard-widget">
     <nav class="dashboard-menu sidebar">
       <ul>
-        <li class="active">
+        <li>
           <a href="{% url 'doctor:doctor-dashboard' %}">
             <i class="fas fa-columns"></i>
             <span>Dashboard</span>
@@ -29,31 +26,28 @@
         </li>
 
         <li>
-        <a href="{% url 'doctor:doctor-profile' pk=request.user.pk %}">
-          <i class="fas fa-user"></i>
-          <span>Profile</span>
-        </a>
-      </li>
-
+          <a href="{% url 'doctor:doctor-profile' pk=request.user.pk %}">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </li>
 
         <li>
           <a href="{% url 'doctor:appointments'%}">
             <i class="fas fa-user-circle"></i>
-            <span>Appoinment</span>
+            <span>Appointments</span>
           </a>
         </li>
-        <li class="nav-item has-submenu">
-          
+        <!-- <li>
             <a href="{% url 'doctor:patient-id' %}" class="nav-link"><i class="fas fa-search"></i><span>Patient ID</span></a>
-          
-        </li>
-        
+        </li> -->
+
         <li>
           <a href="{% url 'multiple-hospital' %}">
             <i class="fas fa-hospital"></i>
             <span>Multiple Hospital</span>
           </a>
-      </li>
+        </li>
         <li>
           <a href="{% url 'doctor:my-patients' %}">
             <i class="fas fa-user-injured"></i>
@@ -61,25 +55,17 @@
           </a>
         </li>
         <li>
-          <a href="{% url 'doctor:doctor-test-list'%}" target="_blank">
+          <a href="{% url 'doctor:doctor-test-list'%}">
             <i class="fas fa-hourglass-start"></i>
             <span>Test Information</span>
           </a>
         </li>
         <li>
-          <a
-            href="{% url 'doctor:doctor-profile-settings' %}"
-          >
+          <a href="{% url 'doctor:doctor-profile-settings' %}">
             <i class="fas fa-user-cog"></i>
             <span>Profile Settings</span>
           </a>
         </li>
-        <!-- <li>
-          <a href="social-media.html">
-            <i class="fas fa-share-alt"></i>
-            <span>Social Media</span>
-          </a>
-        </li> -->
         <li>
           <a href="{% url 'doctor:doctor-change-password' pk=user.id%}">
             <i class="fas fa-lock"></i>
@@ -96,3 +82,4 @@
     </nav>
   </div>
 </div>
+<script src="{% static 'HealthStack-System/js/Normal/active-link.js' %}"></script>

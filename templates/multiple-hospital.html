@@ -102,12 +102,12 @@
 
 												
 													<div class="card">
-														<a class="img-card" href="{% url 'hospital-profile' pk=hospital.hospital_id %}">
+														<a class="img-card" href="../hospital-profile/{{hospital.hospital_id}}/ ">
 														<img src="{{hospital.featured_image.url}}" class="img-fluid"/>
 													  </a>
 														<div class="card-content">
 															<h4 class="card-title">
-																<a href="{% url 'hospital-profile' pk=hospital.hospital_id %}"> {{hospital.name}}
+																<a href="../hospital-profile/{{hospital.hospital_id}}/ "> {{hospital.name}}
 															  </a>
 															</h4>   
 														</div>

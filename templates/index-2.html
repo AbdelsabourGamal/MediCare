@@ -212,9 +212,10 @@
                     />
                     
                       <a
-                        href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
+                        href="hospital-profile/{{ hospital.hospital_id }}"
                         class="position-absolute"
                       >
+                      
                         {{ hospital.name }}
                       </a>
                     
