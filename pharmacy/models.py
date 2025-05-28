@@ -118,6 +118,7 @@ class Order(models.Model):
             return decrease_stock
     
     # TOTAL
+    @property
     def final_bill(self):
         delivery_price= 40.00
         Bill = self.get_totals()+ delivery_price

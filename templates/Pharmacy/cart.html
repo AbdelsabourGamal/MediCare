@@ -78,7 +78,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="{% url 'checkout' %}" class="nav-link">
+                <a href="{% url 'checkout' pk=patient.patient_id id=order.id %}" class="nav-link">
                   <span>Checkout</span>
                 </a>
               </li>
@@ -222,9 +222,9 @@
                 <div class="divider"></div>
                 <div class="summary-row total">
                   <span>Total</span>
-                  <span>{{ order.final_bill | floatformat:2 }} EGP</span>
+                  <span>{{ order.final_bill }} EGP</span>
                 </div>
-                <a href="" class="checkout-btn">Proceed to Checkout</a>
+                <a href="{% url 'checkout' pk=patient.patient_id id=order.id %}" class="checkout-btn">Proceed to Checkout</a>
               </div>
             </div>
           </div>

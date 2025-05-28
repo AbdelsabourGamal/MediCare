@@ -4,7 +4,7 @@ from rest_framework import serializers
 from hospital.models import Hospital_Information, Patient, User 
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
 from hospital_admin.models import Admin_Information,hospital_department
-from paypal.models import Paymentpal
+from paypal.models import Payment
 from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.tokens import RefreshToken  # type: ignore
 from django.contrib.auth import authenticate
@@ -198,7 +198,7 @@ class ReportSerializer(serializers.ModelSerializer):
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Paymentpal
+        model = Payment
         fields = '__all__'
 
 class CombinedDataSerializer(serializers.Serializer):

@@ -10,9 +10,6 @@ urlpatterns = [
     path('test_payment_complete/', views.test_payment_complete, name='test_payment_complete'),
 
 
-    # path('payment_request_pharmacy/<int:pk>/<int:id>/<int:pk2>/', views.paypal_payment_request_pharmacy, name='payment_request_pharmacy'),
-    # path('pharmacy_payment_complete/', views.pharmacy_payment_complete, name='pharmacy_payment_complete'),
-
 
 ]
 

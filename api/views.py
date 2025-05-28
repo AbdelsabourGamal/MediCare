@@ -10,7 +10,7 @@ from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSe
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
 from hospital.models import Hospital_Information, Patient, User 
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
-from paypal.models import Paymentpal
+from paypal.models import Payment
 from hospital_admin.models import Admin_Information,hospital_department
 from rest_framework import generics,status
 from rest_framework.views import APIView
@@ -287,7 +287,7 @@ class PatientReport(generics.ListAPIView):
         return Report.objects.filter(patient__user=self.request.user)
 
 class PatientPayment(generics.ListAPIView):
-    queryset = Paymentpal.objects.all()
+    queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]

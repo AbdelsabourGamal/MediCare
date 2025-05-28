@@ -199,7 +199,7 @@ def appointments(request):
         if request.user.is_authenticated:    
             if request.user.is_doctor:
                 doctor = Doctor_Information.objects.get(user=request.user)
-                total_appointments = Appointment.objects.filter(doctor=doctor)
+                total_appointments = Appointment.objects.filter(doctor=doctor).order_by('-id')
             else:
                 return redirect('doctor:doctor-login')
             
@@ -424,20 +424,28 @@ def booking(request, pk):
         time = request.POST['appoint_time']
         appointment_type = request.POST['appointment_type']
         message = request.POST['message']
-
-    
-        transformed_date = datetime.datetime.strptime(date, '%m/%d/%Y').strftime('%Y-%m-%d')
-        transformed_date = str(transformed_date)
          
-        transformed_time = datetime.datetime.strptime(time, '%I:%M %p').strftime('%H:%M:%S')
-        transformed_time = str(transformed_time)
+        try:
+            hour = int(time)
+            if 8 <= hour <= 20:
+                transformed_time = f"{hour:02d}:00:00"
+            else:
+                return HttpResponse("Invalid hour range", status=400)
+        except (ValueError, TypeError):
+            return HttpResponse("Invalid hour input", status=400)
 
-        appointment.date = transformed_date
+        appointment.date = date
         appointment.time = transformed_time
         appointment.appointment_status = 'pending'
         appointment.serial_number = generate_random_string()
         appointment.appointment_type = appointment_type
         appointment.message = message
+
+        new_appointment_datetime = datetime.datetime.strptime(f"{date} {transformed_time}", "%Y-%m-%d %H:%M:%S")
+        now = datetime.datetime.now()
+        if (new_appointment_datetime - now) < timedelta(hours=3):
+            return HttpResponse("You must book an appointment at least 3 hours in advance.", status=400)
+
         appointment.save()
         
         if message:

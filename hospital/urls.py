@@ -41,6 +41,7 @@ urlpatterns = [
     path('test-cart/<int:pk>/', views.test_cart, name='test-cart'),
     path('prescription-view/<int:pk>', views.prescription_view, name='prescription-view'),
     path('pres_pdf/<int:pk>/',views.prescription_pdf, name='pres_pdf'),
+    path('report_pdf/<int:pk>/',views.report_pdf, name='report_pdf'),
     path('test-single/<int:pk>/', views.test_single, name='test-single'),
     path('test-remove-cart/<int:pk>/', views.test_remove_cart, name='test-remove-cart'),
     path('test-add-to-cart/<int:pk>/<int:pk2>/', views.test_add_to_cart, name='test-add-to-cart'),

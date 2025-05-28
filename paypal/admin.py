@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Paymentpal
+from .models import Payment
 # Register your models here.
-admin.site.register(Paymentpal)
+admin.site.register(Payment)

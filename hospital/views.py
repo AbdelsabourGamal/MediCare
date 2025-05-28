@@ -19,7 +19,7 @@ from xhtml2pdf import pisa
 from .utils import searchDoctors, searchHospitals, searchDepartmentDoctors, paginateHospitals
 from .models import Patient, User
 from doctor.models import Doctor_Information, Appointment,Report, Specimen, Test, Prescription, Prescription_medicine, Prescription_test
-from paypal.models import Paymentpal
+from paypal.models import Payment
 from django.db.models import Q, Count
 import re
 from io import BytesIO
@@ -208,12 +208,11 @@ def patient_register(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def patient_dashboard(request):
     if request.user.is_patient:
-        # patient = Patient.objects.get(user_id=pk)
         patient = Patient.objects.get(user=request.user)
-        report = Report.objects.filter(patient=patient)
-        prescription = Prescription.objects.filter(patient=patient).order_by('-prescription_id')
-        appointments = Appointment.objects.filter(patient=patient).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed'))
-        payments = Paymentpal.objects.filter(patient=patient).filter(payment_type='appointment').filter(status='confirmed')
+        report = Report.objects.filter(patient=patient).order_by('-report_id')
+        prescription = Prescription.objects.filter(patient=patient).order_by('-prescription_id').order_by('-prescription_id')
+        appointments = Appointment.objects.filter(patient=patient).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed')).order_by('-id')
+        payments = Payment.objects.filter(patient=patient).filter(payment_type='appointment').filter(status='confirmed').order_by('-payment_id')
         context = {'patient': patient, 'appointments': appointments, 'payments': payments,'report':report,'prescription':prescription}
     else:
         return redirect('logout')
@@ -629,6 +628,29 @@ def prescription_pdf(request,pk):
         response['Content-Disposition']= content
         return response
     return HttpResponse("Not Found")
+
+@csrf_exempt
+def report_pdf(request, pk):
+    if request.user.is_patient:
+        patient = Patient.objects.get(user=request.user)
+        report = Report.objects.get(report_id=pk)
+        specimen = Specimen.objects.filter(report=report)
+        test = Test.objects.filter(report=report)
+
+        context = {
+            'patient': patient,
+            'report': report,
+            'specimen': specimen,
+            'test': test
+        }
+
+        pdf_data = render_to_pdf('report_pdf.html', context)
+        if pdf_data:
+            response = HttpResponse(pdf_data, content_type='application/pdf')
+            response['Content-Disposition'] = 'inline; filename="report.pdf"'
+            return response
+    return HttpResponse("Not Found")
+
 
 @csrf_exempt
 @login_required(login_url="login")
