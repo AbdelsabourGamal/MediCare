@@ -1,80 +1,115 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-    
-<!-- Mirrored from dreamguys.co.in/demo/doccure/admin/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:51 GMT -->
+
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <title>HealthStack</title>
+        <title>MediCare</title>
 
     	<!-- Favicon -->
 
-    	<link rel="shortcut icon" type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"/>
+    <link
+	rel="shortcut icon"
+	type="image/x-icon"
+	href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+  />
 
-		<!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/bootstrap.min.css'%}"> 
-		
-		<!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/font-awesome.min.css'%}">
-		
-		<!-- Feathericon CSS -->
-        <link rel="stylesheet" href="{% static 'HealthStack-System/admin_assets/css/feathericon.min.css'%}">
-		
-		<!-- Datatables CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/admin/datatables/datatables.min.css'%}"> 
-		
-		<!-- Main CSS -->
-        <link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/style.css'%}"> 
-		
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+  <!-- CSS Files -->
+  <link
+	rel="stylesheet"
+	href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+  />
+
+  <link
+	rel="stylesheet"
+	href="{% static 'HealthStack-System/css/all.min.css' %}"
+  />
+
+  <!-- Main CSS -->
+  <link
+	rel="stylesheet"
+	href="{% static 'HealthStack-System/css/admin/style.css' %}"
+  />
     </head>
     <body>
 	
 		<!-- Main Wrapper -->
         <div class="main-wrapper">
-			<header class="header">{% include 'hospital_admin/hospital-admin-navbar.html' %}</header>
-				<!-- Logo -->
-
-            
-			<!-- /Header -->
-			
-			<!-- Sidebar -->
-			<aside class="sidebar" id="sidebar">
-				{% include 'hospital_admin/hospital-admin-sidebar.html' %} </aside>
-			<!-- /Sidebar -->
+			<header class="header">
+				{% include 'hospital_admin/hospital-admin-navbar.html' %}
+			  </header>
+			  <!-- /Header -->
+		
+			  <!-- Sidebar -->
+			  <aside class="sidebar" id="sidebar">
+				{% include 'hospital_admin/hospital-admin-sidebar.html' %}
+			  </aside>
+			  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+			  <!-- /Sidebar -->
 			
 			<!-- Page Wrapper -->
-			
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
+            <div class="page-container emergency-edit">
 
                 <div class="content container-fluid">
 
-<!-- Breadcrumb -->
-			<div class="breadcrumb-bar">
-				<div class="container-fluid">
-					<div class="row align-items-center">
-						<div class="col-md-12 col-12">
-							<nav aria-label="breadcrumb" class="page-breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Edit hopital information</li>
-								</ol>
-							</nav>
-							<h2 class="breadcrumb-title">Edit Hospital Emergency Information</h2>
-						</div>
-					</div>
-				</div>
+<!-- Page Header -->
+<div class="page-header">
+	<div class="row">
+	  <div class="col-12">
+		<div class="text-center">
+		  <h1 class="page-title mb-0">
+			<i class="fas fa-hospital me-3"></i>
+			Edit Hospital Emergency information
+		  </h1>
+		  
+		</div>
+	  </div>
+	</div>
+  </div>
+  <div class="profile-edit-container">
+	<div class="profile-card">
+	  <div class="profile-content">
+		<div class="profile-image-container">
+		  <div class="profile-image-wrapper">
+			<img 
+			  src="{{hospital.featured_image.url}}" 
+			  alt="{{hospital.name}} logo" 
+			  class="profile-image"
+			>
+		  </div>
+		</div>
+  
+		<form 
+		  action="{% url 'edit-emergency-information' pk=hospital.hospital_id %}" 
+		  method="POST" 
+		  enctype="multipart/form-data" 
+		  class="profile-form"
+		>
+		  {% csrf_token %}
+		  
+		  <div class="form-fields-grid">
+			{% for field in form %}
+			<div class="form-field">
+			  <label class="form-label">{{field.label}}</label>
+			  {{field}}
+			  {% if field.errors %}
+				<div class="form-errors">{{field.errors}}</div>
+			  {% endif %}
 			</div>
-			<!-- /Breadcrumb -->
-			
-			<!-- Page Content -->
+			{% endfor %}
+		  </div>
+  
+		  <div class="form-actions">
+			<button type="submit" class="submit-button">Save Changes</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+			{% comment %} <!-- Page Content -->
 			<div class="call-content-full">
-				<div class="container-lg">
+				
 					<div class="row-cols-6">
 						<div class="col-md-7 col-lg-8 col-xl-20">
 							<div class="card">
@@ -116,10 +151,10 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				
 
 			</div>		
-			<!-- /Page Content -->
+			<!-- /Page Content --> {% endcomment %}
 
 					
 
@@ -133,24 +168,13 @@
         </div>
 		<!-- /Main Wrapper -->
 		
-		<!-- jQuery -->
-        <script src="{% static 'HealthStack-System/js/admin/jquery-3.2.1.min.js' %}"></script> 
-		
-		<!-- Bootstrap Core JS -->
-        <script src="{% static 'HealthStack-System/js/admin/popper.min.js' %}"></script> 
-        <script src="{% static 'HealthStack-System/js/admin/bootstrap.min.js' %}"></script> 
-		
-		<!-- Slimscroll JS -->
-        <script src="{% static 'HealthStack-System/plugins/admin/slimscroll/jquery.slimscroll.min.js' %}"></script>
-		
-		<!-- Datatables JS -->
-		<script src="{% static 'HealthStack-System/plugins/admin/datatables/jquery.dataTables.min.js'%}"></script> 
-		<script src="{% static 'HealthStack-System/plugins/admin/datatables/datatables.min.js'%}"></script>
-		
-		<!-- Custom JS -->
-		<script src="{% static 'HealthStack-System/js/admin/script.js' %}"></script>
+			<!-- Scripts -->
+			<script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+			<script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+			<script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+			<script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+			<script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
 		
     </body>
 
-<!-- Mirrored from dreamguys.co.in/demo/doccure/admin/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:51 GMT -->
 </html>

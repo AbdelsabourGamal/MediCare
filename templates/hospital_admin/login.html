@@ -60,7 +60,7 @@
           </header>
 
           <form class="login-form" method="POST" novalidate>
-            {% csrf_token %} {% include 'message.html' %}
+            {% csrf_token %} 
 
             <div class="form-group">
               <label for="username" class="sr-only">Username</label>
@@ -106,11 +106,7 @@
           </form>
 
           <div class="forgot-password">
-            <a
-              href="{% url 'reset-password'%}"
-              onclick="alert('Redirect to password reset')"
-              >Forgot your password?</a
-            >
+            <a href="{% url 'reset-password'%}">Forgot your password?</a>
           </div>
 
           <div class="divider">
@@ -118,17 +114,10 @@
           </div>
 
           <nav class="form-links" aria-label="Additional options">
-            <a
-              href="{%url 'hospital_home' %}"
-              class="form-link"
-              onclick="alert('Redirect to homepage')"
+            <a href="{%url 'hospital_home' %}" class="form-link"
               >← Return to Homepage</a
             >
-            <a
-              href="{%url 'admin_register'%}"
-              class="form-link"
-              onclick="alert('Redirect to registration')"
-            >
+            <a href="{%url 'admin_register'%}" class="form-link">
               Don't have an account? <strong>Create one here</strong>
             </a>
           </nav>

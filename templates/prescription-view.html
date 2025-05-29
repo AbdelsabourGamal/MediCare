@@ -55,7 +55,7 @@
 			</nav>
       	</div>
       	<!-- /Breadcrumb -->
-
+              {% include 'message.html' %}
       	<!-- Page Content -->
       	<div class="patient prescription-view">
     <div class="container-fluid">
@@ -238,4 +238,14 @@
     <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
     <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
 
+    {% if messages %}
+    <script>
+      {% for message in messages %}
+          $(document).ready(function () {
+              $('.toast').toast('show');
+          });
+      {% endfor %}
+    </script>
+    {% endif %}
+    
 </html>

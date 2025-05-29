@@ -511,7 +511,7 @@ def test_add_to_cart(request, pk, pk2):
         if order_qs.exists():
             order = order_qs[0]
             order.orderitems.add(order_item[0])
-            # messages.info(request, "This test is added to your cart!")
+            messages.info(request, "This test is added to your cart!")
             return redirect("prescription-view", pk=pk)
         else:
             order = testOrder(user=request.user,
@@ -545,9 +545,8 @@ def test_cart(request, pk):
             context = {'test_carts': test_carts,'test_order': test_order, 'patient': patient, 'prescription': prescription ,'prescription_test':prescription_test, 'prescription_id':pk}
             return render(request, 'test-cart.html', context)
         else:
-            # messages.warning(request, "You don't have any test in your cart!")
-            context = {'patient': patient,'prescription_test':prescription_test,'prescription':prescription}
-            return render(request, 'prescription-view.html', context)
+            messages.warning(request, "You don't have any test in your cart!")
+            return redirect('patient-dashboard')
     else:
         logout(request)
         messages.info(request, 'Not Authorized')
@@ -560,12 +559,11 @@ def test_remove_cart(request, pk):
         item = Prescription_test.objects.get(test_id=pk)
 
         patient = Patient.objects.get(user=request.user)
-        prescription = Prescription.objects.filter(prescription_id=pk)
-        prescription_medicine = Prescription_medicine.objects.filter(prescription__in=prescription)
-        prescription_test = Prescription_test.objects.filter(prescription__in=prescription)
+        prescription = item.prescription
+        prescription_medicine = Prescription_medicine.objects.filter(prescription=prescription)
+        prescription_test = Prescription_test.objects.filter(prescription=prescription)
         test_carts = testCart.objects.filter(user=request.user, purchased=False)
-        
-        # item = get_object_or_404(test, pk=pk)
+
         test_order_qs = testOrder.objects.filter(user=request.user, ordered=False)
         if test_order_qs.exists():
             test_order = test_order_qs[0]
@@ -573,15 +571,15 @@ def test_remove_cart(request, pk):
                 test_order_item = testCart.objects.filter(item=item, user=request.user, purchased=False)[0]
                 test_order.orderitems.remove(test_order_item)
                 test_order_item.delete()
-                # messages.warning(request, "This test was remove from your cart!")
-                context = {'test_carts': test_carts,'test_order': test_order,'patient': patient,'prescription_id':pk}
-                return render(request, 'test-cart.html', context)
+                messages.warning(request, "This test was remove from your cart!")
+                context = {'patient': patient,'test': item,'prescription':prescription,'prescription_medicine':prescription_medicine,'prescription_test':prescription_test}
+                return redirect('test-cart', pk=prescription.prescription_id)
             else:
-                # messages.info(request, "This test was not in your cart")
+                messages.info(request, "This test was not in your cart")
                 context = {'patient': patient,'test': item,'prescription':prescription,'prescription_medicine':prescription_medicine,'prescription_test':prescription_test}
                 return render(request, 'prescription-view.html', context)
         else:
-            # messages.info(request, "You don't have an active order")
+            messages.info(request, "You don't have an active order")
             context = {'patient': patient,'test': item,'prescription':prescription,'prescription_medicine':prescription_medicine,'prescription_test':prescription_test}
             return redirect('prescription-view', pk=prescription.prescription_id)
     else:

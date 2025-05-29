@@ -1,14 +1,13 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Mirrored from dreamguys.co.in/demo/doccure/admin/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:51 GMT -->
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicon -->
 
@@ -18,45 +17,25 @@
       href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
-    <!-- Fontawesome CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"
-    />
-
-    <!-- Feathericon CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/admin_assets/css/feathericon.min.css'%}"
-    />
-
-    <!-- Datatables CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css'%}"
+      href="{% static 'HealthStack-System/css/admin/style.css' %}"
     />
-
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.min.js"></script>
-      <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <!-- Main Wrapper -->
-
-    <!-- Header -->
     <div class="main-wrapper">
       <header class="header">
         {% include 'hospital_admin/hospital-admin-navbar.html' %}
@@ -67,299 +46,316 @@
       <aside class="sidebar" id="sidebar">
         {% include 'hospital_admin/hospital-admin-sidebar.html' %}
       </aside>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
       <!-- /Sidebar -->
 
       <!-- Page Wrapper -->
-
-      <div class="page-wrapper">
+      <div class="page-container departments">
         <div class="content container-fluid">
           <!-- Page Header -->
-
           <div class="page-header">
             <div class="row">
-              <div class="col-sm-7 col-auto">
-                <h3 class="page-title">Department</h3>
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a href="index.html">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">Hospital Department</li>
-                </ul>
+              <div class="col-12">
+                <div class="text-center">
+                  <h1 class="page-title mb-0">
+                    <i class="fas fa-hospital me-3"></i>
+                    Hospital Departments information
+                  </h1>
+                  <p class="lead mt-2 mb-0">
+                    Manage and edit all Departments in the system
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <!-- /Page Header -->
-          <div class="row">
-            <div class="col-sm-8">
-              <div class="card">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
-                      <thead>
-                        <tr>
-                          <th>Department Name</th>
-                          <th>Image</th>
-                          <th class="text-center">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {%for dep in departments%}
-                        <tr>
-                          <td>
-                            <h5>{{dep.hospital_department_name}}</h5>
-                          </td>
 
-                          <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="profile.html"
-                                class="avatar avatar-xl mr-2"
-                              >
+          <!-- Departments Management Section -->
+          <section class="departments-management">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                      <i class="fas fa-list-ul"></i>
+                      Departments List
+                    </h5>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table
+                        class="table table-hover table-striped mb-0"
+                        role="table"
+                      >
+                        <thead class="table-dark">
+                          <tr>
+                            <th scope="col">
+                              <i class="fas fa-building me-2"></i>Department
+                              Name
+                            </th>
+                            <th scope="col" class="text-center">
+                              <i class="fas fa-image me-2"></i>Image
+                            </th>
+                            <th scope="col" class="text-center">
+                              <i class="fas fa-cogs me-2"></i>Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for dep in departments %}
+                          <tr
+                            class="department-row"
+                            data-department-id="{{ dep.hospital_department_id }}"
+                          >
+                            <td class="align-middle">
+                              <div class="department-info">
+                                <h6 class="mb-0 text-primary fw-semibold">
+                                  {{ dep.hospital_department_name }}
+                                </h6>
+                              </div>
+                            </td>
+                            <td class="text-center align-middle">
+                              <div class="department-image">
                                 <img
-                                  src="{{dep.featured_image.url}}"
-                                  alt="specialty"
+                                  src="{{ dep.featured_image.url }}"
+                                  alt="Department: {{ dep.hospital_department_name }}"
+                                  class="img-thumbnail rounded-circle"
+                                  style="
+                                    width: 60px;
+                                    height: 60px;
+                                    object-fit: cover;
+                                  "
+                                  loading="lazy"
                                 />
-                              </a>
-                              <!-- class="avatar-img" -->
-                              <!-- class="avatar avatar-sm mr-2" -->
-                            </h2>
-                          </td>
-
-                          <td class="text-center">
-                            <div class="actions">
-                              <a
-                                class="btn btn-sm bg-success-light"
-                                data-toggle="modal"
-                                data-target="#modal-default{{dep.hospital_department_name}}"
-                              >
-                                <i class="fe fe-pencil"></i> Edit
-                              </a>
-                              <a
-                                data-toggle="modal"
-                                data-target="#delete_modal{{dep.hospital_department_id}}"
-                                class="btn btn-sm bg-danger-light"
-                              >
-                                <i class="fe fe-trash"></i> Delete
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-
-                        <div
-                          class="modal fade"
-                          id="modal-default{{dep.hospital_department_name}}"
-                          aria-hidden="true"
-                          role="dialog"
-                        >
-                          <form
-                            action="{%url 'edit-department' pk=dep.hospital_department_id%}"
-                            method="POST"
-                            enctype="multipart/form-data"
-                          >
-                            {% csrf_token %}
-                            <div
-                              class="modal-dialog modal-dialog-centered"
-                              role="document"
-                            >
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">
-                                    Edit Department Name
-                                  </h5>
-                                  <button
-                                    type="button"
-                                    class="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                  >
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <div class="row form-row">
-                                    <div class="col-12 col-sm-6">
-                                      <div class="form-group">
-                                        <label>Department Name</label>
-                                        <input
-                                          type="text"
-                                          class="form-control"
-                                          name="department_name"
-                                          value="{{dep.hospital_department_name}}"
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <div class="col-12 col-sm-6">
-                                      <div class="form-group">
-                                        <label>Image</label>
-                                        <input
-                                          type="file"
-                                          name="featured_image"
-                                          class="form-control"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <button
-                                    type="submit"
-                                    class="btn btn-primary btn-block"
-                                  >
-                                    Save Changes
-                                  </button>
-                                </div>
                               </div>
-                            </div>
-                          </form>
-                        </div>
-
-                        <div
-                          class="modal fade"
-                          id="delete_modal{{dep.hospital_department_id}}"
-                          aria-hidden="true"
-                          role="dialog"
-                        >
-                          <form
-                            method="POST"
-                            action="{%url 'delete-department' pk=dep.hospital_department_id%}"
-                          >
-                            <div
-                              class="modal-dialog modal-dialog-centered"
-                              role="document"
-                            >
-                              <div class="modal-content">
-                                {% csrf_token %}
-                                <div class="modal-body">
-                                  <div class="form-content p-2">
-                                    <h4
-                                      class="modal-title"
-                                      style="
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                      "
-                                    >
-                                      Delete
-                                    </h4>
-                                    <p
-                                      class="mb-4"
-                                      style="
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                      "
-                                    >
-                                      Are you sure want to delete?
-                                    </p>
-                                    <div
-                                      style="
-                                        display: flex;
-                                        justify-content: center;
-                                      "
-                                    >
-                                      <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                        style="margin-right: 5px"
-                                      >
-                                        Save
-                                      </button>
-                                      <button
-                                        type="button"
-                                        class="btn btn-danger"
-                                        style="margin-left: 5px"
-                                        data-dismiss="modal"
-                                      >
-                                        Close
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
+                            </td>
+                            <td class="text-center align-middle">
+                              <div class="action-buttons">
+                                <button
+                                  class="btn btn-sm btn-outline-success"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editModal{{ dep.hospital_department_id }}"
+                                  title="Edit Department"
+                                  aria-label="Edit {{ dep.hospital_department_name }}"
+                                >
+                                  <i class="fas fa-edit me-1"></i>Edit
+                                </button>
+                                <button
+                                  class="btn btn-sm btn-outline-danger"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deleteModal{{ dep.hospital_department_id }}"
+                                  title="Delete Department"
+                                  aria-label="Delete {{ dep.hospital_department_name }}"
+                                >
+                                  <i class="fas fa-trash me-1"></i>Delete
+                                </button>
                               </div>
-                            </div>
-                          </form>
-                        </div>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
 
-                        {%endfor%}
-                      </tbody>
-                    </table>
+                    {% if not departments %}
+                    <div class="empty-state text-center py-5">
+                      <i class="fas fa-hospital fa-3x text-muted mb-3"></i>
+                      <h5 class="text-muted">No Departments Found</h5>
+                      <p class="text-muted mb-0">
+                        Start by adding your first department to the system.
+                      </p>
+                    </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </section>
 
-    {% comment %}
-    <div
-      class="modal fade"
-      id="edit_specialties_details"
-      aria-hidden="true"
-      role="dialog"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Department Name</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="row form-row">
-                <div class="col-12 col-sm-6">
-                  <div class="form-group">
-                    <label>Department Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      value="{{dep.hospital_department_name}}"
-                    />
+          <!-- Edit Modals -->
+          {% for dep in departments %}
+          <div
+            class="modal fade"
+            id="editModal{{ dep.hospital_department_id }}"
+            tabindex="-1"
+            aria-labelledby="editModalLabel{{ dep.hospital_department_id }}"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <form
+                  action="{% url 'edit-department' pk=dep.hospital_department_id %}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="needs-validation"
+                  novalidate
+                >
+                  {% csrf_token %}
+                  <div class="modal-header bg-success text-white">
+                    <h5
+                      class="modal-title"
+                      id="editModalLabel{{ dep.hospital_department_id }}"
+                    >
+                      <i class="fas fa-edit"></i>Edit Department
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close btn-close-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
                   </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                  <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" class="form-control" />
+                  <div class="modal-body">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="departmentName{{ dep.hospital_department_id }}"
+                            name="department_name"
+                            value="{{ dep.hospital_department_name }}"
+                            placeholder="Department Name"
+                            required
+                          />
+                          <label
+                            for="departmentName{{ dep.hospital_department_id }}"
+                          >
+                            Department Name *
+                          </label>
+                          <div class="invalid-feedback">
+                            Please provide a valid department name.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="departmentImage{{ dep.hospital_department_id }}"
+                            class="form-label"
+                          >
+                            Department Image
+                          </label>
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="departmentImage{{ dep.hospital_department_id }}"
+                            name="featured_image"
+                            accept="image/*"
+                          />
+                          <div class="form-text">
+                            <small class="text-muted">
+                              Current: {% if dep.featured_image %}
+                              <img
+                                src="{{ dep.featured_image.url }}"
+                                alt="{{ dep.featured_image.name }}"
+                                class="img-fluid"
+                                width="48"
+                                height="48"
+                              />
+                              {% else %}
+                              <strong>No image</strong>
+                              {% endif %}
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      <i class="fas fa-times me-1"></i>Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                      <i class="fas fa-save me-1"></i>Save Changes
+                    </button>
+                  </div>
+                </form>
               </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                Save Changes
-              </button>
-            </form>
+            </div>
           </div>
+          {% endfor %}
+
+          <!-- Delete Modals -->
+          {% for dep in departments %}
+          <div
+            class="modal fade"
+            id="deleteModal{{ dep.hospital_department_id }}"
+            tabindex="-1"
+            aria-labelledby="deleteModalLabel{{ dep.hospital_department_id }}"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content border-danger">
+                <form
+                  method="POST"
+                  action="{% url 'delete-department' pk=dep.hospital_department_id %}"
+                >
+                  {% csrf_token %}
+                  <div class="modal-header bg-danger text-white">
+                    <h5
+                      class="modal-title"
+                      id="deleteModalLabel{{ dep.hospital_department_id }}"
+                    >
+                      <i class="fas fa-exclamation-triangle"></i>Confirm
+                      Deletion
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close btn-close-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body text-center py-4">
+                    <div class="mb-3">
+                      <i
+                        class="fas fa-exclamation-circle fa-3x text-warning"
+                      ></i>
+                    </div>
+                    <h6 class="mb-3">Delete Department</h6>
+                    <p class="mb-3 text-muted">
+                      Are you sure you want to delete the department
+                      <strong class="text-danger"
+                        >{{ dep.hospital_department_name }}</strong
+                      >?
+                    </p>
+                    <div class="alert alert-warning" role="alert">
+                      <small>
+                        <i class="fas fa-info-circle me-1"></i>
+                        This action cannot be undone and will permanently remove
+                        all associated data.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="modal-footer justify-content-center">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      <i class="fas fa-times me-1"></i>Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                      <i class="fas fa-trash me-1"></i>Delete Department
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
-    {% endcomment %}
-
-    <!-- /Main Wrapper -->
-
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/admin/jquery-3.2.1.min.js' %}"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/admin/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/admin/bootstrap.min.js' %}"></script>
-
-    <!-- Slimscroll JS -->
-    <script src="{% static 'HealthStack-System/plugins/admin/slimscroll/jquery.slimscroll.min.js' %}"></script>
-
-    <!-- Datatables JS -->
-    <script src="{% static 'HealthStack-System/plugins/admin/datatables/jquery.dataTables.min.js'%}"></script>
-    <script src="{% static 'HealthStack-System/plugins/admin/datatables/datatables.min.js'%}"></script>
-
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/js/admin/script.js' %}"></script>
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
   </body>
-
-  <!-- Mirrored from dreamguys.co.in/demo/doccure/admin/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:51 GMT -->
 </html>

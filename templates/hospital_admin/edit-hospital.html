@@ -1,419 +1,332 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>MediCare</title>
 
-<!-- Mirrored from dreamguys.co.in/demo/doccure/admin/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:51 GMT -->
+    <!-- Favicon -->
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-	<title>HealthStack</title>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+    />
 
-    	<!-- Favicon -->
+    <!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+    />
 
-    	<link rel="shortcut icon" type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"/>
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
+    />
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/bootstrap.min.css'%}">
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'HealthStack-System/css/admin/style.css' %}"
+    />
+  </head>
 
-	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}"/>
-	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}"/>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="header">
+        {% include 'hospital_admin/hospital-admin-navbar.html' %}
+      </header>
+      <!-- /Header -->
 
-	<!-- Feathericon CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/admin_assets/css/feathericon.min.css'%}">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        {% include 'hospital_admin/hospital-admin-sidebar.html' %}
+      </aside>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      <!-- /Sidebar -->
 
-	<!-- Datatables CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/admin/datatables/datatables.min.css'%}">
+      <!-- Page Wrapper -->
 
-	<!-- Main CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/style.css'%}">
+      <div class="page-container edit-hospital">
+        <div class="content container-fluid">
+          <!-- Page Header -->
+          <div class="page-header">
+            <div class="row">
+              <div class="col-12">
+                <div class="text-center">
+                  <h1 class="page-title mb-0">
+                    <i class="fas fa-hospital me-3"></i>
+                    Edit Hospital information
+                  </h1>
+                  <p class="lead mt-2 mb-0">
+                    Manage and edit all hospitals in the system
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Page Header -->
 
-	<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-</head>
+          <div class="form-container">
+            <!-- Profile Image Section -->
+            <div class="profile-section">
+              <div class="profile-img">
+                <img
+                  src="{{hospital.featured_image.url}}"
+                  alt="Hospital Image"
+                  id="profileImage"
+                />
+              </div>
+              <div>
+                <label for="featured_image" class="upload-btn">
+                  <i class="fas fa-upload"></i> Upload Photo
+                  <input
+                    type="file"
+                    id="featured_image"
+                    name="featured_image"
+                    value="{{featured_image}}"
+                    accept="image/*"
+                  />
+                </label>
+                <div class="form-hint">
+                  Allowed JPG, GIF or PNG. Max size of 2MB
+                </div>
+              </div>
+            </div>
 
-<body>
+            <form
+              action="{% url 'edit-hospital' pk=hospital.hospital_id %}"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
 
-	<!-- Main Wrapper -->
-	<div class="main-wrapper">
-		<header class="header">{% include 'hospital_admin/hospital-admin-navbar.html' %}</header>
-		<!-- Logo -->
+              <div class="form-grid">
+                <!-- Basic Information -->
+                <div class="card">
+                  <h3 class="card-title">
+                    <i class="fas fa-info-circle"></i>
+                    Basic Information
+                  </h3>
 
+                  <div class="form-group">
+                    <label for="hospital_name">Hospital Name</label>
+                    <input
+                      type="text"
+                      id="hospital_name"
+                      name="hospital_name"
+                      class="input-field"
+                      placeholder="Enter hospital name"
+                      value="{{hospital.name}}"
+                    />
+                  </div>
 
-		<!-- /Header -->
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      class="input-field"
+                      placeholder="Enter hospital address"
+                      value="{{hospital.address}}"
+                    />
+                  </div>
 
-		<!-- Sidebar -->
-		<aside class="sidebar" id="sidebar">
-			{% include 'hospital_admin/hospital-admin-sidebar.html' %} </aside>
-		<!-- /Sidebar -->
+                  <div class="form-group">
+                    <label for="email">Hospital Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      class="input-field"
+                      placeholder="Enter email address"
+                      value="{{hospital.email}}"
+                    />
+                  </div>
 
-		<!-- Page Wrapper -->
+                  <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input
+                      type="tel"
+                      id="phone_number"
+                      name="phone_number"
+                      class="input-field"
+                      placeholder="Enter phone number"
+                      value="{{hospital.phone_number}}"
+                    />
+                  </div>
 
-		<!-- Page Wrapper -->
-		<div class="page-wrapper">
+                  <div class="form-group">
+                    <label for="type">Hospital Type</label>
+                    <input
+                      type="text"
+                      id="type"
+                      name="type"
+                      class="input-field"
+                      placeholder="e.g., General, Specialty, Emergency"
+                      value="{{hospital.hospital_type}}"
+                    />
+                  </div>
+                </div>
 
-			<div class="content container-fluid">
+                <!-- Departments -->
+                <div class="card">
+                  <h3 class="card-title">
+                    <i class="fas fa-building"></i>
+                    Departments
+                  </h3>
 
-				<!-- Breadcrumb -->
-				<div class="breadcrumb-bar">
-					<div class="container-fluid">
-						<div class="row align-items-center">
-							<div class="col-md-12 col-12">
-								<nav aria-label="breadcrumb" class="page-breadcrumb">
-									<ol class="breadcrumb">
-										<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-										<li class="breadcrumb-item active" aria-current="page">Edit Hospital information
-										</li>
-									</ol>
-								</nav>
-								<h2 class="breadcrumb-title">Edit Hospital Information</h2>{% include 'message.html' %}
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Breadcrumb -->
+                  <div id="departments-container">
+                    {% for department in departments %}
+                    <div class="dynamic-item">
+                      <div class="form-group">
+                        <label>Department Name</label>
+                        <input
+                          type="text"
+                          class="input-field"
+                          name="department_name[]"
+                          placeholder="Enter department name"
+                          value="{{department.hospital_department_name}}"
+                        />
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
 
-				<!-- Page Content -->
-				<div class="call-content-full">
-					<div class="container-lg">
-						<div class="row-cols-6">
-							<div class="col-md-6 col-lg-7">
-								<div class="card">
-									<div class="card-body">
+                  <div class="add-more">
+                    <button
+                      type="button"
+                      class="btn btn-secondary add-department"
+                    >
+                      <i class="fas fa-plus-circle"></i> Add Department
+                    </button>
+                  </div>
+                </div>
 
-										<div class="col-12 col-md-12">
-											<div class="form-group">
-												<div class="change-avatar">
-													<div class="profile-img">
-														<img src="{{hospital.featured_image.url}}" width="225 px"
-															alt="User Image">
-													</div>
-												</div>
-											</div>
-										</div>
+                <!-- Services -->
+                <div class="card">
+                  <h3 class="card-title">
+                    <i class="fas fa-stethoscope"></i>
+                    Services
+                  </h3>
 
-										<!-- Profile Settings Form -->
-										<form action="{% url 'edit-hospital' pk=hospital.hospital_id %}" method="POST"
-											enctype="multipart/form-data">
-											{% csrf_token %}
-											<div >
-												<div class="col-12 col-md-6 col-lg-8">
-													<div class="form-group">
-														<div class="change-avatar">
-															<div class="upload-img">
-																<div class="change-photo-btn">
-																	<span><i class="fa fa-upload"></i> Upload
-																		Photo</span>
-																	<input type="file" class="upload"
-																		name="featured_image"
-																		value="{{featured_image}}">
-																</div>
-																<small class="form-text text-muted">Allowed JPG, GIF or
-																	PNG. Max size of 2MB</small>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-md-12">
-													<div class="card card-table">
-														<div class="card-body">
-															<div class="table-responsive">
-																<table class="table table-hover table-center">
-																	<thead>
-																		<tr>
-																			<th style="max-width: 300px;min-width: 280px;">Hospital Name
-																			</th>
-																			<th style="min-width: 50px;"></th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>
-																				<input class="form-control" type="text"
-																					name="hospital_name"
-																					value="{{hospital.name}}">
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div class="card card-table">
-														<div class="card-body">
-															<div class="table-responsive">
-																<table class="table table-hover table-center">
-																	<thead>
-																		<tr>
-																			<th style="max-width: 300px;min-width: 280px;">Address</th>
-																			<th style="min-width: 50px;"></th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>
-																				<input class="form-control" type="text"
-																					name="address"
-																					value="{{hospital.address}}">
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div class="card card-table">
-														<div class="card-body">
-															<div class="table-responsive">
-																<table class="table table-hover table-center">
-																	<thead>
-																		<tr>
-																			<th style="max-width: 300px;min-width: 280px;">Hospital Email
-																			</th>
-																			<th style="min-width: 50px;"></th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>
-																				<input class="form-control" type="email"
-																					name="email"
-																					value="{{hospital.email}}">
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div class="card card-table">
-														<div class="card-body">
-															<div class="table-responsive">
-																<table class="table table-hover table-center">
-																	<thead>
-																		<tr>
-																			<th style="max-width: 300px;min-width: 280px;">Hospital phone
-																				Number</th>
-																			<th style="min-width: 50px;"></th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>
-																				<input class="form-control" type="text"
-																					name="phone_number"
-																					value="{{hospital.phone_number}}">
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div class="card card-table">
-														<div class="card-body">
-															<div class="table-responsive">
-																<table class="table table-hover table-center">
-																	<thead>
-																		<tr>
-																			<th style="max-width: 300px;min-width: 280px;">Hospital Type
-																				</th>
-																			<th style="min-width: 50px;"></th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>
-																				<input class="form-control" type="text"
-																					name="type"
-																					value="{{hospital.hospital_type}}">
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div class="card">
-														<div class="card-body">
-															<h4 class="card-title">Departments</h4>
-															<div class="department-info">
-															{%for department in departments%}	
-																<div class="row form-row department-cont">
-																	<div class="col-12 col-md-10 col-lg-11">
-																		<div class="form-group">
-																			<label>Add New Departments</label>
-																			<input type="text" class="form-control"
-																				value={{department.hospital_department_name}}>
-																		</div>
-																	</div>
-																	{% comment %} <div class="col-md-2 col-lg-1">
-																		<label class="d-md-block d-sm-none d-none">&nbsp;</label>
-																		<a href="#" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-danger">
-																		  <i class="far fa-trash-alt"></i>
-																		</a>
-																	</div> {% endcomment %}
-																</div>
-															{% endfor %}
-																
+                  <div id="services-container">
+                    {% for service in services %}
+                    <div class="dynamic-item">
+                      <div class="form-group">
+                        <label>Service Name</label>
+                        <input
+                          type="text"
+                          class="input-field"
+                          name="service_name[]"
+                          placeholder="Enter service name"
+                          value="{{service.service_name}}"
+                        />
+                      </div>
+                      <a
+                        href="{% url 'delete-service' pk=service.service_id pk2=hospital.hospital_id %}"
+                        onclick="return confirm('Are you sure you want to Delete?');"
+                        class="btn btn-danger"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </a>
+                    </div>
+                    {% endfor %}
+                  </div>
 
-															</div>
-															<div class="add-more">
-																<a href="javascript:void(0);" class="add-department"><i
-																		class="fa fa-plus-circle"></i> Add More</a>
-															</div>
-														</div>
-													</div>
-													<div class="card">
-														<div class="card-body">
-															<h4 class="card-title">Services</h4>
-														{%for service in services%}	
-															<div class="service-info">
-																<div class="row form-row service-cont">
-																	<div class="col-12 col-md-8 col-lg-11">
-																		<div class="form-group">
-																			<label>Add New Services</label>
-																			<input type="text" class="form-control"
-																				value="{{service.service_name}}">
-																		</div>
-																	</div>
-																	<div class="col-md-2 col-lg-1">
-																		<label class="d-md-block d-sm-none d-none">&nbsp;</label>
-																		<a href="{% url 'delete-service' pk=service.service_id pk2=hospital.hospital_id %}" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-danger">
-																		  <i class="far fa-trash-alt"></i>
-																		</a>
-																	</div>
-																</div>
-															</div>
-														{%endfor%}
-															<div class="add-more">
-																<a href="javascript:void(0);" class="add-service"
-																	style="color: #20c0f3"><i
-																		class="fa fa-plus-circle"></i> Add More</a>
-															</div>
-														</div>
-													</div>
-													<div class="card">
-														<div class="card-body">
-															<h4 class="card-title">Specialization</h4>
-															<div class="specialization-info">
+                  <div class="add-more">
+                    <button type="button" class="btn btn-secondary add-service">
+                      <i class="fas fa-plus-circle"></i> Add Service
+                    </button>
+                  </div>
+                </div>
 
-															{%for specialization in specializations%}	
-																<div class="row form-row specialization-cont">
+                <!-- Specializations -->
+                <div class="card">
+                  <h3 class="card-title">
+                    <i class="fas fa-user-md"></i>
+                    Specializations
+                  </h3>
 
-																	<div class="col-12 col-md-8 col-lg-11">
-																		<div class="form-group">
-																			<label>Add New Specialization</label>
-																			<input type="text" class="form-control"
-																				value="{{specialization.specialization_name}}">
-																		</div>
-																	</div>
-																	<div class="col-md-2 col-lg-1">
-																		<label class="d-md-block d-sm-none d-none">&nbsp;</label>
-																		<a href="{% url 'delete-specialization' pk=specialization.specialization_id pk2=hospital.hospital_id %}" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-danger">
-																		  <i class="far fa-trash-alt"></i>
-																		</a>
-																	</div>
+                  <div id="specializations-container">
+                    {% for specialization in specializations %}
+                    <div class="dynamic-item">
+                      <div class="form-group">
+                        <label>Specialization</label>
+                        <input
+                          type="text"
+                          class="input-field"
+                          name="specialization_name[]"
+                          placeholder="Enter specialization"
+                          value="{{specialization.specialization_name}}"
+                        />
+                      </div>
+                      <a
+                        href="{% url 'delete-specialization' pk=specialization.specialization_id pk2=hospital.hospital_id %}"
+                        onclick="return confirm('Are you sure you want to Delete?');"
+                        class="btn btn-danger"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </a>
+                    </div>
+                    {% endfor %}
+                  </div>
 
-																</div>
-															{%endfor%}	
-															</div>
-															<div class="add-more">
-																<a href="javascript:void(0);"
-																	class="add-specialization"><i
-																		class="fa fa-plus-circle"></i> Add More</a>
-															</div>
-														</div>
-													</div>
-													
-													<div class="card">
-														<div class="card-body">
-															<h4 class="card-title">Description</h4>
-															<div class="">
-																<div class="row form-row ">
+                  <div class="add-more">
+                    <button
+                      type="button"
+                      class="btn btn-secondary add-specialization"
+                    >
+                      <i class="fas fa-plus-circle"></i> Add Specialization
+                    </button>
+                  </div>
+                </div>
 
-																	<div class="col-12 col-md-12 col-lg-12">
-																		<div class="form-group">
-																			
-																			<textarea type="text" rows="5" class="form-control"
-																				name="description">{{hospital.description}}</textarea>
-																		</div>
-																	</div>
+                <!-- Description -->
+                <div class="card">
+                  <h3 class="card-title">
+                    <i class="fas fa-file-alt"></i>
+                    Description
+                  </h3>
 
-																</div>
-															</div>
-															
-														</div>
-													</div>
+                  <div class="form-group">
+                    <label for="description">Hospital Description</label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      class="input-field textarea-field"
+                      placeholder="Describe your hospital's mission, values, and key features..."
+                    >
+{{hospital.description}}</textarea
+                    >
+                  </div>
+                </div>
+              </div>
 
-												</div>
-												<div class="submit-section">
-													<button type="submit" class="btn btn-primary submit-btn">
-														Save Changes
-													</button>
-												</div>
-											</div>
-										</form>
-										<!-- /Profile Settings Form -->
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<!-- /Page Content -->
-
-
-
-
-
-
-			</div>
-		</div>
-		<!-- /Page Wrapper -->
-
-	</div>
-	<!-- /Main Wrapper -->
-
-	<!-- jQuery -->
-	<script src="{% static 'HealthStack-System/js/admin/jquery-3.2.1.min.js' %}"></script>
-
-	<!-- Bootstrap Core JS -->
-	<script src="{% static 'HealthStack-System/js/admin/popper.min.js' %}"></script>
-	<script src="{% static 'HealthStack-System/js/admin/bootstrap.min.js' %}"></script>
-
-	<!-- Slimscroll JS -->
-	<script src="{% static 'HealthStack-System/plugins/admin/slimscroll/jquery.slimscroll.min.js' %}"></script>
-
-	<!-- Datatables JS -->
-	<script src="{% static 'HealthStack-System/plugins/admin/datatables/jquery.dataTables.min.js'%}"></script>
-	<script src="{% static 'HealthStack-System/plugins/admin/datatables/datatables.min.js'%}"></script>
-
-	<!-- Custom JS -->
-	<script src="{% static 'HealthStack-System/js/admin/script.js' %}"></script>
-
-	<!-- add js -->
-	<!-- <script src="{% static 'HealthStack-System/js/Normal/edit-hospital.js' %}"></script> -->
-	<script src="{% static 'HealthStack-System/js/Normal/edit_hospital.js' %}"></script>
-
-	{% if messages %}
-    <script>
-        {% for message in messages %}
-            $(document).ready(function () {
-                $('.toast').toast('show');
-            });
-        {% endfor %}
-    </script>
-  {% endif %}
-
-
-</body>
-
-<!-- Mirrored from dreamguys.co.in/demo/doccure/admin/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:51 GMT -->
-
+              <div class="submit-section">
+                <button type="submit" class="btn btn-primary submit-btn">
+                  <i class="fas fa-save"></i> Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- /Page Content -->
+        </div>
+      </div>
+      <!-- /Page Wrapper -->
+    </div>
+    <!-- /Main Wrapper -->
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
+  </body>
 </html>

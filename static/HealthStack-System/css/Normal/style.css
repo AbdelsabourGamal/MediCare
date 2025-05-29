@@ -1700,15 +1700,11 @@ ul {
   position: relative;
   overflow: hidden;
   display: inline-block;
-  background: #20c0f3;
-  border: 2px solid #20c0f3;
-  color: #fff;
   border-radius: 4px;
   transition: all 0.3s;
   cursor: pointer;
   margin-bottom: 10px;
   width: 150px;
-  margin-left: auto;
 }
 
 .patient.profile-setting .change-photo-btn:hover {
@@ -1716,11 +1712,6 @@ ul {
   color: #20c0f3;
 }
 
-.patient.profile-setting .change-photo-btn span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
 .patient.profile-setting .text-danger {
   color: #dc3545;

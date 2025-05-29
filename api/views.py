@@ -5,11 +5,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.response import Response
-from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer, HospitalDepartmentSerializer
+from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer, HospitalDepartmentSerializer, SpecimenSerializer, TestSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
 from hospital.models import Hospital_Information, Patient, User 
-from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
+from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report, Specimen, Test
 from paypal.models import Payment
 from hospital_admin.models import Admin_Information,hospital_department
 from rest_framework import generics,status
@@ -277,14 +277,23 @@ class PatientPrescriptionTest(generics.ListAPIView):
     def get_queryset(self): # type: ignore
         return Prescription_test.objects.filter(prescription__patient__user=self.request.user)
 
-class PatientReport(generics.ListAPIView):
-    queryset = Report.objects.all()
-    serializer_class = ReportSerializer
-    authentication_classes = [JWTAuthentication]
+class PatientReport(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self): # type: ignore
-        return Report.objects.filter(patient__user=self.request.user)
+    def get(self, request):
+        user = request.user
+
+        report = Report.objects.filter(patient__user=user)
+        specimen = Specimen.objects.filter(report__patient__user=user)
+        test = Test.objects.filter(report__patient__user=user)
+
+        data = {
+            "report": ReportSerializer(report, many=True).data,
+            "specimen": SpecimenSerializer(specimen, many=True).data,
+            "test": TestSerializer(test, many=True).data
+        }
+
+        return Response(data)
 
 class PatientPayment(generics.ListAPIView):
     queryset = Payment.objects.all()

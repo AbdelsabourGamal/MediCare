@@ -59,7 +59,7 @@
 				</nav>
 			</div>
 			<!-- /Breadcrumb -->
-			
+          	{% include 'message.html' %}
 			<!-- Page Content -->
 			
 			<div class="patient test-cart">
@@ -150,7 +150,17 @@
     <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
     <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
-		
-	</body>
+
+    {% if messages %}
+    <script>
+      {% for message in messages %}
+          $(document).ready(function () {
+              $('.toast').toast('show');
+          });
+      {% endfor %}
+    </script>
+    {% endif %}
+
+</body>
 
 </html>

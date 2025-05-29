@@ -1,5 +1,3 @@
-// ---- Admin Scripts ----
-
 // Password visibility toggle
 function togglePassword() {
   const passwordInput = document.getElementById("password");
@@ -20,7 +18,6 @@ const mainContent = document.getElementById("mainContent");
 const userDropdown = document.getElementById("userDropdown");
 const userDropdownMenu = document.getElementById("userDropdownMenu");
 const sidebarOverlay = document.getElementById("sidebarOverlay");
-
 
 // Desktop sidebar toggle
 toggleBtn.addEventListener("click", () => {
@@ -89,5 +86,3 @@ mediaQuery.addEventListener("change", (e) => {
     sidebarOverlay.classList.remove("show");
   }
 });
-
-// Sidebar Active Link

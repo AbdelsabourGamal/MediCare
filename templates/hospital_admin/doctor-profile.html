@@ -1,576 +1,361 @@
 {% load static %}
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-	
-<!-- doccure/doctor-profile.html  30 Nov 2019 04:12:16 GMT -->
-<head>
-		<meta charset="utf-8">
-		<title>HealthStack</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-		
-		<!-- Favicons -->
-		<link type="image/x-icon" href=" {% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
-		
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}">
-		
-		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}">
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}">
-	
-		<!-- Fancybox CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.css'%}">
-		
-		<!-- Main CSS -->
-		<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}">
-		<link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/bootstrap.min.css'%}" 
+  <head>
+    <meta charset="utf-8" />
+    <title>MediCare</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
+
+    <!-- Favicon -->
+
     <link
       rel="shortcut icon"
       type="image/x-icon"
       href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
     />
 
-
-		
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-    </head>
-    <body>
-	
-	
-
-    <!-- Bootstrap CSS -->
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/bootstrap.min.css'%}"
-    />
-
-    <!-- Fontawesome CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/font-awesome.min.css'%}"
-    />
-
-    <!-- Feathericon CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/admin_assets/css/feathericon.min.css'%}"
+      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
     />
 
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/plugins/admin/morris/morris.css'%}"
+      href="{% static 'HealthStack-System/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css'%}"
+      href="{% static 'HealthStack-System/css/admin/style.css' %}"
     />
+  </head>
 
-		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-	
-	</head>
-	<body>
-		<!-- Main Wrapper -->
-		<div class="main-wrapper">
-		
-			<!-- Header -->
-			<header class="header">
-				{% include 'hospital_admin/hospital-admin-navbar.html' %}
-			</header>>
-			<!-- /Header -->
-		
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="header">
+        {% include 'hospital_admin/hospital-admin-navbar.html' %}
+      </header>
+      <!-- /Header -->
 
-			<!-- Profile Sidebar -->
-			<aside class="sidebar" id="sidebar">
-				{% include 'hospital_admin/hospital-admin-sidebar.html' %} 
-			</aside>
-			<!-- /Profile Sidebar -->
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        {% include 'hospital_admin/hospital-admin-sidebar.html' %}
+      </aside>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      <!-- /Sidebar -->
+	  .page-container.doctor-profile
+      <div class="page-container doctor-profile">
+        <div class="content container-fluid">
+          <!-- Doctor Profile Header -->
+          <div class="doctor-profile-header">
+            <div class="row align-items-center">
+              <div class="col-md-3 text-center">
+                <img
+                  src="{{doctor.featured_image.url}}"
+                  alt="Dr. {{doctor.name}}"
+                  class="doctor-avatar"
+                />
+              </div>
+              <div class="col-md-6">
+                <div class="doctor-info">
+                  <h1>Dr. {{doctor.name}}</h1>
+                  <div class="doctor-specialty">
+                    {{doctor.department_name.hospital_department_name}}
+                  </div>
+                  <div class="doctor-hospital">{{doctor.hospital_name}}</div>
+                  <div class="info-badges">
+                    <span class="info-badge">
+                      <i class="fas fa-map-marker-alt me-1"></i>
+                      Dhaka, Bangladesh
+                    </span>
+                    <span class="info-badge">
+                      <i class="fas fa-stethoscope me-1"></i>
+                      {{doctor.specialization.specialization_name}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="clinic-gallery">
+                  <img
+                    src="{% static 'HealthStack-System/images/Normal/gyno1.jpg'%}"
+                    alt="Clinic Image"
+                    data-bs-toggle="modal"
+                    data-bs-target="#galleryModal"
+                  />
+                  <img
+                    src="{% static 'HealthStack-System/images/Normal/gyno2.jpg'%}"
+                    alt="Clinic Image"
+                    data-bs-toggle="modal"
+                    data-bs-target="#galleryModal"
+                  />
+                  <img
+                    src="{% static 'HealthStack-System/images/Normal/gyno3.jpg'%}"
+                    alt="Clinic Image"
+                    data-bs-toggle="modal"
+                    data-bs-target="#galleryModal"
+                  />
+                  <img
+                    src="{% static 'HealthStack-System/images/Normal/gyno4.jpg'%}"
+                    alt="Clinic Image"
+                    data-bs-toggle="modal"
+                    data-bs-target="#galleryModal"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
-			<div class="page-wrapper">
-				<div class="content container-fluid">
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row">
-							<div class="col-sm-12 mt-100">	
-								<h3 class="page-title">Doctor Profile</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-									<li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li>
-									<li class="breadcrumb-item active">Doctor</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<!-- /Page Header -->
+          <div class="row">
+            <div class="col-lg-8">
+              <!-- Doctor Details Section -->
+              <div class="details-section">
+                <!-- Custom Tab Navigation -->
+                <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="overview-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#overview"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-user-md me-2"></i>Overview
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="certificate-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#certificate"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-certificate me-2"></i>Certificate
+                    </button>
+                  </li>
+                </ul>
 
-					<!-- Doctor Widget -->
-					<div class="card">
-						<div class="card-body">
-								<div class="doctor-widget">
-									<div class="doc-info-left">
-										<div class="doctor-img">
-											<img src="{{doctor.featured_image.url}}" class="img-fluid" alt="User Image">
-										</div>
-										<div class="doc-info-cont">
-											<h4 class="doc-name">Dr. {{doctor.name}}</h4>
-											<p class="doc-specialty">{{doctor.department_name.hospital_department_name}}</p>
-											<h4 class="doc-hospital">{{doctor.hospital_name}}</h4>
-											<p class="doc-department">{{doctor.specialization.specialization_name}}</p>
-											<div class="rating">
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star"></i>
-												<span class="d-inline-block average-rating">(35)</span>
-											</div>
-											<div class="clinic-details">
-												<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Dhaka,Bangladesh</p>
-												<ul class="clinic-gallery">
-													<li>
-														<a href="{% static 'HealthStack-System/images/Normal/gyno1.jpg'%}" data-fancybox="gallery">
-															<img src="{% static 'HealthStack-System/images/Normal/gyno1.jpg'%}" alt="Feature">
-														</a>
-													</li>
-													<li>
-														<a href="{% static 'HealthStack-System/images/Normal/gyno2.jpg'%}" data-fancybox="gallery">
-															<img  src="{% static 'HealthStack-System/images/Normal/gyno2.jpg'%}" alt="Feature">
-														</a>
-													</li>
-													<li>
-														<a href="{% static 'HealthStack-System/images/Normal/gyno3.jpg'%}" data-fancybox="gallery">
-															<img src="{% static 'HealthStack-System/images/Normal/gyno3.jpg'%}" alt="Feature">
-														</a>
-													</li>
-													<li>
-														<a href="{% static 'HealthStack-System/images/Normal/gyno4.jpg'%}" data-fancybox="gallery">
-															<img src="{% static 'HealthStack-System/images/Normal/gyno4.jpg'%}" alt="Feature">
-														</a>
-													</li>
-												</ul>
-											</div>
-											{% comment %} <div class="clinic-services">
-												<span>obgyn specialist</span>
-												<span>ultra sonogram</span>
-											</div> {% endcomment %}
-										</div>
-									</div>
-									<div class="doc-info-right">
-										<div class="clini-infos">
-											<ul>
-												<li><i class="far fa-thumbs-up"></i> 99%</li>
-												<li><i class="far fa-comment"></i> 35 Feedback</li>
-												<li><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</li>
-												<li><i class="far fa-money-bill-alt"></i>{{doctor.consultation_fee}} BDT</li>
-											</ul>
-										</div>
-										<div class="doctor-action">
-											<a href="javascript:void(0)" class="btn btn-white fav-btn">
-												<i class="far fa-bookmark"></i>
-											</a>
-											<a href="chat.html" class="btn btn-white msg-btn">
-												<i class="far fa-comment-alt"></i>
-											</a>
-											<a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
-												<i class="fas fa-phone"></i>
-											</a>
-											<a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
-												<i class="fas fa-video"></i>
-											</a>
-										</div>
-										{% if user.is_authenticated and user.is_patient %}
-										<div class="clinic-booking">
-											<a class="apt-btn" href="{% url 'booking' pk=doctor.doctor_id  %}">Book Your Appointment</a>
-										</div>
-										{% endif %}
-										</div>
-									</div>
-								</div>
-					</div>
+                <!-- Tab Content -->
+                <div class="tab-content">
+                  <!-- Overview Tab -->
+                  <div
+                    class="tab-pane fade show active"
+                    id="overview"
+                    role="tabpanel"
+                  >
+                    <!-- About Section -->
+                    <div class="widget">
+                      <h4 class="widget-title">About Me</h4>
+                      <p class="text-muted">{{doctor.description}}</p>
+                    </div>
 
-					<!-- Doctor Details Tab -->
-					<div class="card">
-						<div class="card-body pt-0">
-							<!-- Tab Menu -->
-							<nav class="user-tabs mb-4">
-								<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-									<li class="nav-item">
-										<a class="nav-link active" href="#doc_overview" data-toggle="tab">Overview</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#doc_certificate" data-toggle="tab">Certificate</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#doc_reviews" data-toggle="tab">Reviews</a>
-									</li>
-									
-								</ul>
-							</nav>
-							<!-- /Tab Menu -->
-							
-							<!-- Tab Content -->
-							<div class="tab-content pt-0">
-							
-								<!-- Overview Content -->
-								<div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
-									<div class="row">
-										<div class="col-md-12 col-lg-9">
-										
-											<!-- About Details -->
-											<div class="widget about-widget">
-												<h4 class="widget-title">About Me</h4>
-												<p>{{doctor.description}}</p>
-											</div>
-											<!-- /About Details -->
-										
-											<!-- Education Details -->
-											<div class="widget education-widget">
-												<h4 class="widget-title">Education</h4>
-												<div class="experience-box">
-													<ul class="experience-list">
+                    <!-- Education Section -->
+                    <div class="widget">
+                      <h4 class="widget-title">Education</h4>
+                      <ul class="experience-list">
+                        {% for e in educations %}
+                        <li>
+                        
+                          <div class="timeline-content">
+                            <a href="#" class="name">{{e.degree}}</a>
+                            <div class="text-muted">{{e.institute}}</div>
+                            <span class="time">{{e.year_of_completion}}</span>
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
 
+                    <!-- Experience Section -->
+                    <div class="widget">
+                      <h4 class="widget-title">Work & Experience</h4>
+                      <ul class="experience-list">
+                        {% for e in experiences %}
+                        <li>
+                          <div class="before-circle"></div>
+                          <div class="timeline-content">
+                            <a href="#" class="name">{{e.designation}}</a>
+                            <div class="text-muted">{{e.work_place_name}}</div>
+                            <span class="time"
+                              >{{e.from_year}} - {{e.to_year}}</span
+                            >
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
 
-														{% for e in educations %}
-														<li>
-															<div class="experience-user">
-																<div class="before-circle"></div>
-															</div>
-															<div class="experience-content">
-																<div class="timeline-content">
-																	<a href="#/" class="name">{{e.degree}}</a>
-																	<div>{{e.institute}}</div>
-																	<span class="time">{{e.year_of_completion}}</span>
-																</div>
-															</div>
-														</li>
-														{% endfor %}
-													
+                    <!-- Specializations -->
+                    <div class="widget">
+                      <h4 class="widget-title">Specializations</h4>
+                      <div class="specializations-list">
+                        <ul>
+                          <li>{{doctor.specialization.specialization_name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
 
-													</ul>
-												</div>
-											</div>
-											<!-- /Education Details -->
-									
-											<!-- Experience Details -->
-											<div class="widget experience-widget">
-												<h4 class="widget-title">Work & Experience</h4>
-												<div class="experience-box">
-													<ul class="experience-list">
+                  <!-- Certificate Tab -->
+                  <div class="tab-pane fade" id="certificate" role="tabpanel">
+                    <div class="certificate-container">
+                      <img
+                        src="{{doctor.certificate_image.url}}"
+                        alt="Medical Certificate"
+                        class="certificate-image"
+                        data-bs-toggle="modal"
+                        data-bs-target="#certificateModal"
+                      />
+                      <p class="text-muted mt-3">
+                        Click to view full certificate
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-														{% for e in experiences %}
-														<li>
-															<div class="experience-user">
-																<div class="before-circle"></div>
-															</div>
-															<div class="experience-content">
-																<div class="timeline-content">
-																	<a href="#/" class="name">{{e.designation}}</a>
-																	<span class="time">{{ e.work_place_name }}</span>
-																	<span class="time">{{ e.from_year }} - {{e.to_year}}</span>
-																</div>
-															</div>
-														</li>
-														{% endfor %}
+            <div class="col-lg-4">
+              <!-- Booking Section -->
+              <div class="booking-section">
+                <div class="text-center">
+                  <div class="consultation-fee">
+                    <i class="fas fa-money-bill-wave me-2"></i>
+                    {{doctor.consultation_fee}} EGP
+                  </div>
+                  <p class="text-muted mb-3">Consultation Fee</p>
 
+                  {% if user.is_authenticated and user.is_patient %}
+                  <a
+                    href="{% url 'booking' pk=doctor.doctor_id %}"
+                    class="book-appointment-btn"
+                  >
+                    <i class="fas fa-calendar-check"></i>
+                    Book Your Appointment
+                  </a>
+                  {% else %}
+                  <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Please login as a patient to book an appointment
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-												
+        <!-- Certificate Modal -->
+        <div class="modal fade" id="certificateModal" tabindex="-1">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Medical Certificate</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div class="modal-body text-center">
+                <img
+                  src="{{doctor.certificate_image.url}}"
+                  alt="Certificate"
+                  class="img-fluid"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Gallery Modal -->
+        <div class="modal fade" id="galleryModal" tabindex="-1">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Clinic Gallery</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  id="clinicCarousel"
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img
+                        src="{% static 'HealthStack-System/images/Normal/gyno1.jpg'%}"
+                        class="d-block w-100"
+                        alt="Clinic Image"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="{% static 'HealthStack-System/images/Normal/gyno2.jpg'%}"
+                        class="d-block w-100"
+                        alt="Clinic Image"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="{% static 'HealthStack-System/images/Normal/gyno3.jpg'%}"
+                        class="d-block w-100"
+                        alt="Clinic Image"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="{% static 'HealthStack-System/images/Normal/gyno4.jpg'%}"
+                        class="d-block w-100"
+                        alt="Clinic Image"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#clinicCarousel"
+                    data-bs-slide="prev"
+                  >
+                    <span class="carousel-control-prev-icon"></span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#clinicCarousel"
+                    data-bs-slide="next"
+                  >
+                    <span class="carousel-control-next-icon"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-													</ul>
-												</div>
-											</div>
-											<!-- /Experience Details -->
-								
-											
-											
-											
-											<!-- Specializations List -->
-											<div class="service-list">
-												<h4>Specializations</h4>
-												<ul class="clearfix">
-													<li>{{doctor.specialization.specialization_name}}</li>
-													
-												</ul>
-											</div>
-											<!-- /Specializations List -->
+    <!-- /Main Wrapper -->
 
-										</div>
-									</div>
-								</div>
-								<!-- /Overview Content -->
-								
-								
-								
-								<!-- Reviews Content -->
-								<div role="tabpanel" id="doc_reviews" class="tab-pane fade">
-								
-									<!-- Review Listing -->
-									<div class="widget review-listing">
-										<ul class="comments-list">
-										
-											<!-- Comment List -->
-											<li>
-												<div class="comment">
-													<img class="avatar avatar-sm rounded-circle" alt="User Image" src="{% static 'HealthStack-System/images/Normal/patients/patient.jpg' %}">
-													<div class="comment-body">
-														<div class="meta-data">
-															<span class="comment-author">Richard Wilson</span>
-															<span class="comment-date">Reviewed 2 Days ago</span>
-															<div class="review-count rating">
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star"></i>
-															</div>
-														</div>
-														<p class="recommended"><i class="far fa-thumbs-up"></i> I recommend the doctor</p>
-														<p class="comment-content">
-															Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-															sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-															Ut enim ad minim veniam, quis nostrud exercitation.
-															Curabitur non nulla sit amet nisl tempus
-														</p>
-														<div class="comment-reply">
-															<a class="comment-btn" href="#">
-																<i class="fas fa-reply"></i> Reply
-															</a>
-														<p class="recommend-btn">
-															<span>Recommend?</span>
-															<a href="#" class="like-btn">
-																<i class="far fa-thumbs-up"></i> Yes
-															</a>
-															<a href="#" class="dislike-btn">
-																<i class="far fa-thumbs-down"></i> No
-															</a>
-														</p>
-														</div>
-													</div>
-												</div>
-												
-												<!-- Comment Reply -->
-												<ul class="comments-reply">
-													<li>
-														<div class="comment">
-															<img class="avatar avatar-sm rounded-circle" alt="User Image" src="{% static 'HealthStack-System/images/Normal/patients/patient1.jpg' %}">
-															<div class="comment-body">
-																<div class="meta-data">
-																	<span class="comment-author">Charlene Reed</span>
-																	<span class="comment-date">Reviewed 3 Days ago</span>
-																	<div class="review-count rating">
-																		<i class="fas fa-star filled"></i>
-																		<i class="fas fa-star filled"></i>
-																		<i class="fas fa-star filled"></i>
-																		<i class="fas fa-star filled"></i>
-																		<i class="fas fa-star"></i>
-																	</div>
-																</div>
-																<p class="comment-content">
-																	Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-																	sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-																	Ut enim ad minim veniam.
-																	Curabitur non nulla sit amet nisl tempus
-																</p>
-																<div class="comment-reply">
-																	<a class="comment-btn" href="#">
-																		<i class="fas fa-reply"></i> Reply
-																	</a>
-																	<p class="recommend-btn">
-																		<span>Recommend?</span>
-																		<a href="#" class="like-btn">
-																			<i class="far fa-thumbs-up"></i> Yes
-																		</a>
-																		<a href="#" class="dislike-btn">
-																			<i class="far fa-thumbs-down"></i> No
-																		</a>
-																	</p>
-																</div>
-															</div>
-														</div>
-													</li>
-												</ul>
-												<!-- /Comment Reply -->
-												
-											</li>
-											<!-- /Comment List -->
-											
-											<!-- Comment List -->
-											<li>
-												<div class="comment">
-													<img class="avatar avatar-sm rounded-circle" alt="User Image" src="{% static 'HealthStack-System/images/Normal/patients/patient2.jpg' %}">
-													<div class="comment-body">
-														<div class="meta-data">
-															<span class="comment-author">Travis Trimble</span>
-															<span class="comment-date">Reviewed 4 Days ago</span>
-															<div class="review-count rating">
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star filled"></i>
-																<i class="fas fa-star"></i>
-															</div>
-														</div>
-														<p class="comment-content">
-															Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-															sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-															Ut enim ad minim veniam, quis nostrud exercitation.
-															Curabitur non nulla sit amet nisl tempus
-														</p>
-														<div class="comment-reply">
-															<a class="comment-btn" href="#">
-																<i class="fas fa-reply"></i> Reply
-															</a>
-															<p class="recommend-btn">
-																<span>Recommend?</span>
-																<a href="#" class="like-btn">
-																	<i class="far fa-thumbs-up"></i> Yes
-																</a>
-																<a href="#" class="dislike-btn">
-																	<i class="far fa-thumbs-down"></i> No
-																</a>
-															</p>
-														</div>
-													</div>
-												</div>
-											</li>
-											<!-- /Comment List -->
-											
-										</ul>
-										
-										<!-- Show All -->
-										<div class="all-feedback text-center">
-											<a href="#" class="btn btn-primary btn-sm">
-												Show all feedback <strong>(167)</strong>
-											</a>
-										</div>
-										<!-- /Show All -->
-										
-									</div>
-									<!-- /Review Listing -->
-								
-									<!-- Write Review -->
-									<div class="write-review">
-										<h4>Write a review for <strong>Dr. Darren Elder</strong></h4>
-										
-										<!-- Write Review Form -->
-										<form>
-											<div class="form-group">
-												<label>Review</label>
-												<div class="star-rating">
-													<input id="star-5" type="radio" name="rating" value="star-5">
-													<label for="star-5" title="5 stars">
-														<i class="active fa fa-star"></i>
-													</label>
-													<input id="star-4" type="radio" name="rating" value="star-4">
-													<label for="star-4" title="4 stars">
-														<i class="active fa fa-star"></i>
-													</label>
-													<input id="star-3" type="radio" name="rating" value="star-3">
-													<label for="star-3" title="3 stars">
-														<i class="active fa fa-star"></i>
-													</label>
-													<input id="star-2" type="radio" name="rating" value="star-2">
-													<label for="star-2" title="2 stars">
-														<i class="active fa fa-star"></i>
-													</label>
-													<input id="star-1" type="radio" name="rating" value="star-1">
-													<label for="star-1" title="1 star">
-														<i class="active fa fa-star"></i>
-													</label>
-												</div>
-											</div>
-											<div class="form-group">
-												<label>Title of your review</label>
-												<input class="form-control" type="text" placeholder="If you could say it in one sentence, what would you say?">
-											</div>
-											<div class="form-group">
-												<label>Your review</label>
-												<textarea id="review_desc" maxlength="100" class="form-control"></textarea>
-											
-											<div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> characters remaining</small></div>
-											</div>
-											<hr>
-											<div class="form-group">
-												<div class="terms-accept">
-													<div class="custom-checkbox">
-													<input type="checkbox" id="terms_accept">
-													<label for="terms_accept">I have read and accept <a href="#">Terms &amp; Conditions</a></label>
-													</div>
-												</div>
-											</div>
-											<div class="submit-section">
-												<button type="submit" class="btn btn-primary submit-btn">Add Review</button>
-											</div>
-										</form>
-										<!-- /Write Review Form -->
-										
-									</div>
-									<!-- /Write Review -->
-						
-								</div>
-								<!-- /Reviews Content -->
-								
-								<!-- Certificate Content -->
-								<div role="tabpanel" id="doc_certificate" class="tab-pane fade">
-									<div class="row">
-
-										<div class="col-md-6 offset-md-3 zoom">
-											<img src="{{doctor.certificate_image.url}}" alt="logo" class="img-fluid">
-													
-										</div>
-										
-									</div>
-								</div>
-								<!-- /Certificate Content -->
-								
-							</div>
-						</div>
-			</div>
-
-				</div>
-			</div>
-					
-		</div>			
-
-		<!-- /Main Wrapper -->
-		
-	
-		<!-- jQuery -->
-        <script src="{% static 'HealthStack-System/js/admin/jquery-3.2.1.min.js' %}"></script> 
-		
-		<!-- Bootstrap Core JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
-		
-		<!-- Fancybox JS -->
-		<script src="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.js'%}"></script>
-		
-		<script src="{% static 'HealthStack-System/plugins/admin/slimscroll/jquery.slimscroll.min.js' %}"></script>
-
-		<!-- Custom JS -->
-		<!-- <script src="{% static 'HealthStack-System/js/Normal/script.js' %}"></script> -->
-		<script src="{% static 'HealthStack-System/js/admin/script.js' %}"></script>
-
-		<!-- Searchbar JS -->
-		<script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
-
-
-        
-        
-		
-	</body>
-
-<!-- doccure/doctor-profile.html  30 Nov 2019 04:12:16 GMT -->
+    <!-- Scripts -->
+    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
+  </body>
 </html>

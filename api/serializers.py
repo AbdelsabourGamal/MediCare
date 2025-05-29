@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework import serializers
 from hospital.models import Hospital_Information, Patient, User 
-from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report
+from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report, Specimen, Test
 from hospital_admin.models import Admin_Information,hospital_department
 from paypal.models import Payment
 from hospital_admin.views import appointment_list
@@ -195,6 +195,20 @@ class ReportSerializer(serializers.ModelSerializer):
         model = Report
         fields = '__all__'
 
+class SpecimenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specimen
+        fields = '__all__'
+
+class TestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Test
+        fields = '__all__'
+
+class AllReportSerializer(serializers.Serializer):
+    report = ReportSerializer(many=True)
+    specimen = SpecimenSerializer(many=True)
+    test = TestSerializer(many=True)
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
