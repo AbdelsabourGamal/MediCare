@@ -34,7 +34,7 @@
     <!-- Main Wrapper -->
     <div class="main-wrapper">
       <!-- Header -->
-      <header class="header">{% include 'navbar_home.html' %}</header>
+      <header class="header">{% include 'navbar_home.html' %}</header> 
       <!-- header -->
 
       <!-- Landing Section -->
@@ -69,89 +69,89 @@
             </p>
           </div>
 
-          
-              <div
-                class="clinics-container"
-              >
-                <!-- Clinic Item -->
-                <div class="clinic-item">
-                  <div class="clinic-img">
-                    <img
-                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-01.png' %}"
-                      class="img-fluid"
-                      alt="Urology Clinic"
-                    />
-                  </div>
-                  <p class="clinic-name ">Urology</p>
-                </div>
-
-                <!-- Clinic Item -->
-                <div class="clinic-item">
-                  <div class="clinic-img">
-                    <img
-                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-02.png' %}"
-                      class="img-fluid"
-                      alt="Neurology Clinic"
-                    />
-                  </div>
-                  <p class="clinic-name ">Neurology</p>
-                </div>
-
-                <!-- Clinic Item -->
-                <div class="clinic-item">
-                  <div class="clinic-img">
-                    <img
-                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-03.png' %}"
-                      class="img-fluid"
-                      alt="Orthopedic Clinic"
-                    />
-                  </div>
-                  <p class="clinic-name ">Orthopedic</p>
-                </div>
-
-                <!-- Clinic Item -->
-                <div class="clinic-item">
-                  <div class="clinic-img">
-                    <img
-                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-04.png' %}"
-                      class="img-fluid"
-                      alt="Cardiology Clinic"
-                    />
-                  </div>
-                  <p class="clinic-name ">Cardiologist</p>
-                </div>
-
-                <!-- Clinic Item -->
-                <div class="clinic-item">
-                  <div class="clinic-img">
-                    <img
-                      src="{% static 'HealthStack-System/images/Normal/specialties/specialties-05.png' %}"
-                      class="img-fluid"
-                      alt="Dentistry Clinic"
-                    />
-                  </div>
-                  <p class="clinic-name ">Dentist</p>
-                </div>
+          <div class="clinics-container">
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'HealthStack-System/images/Normal/specialties/specialties-01.png' %}"
+                  class="img-fluid"
+                  alt="Urology Clinic"
+                />
               </div>
-            
-          </div>
-        
-      </section>
+              <p class="clinic-name">Urology</p>
+            </div>
 
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'HealthStack-System/images/Normal/specialties/specialties-02.png' %}"
+                  class="img-fluid"
+                  alt="Neurology Clinic"
+                />
+              </div>
+              <p class="clinic-name">Neurology</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'HealthStack-System/images/Normal/specialties/specialties-03.png' %}"
+                  class="img-fluid"
+                  alt="Orthopedic Clinic"
+                />
+              </div>
+              <p class="clinic-name">Orthopedic</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'HealthStack-System/images/Normal/specialties/specialties-04.png' %}"
+                  class="img-fluid"
+                  alt="Cardiology Clinic"
+                />
+              </div>
+              <p class="clinic-name">Cardiologist</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'HealthStack-System/images/Normal/specialties/specialties-05.png' %}"
+                  class="img-fluid"
+                  alt="Dentistry Clinic"
+                />
+              </div>
+              <p class="clinic-name">Dentist</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Doctors Section -->
       <section class="section section-doctors">
         <div class="container">
           <div class="text-center mb-4">
             <h2 class="section-title">Our Doctors</h2>
-            <p class="section-subtitle">You can book doctors from any hospital here.</p>
+            <p class="section-subtitle">
+              You can book doctors from any hospital here.
+            </p>
           </div>
 
           <div class="doctors-container">
             {% for doctor in doctors %}
             <div class="doctor">
               <div class="doctor-img">
+                {% if user.is_authenticated and user.is_hospital_admin %}
+                <a href="hospital_admin/admin-doctor-profile/{{doctor.pk}}">
+                {% else %}
                 <a href="{% url 'doctor:doctor-profile' doctor.pk %}">
+                {% endif %}
                   <img
                     src="{{ doctor.featured_image.url }}"
                     alt="{{ doctor.name }}"
@@ -166,12 +166,15 @@
               </p>
 
               <ul>
-                <li><i class="fas fa-map-marker-alt me-2"></i> {{ doctor.hospital_name }}</li>
-                <li><i class="far fa-clock me-2"></i> {{ doctor.visiting_hour }}</li>
                 <li>
-                  <i class="far fa-money-bill-alt me-2"></i> Consultation Fee: 
+                  <i class="fas fa-map-marker-alt me-2"></i> {{doctor.hospital_name }}
+                </li>
+                <li>
+                  <i class="far fa-clock me-2"></i> {{ doctor.visiting_hour }}
+                </li>
+                <li>
+                  <i class="far fa-money-bill-alt me-2"></i> Consultation Fee:
                   {{ doctor.consultation_fee }} EGP
-                
                 </li>
               </ul>
             </div>
@@ -179,7 +182,6 @@
           </div>
         </div>
       </section>
-      
 
       <!-- Our Hospitals -->
       <section class="section section-hospitals">
@@ -192,17 +194,28 @@
               information from here.
             </p>
           </div>
-          <div id="hospitalCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div
+            id="hospitalCarousel"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
             <div class="carousel-indicators">
               {% for hospital in hospitals %}
-              <button type="button" data-bs-target="#hospitalCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
-                class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}">
-              </button>
+              <button
+                type="button"
+                data-bs-target="#hospitalCarousel"
+                data-bs-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}"
+                aria-current="true"
+                aria-label="Slide {{ forloop.counter }}"
+              ></button>
               {% endfor %}
             </div>
             <div class="carousel-inner">
               {% for hospital in hospitals %}
-              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <div
+                class="carousel-item {% if forloop.first %}active{% endif %}"
+              >
                 <div>
                   <div class="text-center position-relative">
                     <img
@@ -210,15 +223,19 @@
                       alt="{{ hospital.name }}"
                       class="img-fluid"
                     />
-                    
-                      <a
-                        href="hospital-profile/{{ hospital.hospital_id }}"
-                        class="position-absolute"
+                    {% if user.is_authenticated and user.is_hospital_admin %}
+                    <a
+                    href="hospital_admin/edit-hospital/{{ hospital.hospital_id }}"
+                    class="position-absolute"
                       >
-                      
-                        {{ hospital.name }}
-                      </a>
-                    
+                    {% else %}
+                      <a
+                    href="hospital-profile/{{ hospital.hospital_id }}"
+                    class="position-absolute"
+                      >
+                    {% endif %}
+                      {{ hospital.name }}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -226,12 +243,28 @@
             </div>
 
             <!-- Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#hospitalCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#hospitalCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#hospitalCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#hospitalCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
               <span class="visually-hidden">Next</span>
             </button>
           </div>
@@ -251,5 +284,13 @@
     <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
     <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script>
+      // Hospital Carousel
+      const hospitalCarousel = document.querySelector("#hospitalCarousel");
+      const carousel = new bootstrap.Carousel(hospitalCarousel, {
+        interval: 1500,
+        ride: "carousel",
+      });
+    </script>
   </body>
 </html>

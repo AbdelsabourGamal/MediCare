@@ -33,10 +33,8 @@ urlpatterns = [
     path('doctor/', include('doctor.urls')),
     path('api/', include('api.urls', namespace="api")),
     path('hospital_admin/', include('hospital_admin.urls',)),
-    # path('sslcommerz/', include('sslcommerz.urls')),
     path('paypal/', include('paypal.urls')),
     path('pharmacy/', include('pharmacy.urls')),
-    # path('__debug__/', include('debug_toolbar.urls')),
     
     # For forgot password views and reset password views
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="reset_password.html"),name="reset-password"),

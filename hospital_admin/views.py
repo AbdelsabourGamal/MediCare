@@ -1,6 +1,5 @@
 import email
 from email.mime import image
-from multiprocessing import context
 from unicodedata import name
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -9,12 +8,12 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from doctor import admin
 from hospital.models import Hospital_Information, User, Patient
 from django.db.models import Q
 from pharmacy.models import Medicine, Pharmacist
 from doctor.models import Doctor_Information, Prescription, Prescription_test, Report, Appointment, Experience , Education,Specimen,Test
 from pharmacy.models import Order, Cart
-# from sslcommerz.models import Payment
 from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditHospitalForm, EditEmergencyForm,AdminForm , PharmacistCreationForm 
 
 from .models import Admin_Information,specialization,service,hospital_department, Clinical_Laboratory_Technician, Test_Information
@@ -37,7 +36,6 @@ from .utils import searchMedicines
 @login_required(login_url='admin_login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_dashboard(request):
-    # admin = Admin_Information.objects.get(user_id=pk)
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
         total_patient_count = Patient.objects.annotate(count=Count('patient_id'))
@@ -230,8 +228,6 @@ def hospital_profile(request,pk):
 
     admin = Admin_Information.objects.get(user=request.user)
 
-
-    
     departments = hospital_department.objects.filter(hospital=hospitals)
     specializations = specialization.objects.filter(hospital=hospitals)
     services = service.objects.filter(hospital=hospitals)
@@ -292,9 +288,7 @@ def add_hospital(request):
             hospital.phone_number =phone_number
             hospital.featured_image=featured_image 
             hospital.hospital_type=hospital_type
-            
-            # print(department_name[0])
-         
+
             hospital.save()
             
             for i in range(len(department_name)):
@@ -318,11 +312,6 @@ def add_hospital(request):
 
         context = { 'admin': user}
         return render(request, 'hospital_admin/add-hospital.html',context)
-
-
-# def edit_hospital(request, pk):
-#     hospital = Hospital_Information.objects.get(hospital_id=pk)
-#     return render(request, 'hospital_admin/edit-hospital.html')
 
 @csrf_exempt
 @login_required(login_url='admin_login')
@@ -363,10 +352,6 @@ def edit_hospital(request, pk):
             hospital.phone_number =phone_number
             hospital.featured_image =featured_image 
             hospital.hospital_type =hospital_type
-            
-            # specializations.specialization_name=specialization_name
-            # services.service_name = service_name
-            # departments.hospital_department_name = department_name 
 
             hospital.save()
 
@@ -409,7 +394,7 @@ def delete_service(request, pk, pk2):
 @csrf_exempt
 @login_required(login_url='admin_login')
 def edit_emergency_information(request, pk):
-
+    admin = Admin_Information.objects.get(user=request.user)
     hospital = Hospital_Information.objects.get(hospital_id=pk)
     form = EditEmergencyForm(instance=hospital)  
 
@@ -423,7 +408,7 @@ def edit_emergency_information(request, pk):
         else:
             form = EditEmergencyForm()
 
-    context = {'hospital': hospital, 'form': form}
+    context = {'hospital': hospital, 'form': form,'admin':admin}
     return render(request, 'hospital_admin/edit-emergency-information.html', context)
 
 @csrf_exempt
@@ -720,6 +705,7 @@ def delete_medicine(request, pk):
 @csrf_exempt
 @login_required(login_url='admin_login')
 def add_lab_worker(request):
+    admin = Admin_Information.objects.get(user=request.user)
     if request.user.is_hospital_admin:
         user = None
         
@@ -743,7 +729,7 @@ def add_lab_worker(request):
             else:
                 messages.error(request, 'An error has occurred during registration')
     
-    context = {'form': form, 'admin': user}
+    context = {'form': form, 'admin': user,'admin':admin}
     return render(request, 'hospital_admin/add-lab-worker.html', context)  
 
 @csrf_exempt
@@ -828,9 +814,10 @@ def edit_pharmacist(request, pk):
 @csrf_exempt
 @login_required(login_url='admin_login')
 def department_image_list(request,pk):
+    admin = Admin_Information.objects.get(user=request.user)
     departments = hospital_department.objects.filter(hospital_id=pk)
     #departments = hospital_department.objects.all()
-    context = {'departments': departments}
+    context = {'departments': departments,'admin':admin}
     return render(request, 'hospital_admin/department-image-list.html',context)
 
 @csrf_exempt
@@ -867,7 +854,7 @@ def accept_doctor(request,pk):
     doctor = Doctor_Information.objects.get(doctor_id=pk)
     doctor.register_status = 'Accepted'
     doctor.save()
-    
+
     experience= Experience.objects.filter(doctor_id=pk)
     education = Education.objects.filter(doctor_id=pk)
     

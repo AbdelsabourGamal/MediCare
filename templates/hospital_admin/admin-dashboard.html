@@ -130,8 +130,8 @@
                     <tr>
                       <th>Hospital Name</th>
                       <th>Address</th>
-                      <th>Contact</th>
                       <th>Phone Number</th>
+                      <th>EMAIL</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -146,15 +146,15 @@
                             class="avatar"
                           />
                           <a
-                            href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
+                            href="{% url 'edit-hospital' pk=hospital.hospital_id %}"
                             class="user-name"
                             >{{hospital.name}}</a
                           >
                         </div>
                       </td>
                       <td>{{hospital.address}}</td>
+                      <td>+20{{hospital.phone_number}}</td>
                       <td>{{hospital.email}}</td>
-                      <td>{{hospital.phone_number}}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -220,9 +220,24 @@
                           >
                         </div>
                       </td>
+                      {% if doctor.department %}
                       <td>{{doctor.department}}</td>
-                      <td>{{doctor.specialty}}</td>
-                      <td>{{doctor.hospital}}</td>
+                      {% else %}
+                      <td>Unavailable</td>
+                      {% endif %}
+
+                      {% if doctor.specialization %}
+                      <td>{{doctor.specialization.specialization_name}}</td>
+                      {% else %}
+                      <td>Unavailable</td>
+                      {% endif %}
+
+                      {% if doctor.hospital_name %}
+                      <td>{{doctor.hospital_name}}</td>
+                      {% else %}
+                      <td>Unavailable</td>
+                      {% endif %}
+
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -260,10 +275,10 @@
                             alt="Patient Image"
                             class="avatar"
                           />
-                          <a href="#" class="user-name">{{patient.name}}</a>
+                          <a class="user-name">{{patient.name}}</a>
                         </div>
                       </td>
-                      <td>{{patient.phone_number}}</td>
+                      <td>+20{{patient.phone_number}}</td>
                       <td>{{patient.email}}</td>
                       <td>{{patient.address}}</td>
                     </tr>
@@ -305,11 +320,11 @@
                             alt="Pharmacist Image"
                             class="avatar"
                           />
-                          <a href="#" class="user-name">{{p.username}}</a>
+                          <a href="{% url 'edit-pharmacist' pk=p.pharmacist_id %}" class="user-name">{{p.username}}</a>
                         </div>
                       </td>
                       <td>{{p.email}}</td>
-                      <td>{{p.phone_number}}</td>
+                      <td>+20{{p.phone_number}}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -347,10 +362,10 @@
                             alt="Lab-Worker Image"
                             class="avatar"
                           />
-                          <a href="#" class="user-name">{{lab_worker.name}}</a>
+                          <a href="{% url 'edit-lab-worker' pk=lab_worker.technician_id %}" class="user-name">{{lab_worker.name}}</a>
                         </div>
                       </td>
-                      <td>{{lab_worker.phone_number}}</td>
+                      <td>+20{{lab_worker.phone_number}}</td>
                       <td>{{lab_worker.email}}</td>
                       <td>{{lab_worker.age}}</td>
                     </tr>

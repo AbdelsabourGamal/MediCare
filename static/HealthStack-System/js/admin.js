@@ -86,3 +86,138 @@ mediaQuery.addEventListener("change", (e) => {
     sidebarOverlay.classList.remove("show");
   }
 });
+
+// Dynamic Departments, Services, and Specialization Management Script
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Function to create a new department entry
+  function createDepartmentEntry() {
+    const departmentEntry = document.createElement("div");
+    departmentEntry.className = "row form-row department-cont";
+    departmentEntry.innerHTML = `
+      <div class="col-12 col-md-10 col-lg-10">
+          <div class="form-group">
+              <input type="text" class="form-control" name="department" placeholder="Add new department" />
+          </div>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2">
+          <a href="#" class="btn btn-danger trash-btn">
+              <i class="far fa-trash-alt"></i>
+          </a>
+      </div>
+  `;
+    return departmentEntry;
+  }
+
+  // Function to create a new service entry
+  function createServiceEntry() {
+    const serviceEntry = document.createElement("div");
+    serviceEntry.className = "row form-row service-cont";
+    serviceEntry.innerHTML = `
+      <div class="col-12 col-md-10 col-lg-10">
+          <div class="form-group">
+              <input type="text" class="form-control" name="service" placeholder="Add new service" />
+          </div>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2">
+          <a href="#" class="btn btn-danger trash-btn">
+              <i class="far fa-trash-alt"></i>
+          </a>
+      </div>
+  `;
+    return serviceEntry;
+  }
+
+  // Function to create a new specialization entry
+  function createSpecializationEntry() {
+    const specializationEntry = document.createElement("div");
+    specializationEntry.className = "row form-row specialization-cont";
+    specializationEntry.innerHTML = `
+      <div class="col-12 col-md-10 col-lg-10">
+          <div class="form-group">
+              <input type="text" class="form-control" name="specialization" placeholder="Add new specialization" />
+          </div>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2">
+          <a href="#" class="btn btn-danger trash-btn">
+              <i class="far fa-trash-alt"></i>
+          </a>
+      </div>
+  `;
+    return specializationEntry;
+  }
+
+  // Add Department Entry
+  const addDepartmentBtn = document.querySelector(".add-department");
+  if (addDepartmentBtn) {
+    addDepartmentBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const departmentInfo = document.querySelector(".department-info");
+      const newDepartmentEntry = createDepartmentEntry();
+      departmentInfo.appendChild(newDepartmentEntry);
+    });
+  }
+
+  // Add Service Entry
+  const addServiceBtn = document.querySelector(".add-service");
+  if (addServiceBtn) {
+    addServiceBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const serviceInfo = document.querySelector(".service-info");
+      const newServiceEntry = createServiceEntry();
+      serviceInfo.appendChild(newServiceEntry);
+    });
+  }
+
+  // Add Specialization Entry
+  const addSpecializationBtn = document.querySelector(".add-specialization");
+  if (addSpecializationBtn) {
+    addSpecializationBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const specializationInfo = document.querySelector(".specialization-info");
+      const newSpecializationEntry = createSpecializationEntry();
+      specializationInfo.appendChild(newSpecializationEntry);
+    });
+  }
+
+  // Delete Entry (using event delegation for dynamically added elements)
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(".trash-btn")) {
+      e.preventDefault();
+      const trashBtn = e.target.closest(".trash-btn");
+      const entryToDelete = trashBtn.closest(
+        ".department-cont, .service-cont, .specialization-cont"
+      );
+
+      if (entryToDelete) {
+        // Check which type of entry this is
+        const isDepartmentEntry =
+          entryToDelete.classList.contains("department-cont");
+        const isServiceEntry = entryToDelete.classList.contains("service-cont");
+        const isSpecializationEntry = entryToDelete.classList.contains(
+          "specialization-cont"
+        );
+
+        // Count remaining entries of the same type
+        let remainingEntries;
+        if (isDepartmentEntry) {
+          remainingEntries =
+            document.querySelectorAll(".department-cont").length;
+        } else if (isServiceEntry) {
+          remainingEntries = document.querySelectorAll(".service-cont").length;
+        } else if (isSpecializationEntry) {
+          remainingEntries = document.querySelectorAll(
+            ".specialization-cont"
+          ).length;
+        }
+
+        // Only allow deletion if there will be at least 1 entry remaining
+        if (remainingEntries > 1) {
+          entryToDelete.remove();
+        } else {
+          alert("At least one entry must remain.");
+        }
+      }
+    }
+  });
+});

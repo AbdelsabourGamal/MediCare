@@ -72,6 +72,12 @@
           </div>
           <!-- /Page Header -->
 
+          <form
+              action="{% url 'edit-hospital' pk=hospital.hospital_id %}"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
           <div class="form-container">
             <!-- Profile Image Section -->
             <div class="profile-section">
@@ -98,13 +104,6 @@
                 </div>
               </div>
             </div>
-
-            <form
-              action="{% url 'edit-hospital' pk=hospital.hospital_id %}"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              {% csrf_token %}
 
               <div class="form-grid">
                 <!-- Basic Information -->

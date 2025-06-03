@@ -98,9 +98,23 @@
                             </a>
                           </div>
                         </td>
+                        {% if doctor.email %}
                         <td>{{doctor.email}}</td>
+                        {% else %}
+                        <td>Unavailable</td>
+                        {% endif %}
+
+                        {% if doctor.department %}
                         <td>{{doctor.department}}</td>
-                        <td>{{doctor.hospital}}</td>
+                        {% else %}
+                        <td>Unavailable</td>
+                        {% endif %}
+
+                        {% if doctor.hospital_name %}
+                        <td>{{doctor.hospital_name}}</td>
+                        {% else %}
+                        <td>Unavailable</td>
+                        {% endif %}
                         <td>
                           <a
                             href="{% url 'admin-doctor-profile' doctor.doctor_id %}"

@@ -1,6 +1,5 @@
 import email
 from email import message
-from multiprocessing import context
 from django.contrib.auth.hashers import check_password
 from turtle import title
 from django.shortcuts import render, redirect
@@ -13,9 +12,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from hospital.models import User, Patient
-from hospital_admin.models import Admin_Information,Clinical_Laboratory_Technician
 from .models import Doctor_Information, Appointment, Education, Experience, Prescription_medicine, Report,Specimen,Test, Prescription_test, Prescription, Doctor_review
-from hospital_admin.models import Admin_Information,Clinical_Laboratory_Technician, Test_Information
+from hospital_admin.models import Test_Information
 from django.db.models import Q, Count
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
@@ -23,13 +21,11 @@ import random
 import string
 from datetime import datetime, timedelta
 import datetime
-import re
 from django.core.mail import BadHeaderError, send_mail
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.utils.html import strip_tags
 from io import BytesIO
-from urllib import response
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.http import HttpResponse
@@ -100,7 +96,6 @@ def patient_id(request):
 def logoutDoctor(request):
     user = User.objects.get(id=request.user.id)
     if user.is_doctor:
-        user.login_status == "offline"
         user.save()
         logout(request)
     
@@ -115,18 +110,16 @@ def doctor_register(request):
     if request.method == 'POST':
         form = DoctorUserCreationForm(request.POST)
         if form.is_valid():
-            # form.save()
-            # commit=False --> don't save to database yet (we have a chance to modify object)
             user = form.save(commit=False)
+            user.first_name = user.username
+            user.last_name = user.username
             user.is_doctor = True
-            # user.username = user.username.lower()  # lowercase username
             user.save()
 
             messages.success(request, 'Doctor account was created!')
 
-            # After user is created, we can log them in
-            #login(request, user)
-            return redirect('doctor:doctor-login')
+            login(request, user)
+            return redirect('doctor:doctor-profile-settings')
 
         else:
             messages.error(request, 'An error has occurred during registration')

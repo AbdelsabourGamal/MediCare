@@ -11,7 +11,6 @@ urlpatterns = [
     path('login/', views.LoginView.as_view()),
     path('logout/', views.LogoutView.as_view(), name='logout'),
 
-
     path('password_reset/', views.PasswordResetView.as_view(), name='password-reset'),
 
     path('change_password/', views.ChangePasswordView.as_view(), name='change_password'),
@@ -35,4 +34,5 @@ urlpatterns = [
     path('all_prescription_data/', views.CombinedDataView.as_view()),
 
     path('hospital_department/', views.HospitalDepartment.as_view()), 
+
 ]
