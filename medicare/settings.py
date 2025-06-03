@@ -4,7 +4,6 @@ import os
 
 from dotenv import load_dotenv # type: ignore
 import environ # type: ignore
-# django-environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,9 +14,6 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -25,7 +21,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['192.168.0.100', '127.0.0.1','5749-103-109-53-5.in.ngrok.io','10.0.2.2']
+ALLOWED_HOSTS = ['127.0.0.1','medicare.onrender.com','10.0.2.2']
 # ALLOWED_HOSTS = ['mobile view', 'local host','ngrok -- keeps on changing']
 
 # Application definition
@@ -168,13 +164,13 @@ STATICFILES_DIRS = [
 
 
 
-### Paymo env variables
-PAYMOB_API_KEY = env('PAYMOB_API_KEY')
-PAYMOB_INTEGRATION_ID = env('PAYMOB_INTEGRATION_ID')
-PAYMOB_HMAC_KEY = env('PAYMOB_HMAC_SECRET')
+### PAYPAL env variables
+PAYPAL_API_KEY = env('PAYPAL_API_KEY')
+PAYPAL_INTEGRATION_ID = env('PAYPAL_INTEGRATION_ID')
+PAYPAL_HMAC_KEY = env('PAYPAL_HMAC_SECRET')
 
-PAYMOB_MODE = 'sandbox' 
-PAYMOB_TEST_MODE = True 
+PAYPAL_MODE = 'sandbox' 
+PAYPAL_TEST_MODE = True 
 
 ###Mailtrap env Variables
 SMTP_HOST = env('SMTP_HOST')
