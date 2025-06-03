@@ -15,7 +15,7 @@ def render_to_pdf(template_src, context_dict={}):
     html=template.render(context_dict)
     result=BytesIO()
     pres_pdf=pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
-    if not pres_pdf.err:
+    if not pres_pdf.err: # type: ignore
         return HttpResponse(result.getvalue(),content_type="aplication/pres_pdf")
     return None
 
