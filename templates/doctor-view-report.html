@@ -1,269 +1,321 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
     <title>MediCare</title>
 
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Main Wrapper -->
-<div class="main-wrapper">
-    <!-- Header -->
-    <header class="header">{% include 'doctor-navbar.html' %}</header>
-    <!-- /Header -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">{% include 'doctor-navbar.html' %}</header>
+      <!-- /Header -->
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-bar">
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
         <nav aria-label="breadcrumb" class="page-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'hospital_home'%}">Home</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Medical Record
-                </li>
-            </ol>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'hospital_home'%}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Medical Record
+            </li>
+          </ol>
         </nav>
-    </div>
-    <!-- /Breadcrumb -->
+      </div>
+      <!-- /Breadcrumb -->
 
-    <!-- Page Content -->
-    
-    <div class="doctor medical-record">
+      <!-- Page Content -->
+
+      <div class="doctor medical-record">
         <div class="container-fluid">
-            <div class="row">
-                <!-- Profile Sidebar -->
-                <div class="col-md-5 col-lg-4 col-xl-3 sidebar-column">
-                    <div class="card patient-card shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="patient-avatar-container mx-auto mb-3">
-                                <img
-                                    src="{{ report.patient.featured_image.url }}"
-                                    alt="{{ report.patient.name }}"
-                                    class="patient-avatar rounded-circle"
-                                />
-                            </div>
-            
-                            <h2 class="card-title patient-name">{{ report.patient.name }}</h2>
-            
-                            <div class="patient-meta mb-3">
-                                <div class="patient-id d-flex justify-content-center align-items-center gap-2">
-                                    <span class="fw-medium">ID:</span>
-                                    <span class="fw-semibold">{{ report.patient.patient_id }}</span>
-                                </div>
-                                <div class="patient-location d-flex justify-content-center align-items-center gap-2">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>{{ report.patient.address }}</span>
-                                </div>
-                            </div>
-            
-                            <div class="patient-details bg-light rounded-3 p-3">
-                                <div class="detail-item d-flex justify-content-between py-2 border-bottom">
-                                    <span class="fw-medium">Phone</span>
-                                    <span class="fw-semibold">+20{{ report.patient.phone_number }}</span>
-                                </div>
-                                <div class="detail-item d-flex justify-content-between py-2 border-bottom">
-                                    <span class="fw-medium">Age</span>
-                                    <span class="fw-semibold">{{ report.patient.age }}</span>
-                                </div>
-                                <div class="detail-item d-flex justify-content-between py-2">
-                                    <span class="fw-medium">Blood Group</span>
-                                    <span class="fw-semibold">{{ report.patient.blood_group }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- / Profile Sidebar -->
+          <div class="row">
+            <!-- Profile Sidebar -->
+            <div class="col-md-5 col-lg-4 col-xl-3 sidebar-column">
+              <div class="card patient-card shadow-sm">
+                <div class="card-body text-center">
+                  <div class="patient-avatar-container mx-auto mb-3">
+                    <img
+                      src="{{ report.patient.featured_image.url }}"
+                      alt="{{ report.patient.name }}"
+                      class="patient-avatar rounded-circle"
+                    />
+                  </div>
 
-                <!-- Main Content Area -->
-                <div class="col-md-7 col-lg-8 col-xl-9">
-                    <div class="medical-record-container">
-                        <header class="medical-record-header">
-                            <h1>Medical Record</h1>
-                        </header>
-                        <main class="medical-record-content">
-                            <section class="medical-record-meta">
-								<div class="meta-grid">
-									<div class="meta-item">
-										<span class="meta-label">Prescription ID:</span>
-										<span class="meta-value">{{report.report_id}}</span>
-									</div>
-									<div class="meta-item">
-										<span class="meta-label">Patient ID:</span>
-										<span class="meta-value">{{report.patient.patient_id}}</span>
-									</div>
-									<div class="meta-item">
-										<span class="meta-label">Date Issued:</span>
-										<span class="meta-value">{{report.delivery_date}}</span>
-									</div>
-								</div>
-							</section>
-                            <!-- Doctor and Patient Information -->
-							<section class="section">
-								<div class="info-grid">
-									<article class="info-card doctor">
-										<h3>Prescribing Doctor</h3>
-										<ul class="info-list">
-											<li><strong>Name:</strong> {{report.doctor.name}}</li>
-											<li><strong>Department:</strong> {{report.doctor.department_name}}</li>
-											<li><strong>Email:</strong> {{report.doctor.email}}</li>
-											<li><strong>Phone:</strong> {{report.doctor.phone_number}}</li>
-										</ul>
-									</article>
-				
-									<article class="info-card patient">
-										<h3>Patient Information</h3>
-										<ul class="info-list">
-											<li><strong>Name:</strong> {{report.patient.name}}</li>
-											<li><strong>Address:</strong> {{report.patient.address}}</li>
-											<li><strong>Email:</strong> {{report.patient.email}}</li>
-											<li><strong>Phone:</strong> {{report.patient.phone_number}}</li>
-										</ul>
-									</article>
-								</div>
-							</section>
-                            <section class="section">
-                                <h2 class="section-title">Specimen Information</h2>
-                                <div class="table-container">
-                                    <table class="data-table specimen-table" role="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Specimen Type</th>
-                                                <th scope="col" class="text-center">Specimen ID</th>
-                                                <th scope="col" class="text-center">Collection Date/Time</th>
-                                                <th scope="col" class="text-center">Receiving Date/Time</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for s in specimen %}
-                                            <tr>
-                                                <td>{{s.specimen_type}}</td>
-                                                <td class="text-center">{{s.specimen_id}}</td>
-                                                <td class="text-center">{{s.collection_date}}</td>
-                                                <td class="text-center">{{s.receiving_date}}</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </section>
-                
-                            <!-- NEW: Test Results Section -->
-                            <section class="section">
-                                <h2 class="section-title">Test Results</h2>
-                                <div class="table-container">
-                                    <table class="data-table test-results-table" role="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Test Name</th>
-                                                <th scope="col" class="text-center">Result</th>
-                                                <th scope="col" class="text-center">Unit</th>
-                                                <th scope="col" class="text-center">Reference Range</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for t in test %}
-                                            <tr>
-                                                <td>{{t.test_name}}</td>
-                                                <td class="text-center">
-                                                    <span class="status-indicator status-normal"></span>
-                                                    {{t.result}}
-                                                </td>
-                                                <td class="text-center">{{t.unit}}</td>
-                                                <td class="text-center">{{t.referred_value}}</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </section>
-                
-                            <!-- NEW: Additional Information Section -->
-                            <section class="section">
-                                <div class="additional-info">
-                                    <h3>Additional Information</h3>
-                                    <p>{{report.other_information}}</p>
-                                    
-                                    <div class="download-section">
-                                        <a href="#" class="download-btn" target="_blank" rel="noopener noreferrer">
-                                            Download Complete Report
-                                        </a>
-                                    </div>
-                                </div>
-                            </section>
-                        </main>
+                  <h2 class="card-title patient-name">
+                    {{ report.patient.name }}
+                  </h2>
+
+                  <div class="patient-meta mb-3">
+                    <div
+                      class="patient-id d-flex justify-content-center align-items-center gap-2"
+                    >
+                      <span class="fw-medium">ID:</span>
+                      <span class="fw-semibold"
+                        >{{ report.patient.patient_id }}</span
+                      >
                     </div>
+                    <div
+                      class="patient-location d-flex justify-content-center align-items-center gap-2"
+                    >
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>{{ report.patient.address }}</span>
+                    </div>
+                  </div>
+
+                  <div class="patient-details bg-light rounded-3 p-3">
+                    <div
+                      class="detail-item d-flex justify-content-between py-2 border-bottom"
+                    >
+                      <span class="fw-medium">Phone</span>
+                      <span class="fw-semibold"
+                        >+20{{ report.patient.phone_number }}</span
+                      >
+                    </div>
+                    <div
+                      class="detail-item d-flex justify-content-between py-2 border-bottom"
+                    >
+                      <span class="fw-medium">Age</span>
+                      <span class="fw-semibold">{{ report.patient.age }}</span>
+                    </div>
+                    <div
+                      class="detail-item d-flex justify-content-between py-2"
+                    >
+                      <span class="fw-medium">Blood Group</span>
+                      <span class="fw-semibold"
+                        >{{ report.patient.blood_group }}</span
+                      >
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+            <!-- / Profile Sidebar -->
+
+            <!-- Main Content Area -->
+            <div class="col-md-7 col-lg-8 col-xl-9">
+              <div class="medical-record-container">
+                <header class="medical-record-header">
+                  <h1>Medical Record</h1>
+                </header>
+                <main class="medical-record-content">
+                  <section class="medical-record-meta">
+                    <div class="meta-grid">
+                      <div class="meta-item">
+                        <span class="meta-label">Prescription ID:</span>
+                        <span class="meta-value">{{report.report_id}}</span>
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-label">Patient ID:</span>
+                        <span class="meta-value"
+                          >{{report.patient.patient_id}}</span
+                        >
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-label">Date Issued:</span>
+                        <span class="meta-value">{{report.delivery_date}}</span>
+                      </div>
+                    </div>
+                  </section>
+                  <!-- Doctor and Patient Information -->
+                  <section class="section">
+                    <div class="info-grid">
+                      <article class="info-card doctor">
+                        <h3>Prescribing Doctor</h3>
+                        <ul class="info-list">
+                          <li><strong>Name:</strong> {{report.doctor.name}}</li>
+                          <li>
+                            <strong>Department:</strong>
+                            {{report.doctor.department_name}}
+                          </li>
+                          <li>
+                            <strong>Email:</strong> {{report.doctor.email}}
+                          </li>
+                          <li>
+                            <strong>Phone:</strong>
+                            {{report.doctor.phone_number}}
+                          </li>
+                        </ul>
+                      </article>
+
+                      <article class="info-card patient">
+                        <h3>Patient Information</h3>
+                        <ul class="info-list">
+                          <li>
+                            <strong>Name:</strong> {{report.patient.name}}
+                          </li>
+                          <li>
+                            <strong>Address:</strong> {{report.patient.address}}
+                          </li>
+                          <li>
+                            <strong>Email:</strong> {{report.patient.email}}
+                          </li>
+                          <li>
+                            <strong>Phone:</strong>
+                            {{report.patient.phone_number}}
+                          </li>
+                        </ul>
+                      </article>
+                    </div>
+                  </section>
+                  <section class="section">
+                    <h2 class="section-title">Specimen Information</h2>
+                    <div class="table-container">
+                      <table class="data-table specimen-table" role="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Specimen Type</th>
+                            <th scope="col" class="text-center">Specimen ID</th>
+                            <th scope="col" class="text-center">
+                              Collection Date/Time
+                            </th>
+                            <th scope="col" class="text-center">
+                              Receiving Date/Time
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for s in specimen %}
+                          <tr>
+                            <td>{{s.specimen_type}}</td>
+                            <td class="text-center">{{s.specimen_id}}</td>
+                            <td class="text-center">{{s.collection_date}}</td>
+                            <td class="text-center">{{s.receiving_date}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <!-- NEW: Test Results Section -->
+                  <section class="section">
+                    <h2 class="section-title">Test Results</h2>
+                    <div class="table-container">
+                      <table class="data-table test-results-table" role="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Test Name</th>
+                            <th scope="col" class="text-center">Result</th>
+                            <th scope="col" class="text-center">Unit</th>
+                            <th scope="col" class="text-center">
+                              Reference Range
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for t in test %}
+                          <tr>
+                            <td>{{t.test_name}}</td>
+                            <td class="text-center">
+                              <span
+                                class="status-indicator status-normal"
+                              ></span>
+                              {{t.result}}
+                            </td>
+                            <td class="text-center">{{t.unit}}</td>
+                            <td class="text-center">{{t.referred_value}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <!-- NEW: Additional Information Section -->
+                  <section class="section">
+                    <div class="additional-info">
+                      <h3>Additional Information</h3>
+                      <p>{{report.other_information}}</p>
+
+                      <div class="download-section">
+                        <a
+                          href="#"
+                          class="download-btn"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Download Complete Report
+                        </a>
+                      </div>
+                    </div>
+                  </section>
+                </main>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- /Page Content -->
+
+      <!-- Footer -->
+      {% include 'footer.html' %}
+      <!-- /Footer -->
     </div>
-    <!-- /Page Content -->
+    <!-- Scripts -->
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
+    <script>
+      // Add dynamic result status indicators
+      document.addEventListener("DOMContentLoaded", function () {
+        const resultCells = document.querySelectorAll(
+          ".test-results-table tbody td:nth-child(2)"
+        );
 
-    <!-- Footer -->
-    {% include 'footer.html' %}
-    <!-- /Footer -->
-</div>
-<!-- Scripts -->
-<script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-<script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-<script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-<script src="{% static 'HealthStack-System/js/script.js' %}"></script>
-<script>
-    // Add dynamic result status indicators
-    document.addEventListener('DOMContentLoaded', function() {
-        const resultCells = document.querySelectorAll('.test-results-table tbody td:nth-child(2)');
-        
-        resultCells.forEach(cell => {
-            const indicator = cell.querySelector('.status-indicator');
-            const resultText = cell.textContent.trim().toLowerCase();
-            
-            // Simple logic to determine result status (customize as needed)
-            if (resultText.includes('high') || resultText.includes('elevated')) {
-                indicator.className = 'status-indicator status-abnormal';
-                cell.classList.add('result-abnormal');
-            } else if (resultText.includes('low') || resultText.includes('decreased')) {
-                indicator.className = 'status-indicator status-abnormal';
-                cell.classList.add('result-abnormal');
-            } else if (resultText.includes('borderline')) {
-                indicator.className = 'status-indicator status-borderline';
-                cell.classList.add('result-borderline');
-            } else {
-                indicator.className = 'status-indicator status-normal';
-                cell.classList.add('result-normal');
-            }
+        resultCells.forEach((cell) => {
+          const indicator = cell.querySelector(".status-indicator");
+          const resultText = cell.textContent.trim().toLowerCase();
+
+          // Simple logic to determine result status (customize as needed)
+          if (resultText.includes("high") || resultText.includes("elevated")) {
+            indicator.className = "status-indicator status-abnormal";
+            cell.classList.add("result-abnormal");
+          } else if (
+            resultText.includes("low") ||
+            resultText.includes("decreased")
+          ) {
+            indicator.className = "status-indicator status-abnormal";
+            cell.classList.add("result-abnormal");
+          } else if (resultText.includes("borderline")) {
+            indicator.className = "status-indicator status-borderline";
+            cell.classList.add("result-borderline");
+          } else {
+            indicator.className = "status-indicator status-normal";
+            cell.classList.add("result-normal");
+          }
         });
-    });
-</script>
-
-</body>
-
-
+      });
+    </script>
+  </body>
 </html>

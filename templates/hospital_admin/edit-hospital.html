@@ -14,25 +14,19 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/admin/style.css' %}" />
   </head>
 
   <body>
@@ -72,38 +66,39 @@
           </div>
           <!-- /Page Header -->
 
-          <form
+          <div class="form-container">
+            <!-- Profile Image Section -->
+
+            <form
               action="{% url 'edit-hospital' pk=hospital.hospital_id %}"
               method="POST"
               enctype="multipart/form-data"
             >
               {% csrf_token %}
-          <div class="form-container">
-            <!-- Profile Image Section -->
-            <div class="profile-section">
-              <div class="profile-img">
-                <img
-                  src="{{hospital.featured_image.url}}"
-                  alt="Hospital Image"
-                  id="profileImage"
-                />
-              </div>
-              <div>
-                <label for="featured_image" class="upload-btn">
-                  <i class="fas fa-upload"></i> Upload Photo
-                  <input
-                    type="file"
-                    id="featured_image"
-                    name="featured_image"
-                    value="{{featured_image}}"
-                    accept="image/*"
+              <div class="profile-section">
+                <div class="profile-img">
+                  <img
+                    src="{{hospital.featured_image.url}}"
+                    alt="Hospital Image"
+                    id="profileImage"
                   />
-                </label>
-                <div class="form-hint">
-                  Allowed JPG, GIF or PNG. Max size of 2MB
+                </div>
+                <div>
+                  <label for="featured_image" class="upload-btn">
+                    <i class="fas fa-upload"></i> Upload Photo
+                    <input
+                      type="file"
+                      id="featured_image"
+                      name="featured_image"
+                      value="{{featured_image}}"
+                      accept="image/*"
+                    />
+                  </label>
+                  <div class="form-hint">
+                    Allowed JPG, GIF or PNG. Max size of 2MB
+                  </div>
                 </div>
               </div>
-            </div>
 
               <div class="form-grid">
                 <!-- Basic Information -->
@@ -322,10 +317,207 @@
     </div>
     <!-- /Main Wrapper -->
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/admin.js' %}"></script>
+    <script>
+      // Dynamic Hospital Departments, Services, and Specializations Management Script
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Function to create a new department entry
+        function createDepartmentEntry() {
+          const departmentEntry = document.createElement("div");
+          departmentEntry.className = "dynamic-item";
+          departmentEntry.innerHTML = `
+          <div class="form-group">
+              <label>Department Name</label>
+              <input
+                  type="text"
+                  class="input-field"
+                  name="department_name[]"
+                  placeholder="Enter department name"
+              />
+          </div>
+          <button type="button" class="btn btn-danger delete-item">
+              <i class="fas fa-trash"></i>
+          </button>
+      `;
+          return departmentEntry;
+        }
+
+        // Function to create a new service entry
+        function createServiceEntry() {
+          const serviceEntry = document.createElement("div");
+          serviceEntry.className = "dynamic-item";
+          serviceEntry.innerHTML = `
+          <div class="form-group">
+              <label>Service Name</label>
+              <input
+                  type="text"
+                  class="input-field"
+                  name="service_name[]"
+                  placeholder="Enter service name"
+              />
+          </div>
+          <button type="button" class="btn btn-danger delete-item">
+              <i class="fas fa-trash"></i>
+          </button>
+      `;
+          return serviceEntry;
+        }
+
+        // Function to create a new specialization entry
+        function createSpecializationEntry() {
+          const specializationEntry = document.createElement("div");
+          specializationEntry.className = "dynamic-item";
+          specializationEntry.innerHTML = `
+          <div class="form-group">
+              <label>Specialization</label>
+              <input
+                  type="text"
+                  class="input-field"
+                  name="specialization_name[]"
+                  placeholder="Enter specialization"
+              />
+          </div>
+          <button type="button" class="btn btn-danger delete-item">
+              <i class="fas fa-trash"></i>
+          </button>
+      `;
+          return specializationEntry;
+        }
+
+        // Add Department Entry
+        const addDepartmentBtn = document.querySelector(".add-department");
+        if (addDepartmentBtn) {
+          addDepartmentBtn.addEventListener("click", function () {
+            const departmentsContainer = document.getElementById(
+              "departments-container"
+            );
+            const newDepartmentEntry = createDepartmentEntry();
+            departmentsContainer.appendChild(newDepartmentEntry);
+          });
+        }
+
+        // Add Service Entry
+        const addServiceBtn = document.querySelector(".add-service");
+        if (addServiceBtn) {
+          addServiceBtn.addEventListener("click", function () {
+            const servicesContainer =
+              document.getElementById("services-container");
+            const newServiceEntry = createServiceEntry();
+            servicesContainer.appendChild(newServiceEntry);
+          });
+        }
+
+        // Add Specialization Entry
+        const addSpecializationBtn = document.querySelector(
+          ".add-specialization"
+        );
+        if (addSpecializationBtn) {
+          addSpecializationBtn.addEventListener("click", function () {
+            const specializationsContainer = document.getElementById(
+              "specializations-container"
+            );
+            const newSpecializationEntry = createSpecializationEntry();
+            specializationsContainer.appendChild(newSpecializationEntry);
+          });
+        }
+
+        // Delete Entry (using event delegation for dynamically added elements)
+        document.addEventListener("click", function (e) {
+          if (e.target.closest(".delete-item")) {
+            const deleteBtn = e.target.closest(".delete-item");
+            const entryToDelete = deleteBtn.closest(".dynamic-item");
+
+            if (entryToDelete) {
+              // Determine which container this entry belongs to
+              const departmentsContainer = document.getElementById(
+                "departments-container"
+              );
+              const servicesContainer =
+                document.getElementById("services-container");
+              const specializationsContainer = document.getElementById(
+                "specializations-container"
+              );
+
+              let remainingEntries;
+              let containerType = "";
+
+              if (departmentsContainer.contains(entryToDelete)) {
+                remainingEntries =
+                  departmentsContainer.querySelectorAll(".dynamic-item").length;
+                containerType = "department";
+              } else if (servicesContainer.contains(entryToDelete)) {
+                remainingEntries =
+                  servicesContainer.querySelectorAll(".dynamic-item").length;
+                containerType = "service";
+              } else if (specializationsContainer.contains(entryToDelete)) {
+                remainingEntries =
+                  specializationsContainer.querySelectorAll(
+                    ".dynamic-item"
+                  ).length;
+                containerType = "specialization";
+              }
+
+              // Only allow deletion if there will be at least 1 entry remaining
+              if (remainingEntries > 1) {
+                entryToDelete.remove();
+              } else {
+                alert(`At least one ${containerType} entry must remain.`);
+              }
+            }
+          }
+        });
+
+        // Handle existing delete links (for items loaded from backend)
+        document.addEventListener("click", function (e) {
+          if (e.target.closest('a.btn-danger[href*="delete"]')) {
+            const deleteLink = e.target.closest('a.btn-danger[href*="delete"]');
+            const entryToDelete = deleteLink.closest(".dynamic-item");
+
+            if (entryToDelete) {
+              // Determine which container this entry belongs to
+              const departmentsContainer = document.getElementById(
+                "departments-container"
+              );
+              const servicesContainer =
+                document.getElementById("services-container");
+              const specializationsContainer = document.getElementById(
+                "specializations-container"
+              );
+
+              let remainingEntries;
+              let containerType = "";
+
+              if (departmentsContainer.contains(entryToDelete)) {
+                remainingEntries =
+                  departmentsContainer.querySelectorAll(".dynamic-item").length;
+                containerType = "department";
+              } else if (servicesContainer.contains(entryToDelete)) {
+                remainingEntries =
+                  servicesContainer.querySelectorAll(".dynamic-item").length;
+                containerType = "service";
+              } else if (specializationsContainer.contains(entryToDelete)) {
+                remainingEntries =
+                  specializationsContainer.querySelectorAll(
+                    ".dynamic-item"
+                  ).length;
+                containerType = "specialization";
+              }
+
+              // Only allow deletion if there will be at least 1 entry remaining
+              if (remainingEntries <= 1) {
+                e.preventDefault();
+                alert(`At least one ${containerType} entry must remain.`);
+                return false;
+              }
+            }
+          }
+        });
+      });
+    </script>
   </body>
 </html>

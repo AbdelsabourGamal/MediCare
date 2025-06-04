@@ -6,20 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
     <title>MediCare Payment</title>
     <style>
       :root {
@@ -80,8 +77,6 @@
         padding: 1.5rem;
         margin-bottom: 2rem;
       }
-
-    
 
       .detail-item {
         display: flex;
@@ -201,7 +196,6 @@
         <h1 class="payment-title">Appointment Payment</h1>
 
         <div class="payment-details">
-          
           <div class="detail-item">
             <span>Service :</span>
             <span class="highlight">{{appointment.appointment_type}}</span>
@@ -311,7 +305,7 @@
 
                       document.getElementById('payment-success').style.display = 'block';
 
-                      fetch('/paypal/payment_complete/', {
+                      fetch('/paypal/payment-complete/', {
                           method: 'POST',
                           headers: {
                               'Content-Type': 'application/json',

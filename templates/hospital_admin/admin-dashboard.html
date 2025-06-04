@@ -13,24 +13,18 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/admin/style.css' %}" />
   </head>
 
   <body>
@@ -54,14 +48,14 @@
       <!-- Dashboard Page -->
       <div class="page-container dashboard">
         <!-- Page Header -->
-        <div class="page-header ">
+        <div class="page-header">
           <h1 class="page-title">Welcome Back Admin!</h1>
           <div class="breadcrumb">Dashboard Overview</div>
         </div>
 
         <!-- Stats Cards -->
         <div class="stats-grid">
-          <div class="stat-card ">
+          <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon primary">
                 <i class="fas fa-user-md"></i>
@@ -74,7 +68,7 @@
             </div>
           </div>
 
-          <div class="stat-card ">
+          <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon success">
                 <i class="fas fa-users"></i>
@@ -87,7 +81,7 @@
             </div>
           </div>
 
-          <div class="stat-card ">
+          <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon danger">
                 <i class="fas fa-hospital"></i>
@@ -100,7 +94,7 @@
             </div>
           </div>
 
-          <div class="stat-card ">
+          <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon warning">
                 <i class="fas fa-flask"></i>
@@ -114,9 +108,9 @@
           </div>
         </div>
 
-        <!-- Hospital List and Chart -->
+        <!-- Hospital List -->
         <div class="content-grid">
-          <div class="card ">
+          <div class="card">
             <div class="card-header">
               <h4 class="card-title">
                 <i class="fas fa-hospital"></i>
@@ -130,8 +124,8 @@
                     <tr>
                       <th>Hospital Name</th>
                       <th>Address</th>
+                      <th>Contact</th>
                       <th>Phone Number</th>
-                      <th>EMAIL</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -146,15 +140,15 @@
                             class="avatar"
                           />
                           <a
-                            href="{% url 'edit-hospital' pk=hospital.hospital_id %}"
+                            href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
                             class="user-name"
                             >{{hospital.name}}</a
                           >
                         </div>
                       </td>
                       <td>{{hospital.address}}</td>
-                      <td>+20{{hospital.phone_number}}</td>
                       <td>{{hospital.email}}</td>
+                      <td>{{hospital.phone_number}}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -162,29 +156,11 @@
               </div>
             </div>
           </div>
-
-          <div class="card ">
-            <div class="card-header">
-              <h4 class="card-title">
-                <i class="fas fa-chart-bar"></i>
-                Appointment Analytics
-              </h4>
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <div class="chart-placeholder">
-                  <div class="loading-animation"></div>
-                  <p>Interactive Chart Loading...</p>
-                  <small>Real-time appointment data visualization</small>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- Doctors and Patients -->
         <div class="content-grid">
-          <div class="card ">
+          <div class="card">
             <div class="card-header">
               <h4 class="card-title">
                 <i class="fas fa-user-md"></i>
@@ -224,20 +200,15 @@
                       <td>{{doctor.department}}</td>
                       {% else %}
                       <td>Unavailable</td>
-                      {% endif %}
-
-                      {% if doctor.specialization %}
+                      {% endif %} {% if doctor.specialization %}
                       <td>{{doctor.specialization.specialization_name}}</td>
                       {% else %}
                       <td>Unavailable</td>
-                      {% endif %}
-
-                      {% if doctor.hospital_name %}
+                      {% endif %} {% if doctor.hospital_name %}
                       <td>{{doctor.hospital_name}}</td>
                       {% else %}
                       <td>Unavailable</td>
                       {% endif %}
-
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -245,8 +216,9 @@
               </div>
             </div>
           </div>
-
-          <div class="card ">
+        </div>
+        <div class="content-grid">
+          <div class="card">
             <div class="card-header">
               <h4 class="card-title">
                 <i class="fas fa-users"></i>
@@ -275,10 +247,10 @@
                             alt="Patient Image"
                             class="avatar"
                           />
-                          <a class="user-name">{{patient.name}}</a>
+                          <a href="#" class="user-name">{{patient.name}}</a>
                         </div>
                       </td>
-                      <td>+20{{patient.phone_number}}</td>
+                      <td>{{patient.phone_number}}</td>
                       <td>{{patient.email}}</td>
                       <td>{{patient.address}}</td>
                     </tr>
@@ -292,7 +264,7 @@
 
         <!-- Pharmacists and Lab Workers -->
         <div class="content-grid">
-          <div class="card ">
+          <div class="card">
             <div class="card-header">
               <h4 class="card-title">
                 <i class="fas fa-user-md"></i>
@@ -320,11 +292,11 @@
                             alt="Pharmacist Image"
                             class="avatar"
                           />
-                          <a href="{% url 'edit-pharmacist' pk=p.pharmacist_id %}" class="user-name">{{p.username}}</a>
+                          <a href="#" class="user-name">{{p.username}}</a>
                         </div>
                       </td>
                       <td>{{p.email}}</td>
-                      <td>+20{{p.phone_number}}</td>
+                      <td>{{p.phone_number}}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -332,8 +304,10 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="card ">
+        <div class="content-grid">
+          <div class="card">
             <div class="card-header">
               <h4 class="card-title">
                 <i class="fas fa-users"></i>
@@ -362,10 +336,10 @@
                             alt="Lab-Worker Image"
                             class="avatar"
                           />
-                          <a href="{% url 'edit-lab-worker' pk=lab_worker.technician_id %}" class="user-name">{{lab_worker.name}}</a>
+                          <a href="#" class="user-name">{{lab_worker.name}}</a>
                         </div>
                       </td>
-                      <td>+20{{lab_worker.phone_number}}</td>
+                      <td>{{lab_worker.phone_number}}</td>
                       <td>{{lab_worker.email}}</td>
                       <td>{{lab_worker.age}}</td>
                     </tr>
@@ -383,10 +357,10 @@
     <!-- /Main Wrapper -->
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/admin.js' %}"></script>
   </body>
 </html>

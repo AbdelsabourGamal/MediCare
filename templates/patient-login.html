@@ -12,24 +12,21 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
   </head>
 
@@ -45,7 +42,7 @@
           <!-- Image Container -->
           <div class="img-container">
             <img
-              src="{% static 'HealthStack-System/images/Normal/patient-login.png' %}"
+              src="{% static 'MediCare/images/Normal/patient-login.png' %}"
               class="img-fluid"
               alt="HealthStack Patient Login"
             />
@@ -62,7 +59,6 @@
             <!-- Login Form -->
             <form method="POST" action="{% url 'login' %}">
               {% csrf_token %}
-              {% include 'message.html' %}
 
               <!-- Username Field -->
               <div class="form-floating mt-3 mb-3">
@@ -102,7 +98,10 @@
               </div>
 
               <!-- Login Button -->
-              <button class="btn btn-primary w-100 btn-lg login-btn" type="submit">
+              <button
+                class="btn btn-primary w-100 btn-lg login-btn"
+                type="submit"
+              >
                 Login
               </button>
 
@@ -130,11 +129,11 @@
     <!-- /Main Wrapper -->
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
 
     <!-- Toast Notifications for Messages -->
     {% if messages %}
@@ -146,6 +145,5 @@
       });
     </script>
     {% endif %}
-
   </body>
 </html>

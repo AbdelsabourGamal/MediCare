@@ -14,25 +14,19 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/admin/style.css' %}" />
   </head>
 
   <body>
@@ -49,7 +43,7 @@
       </aside>
       <div class="sidebar-overlay" id="sidebarOverlay"></div>
       <!-- /Sidebar -->
-	  .page-container.doctor-profile
+      .page-container.doctor-profile
       <div class="page-container doctor-profile">
         <div class="content container-fluid">
           <!-- Doctor Profile Header -->
@@ -84,25 +78,25 @@
               <div class="col-md-3">
                 <div class="clinic-gallery">
                   <img
-                    src="{% static 'HealthStack-System/images/Normal/gyno1.jpg'%}"
+                    src="{% static 'MediCare/images/Normal/gyno1.jpg'%}"
                     alt="Clinic Image"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
                   />
                   <img
-                    src="{% static 'HealthStack-System/images/Normal/gyno2.jpg'%}"
+                    src="{% static 'MediCare/images/Normal/gyno2.jpg'%}"
                     alt="Clinic Image"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
                   />
                   <img
-                    src="{% static 'HealthStack-System/images/Normal/gyno3.jpg'%}"
+                    src="{% static 'MediCare/images/Normal/gyno3.jpg'%}"
                     alt="Clinic Image"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
                   />
                   <img
-                    src="{% static 'HealthStack-System/images/Normal/gyno4.jpg'%}"
+                    src="{% static 'MediCare/images/Normal/gyno4.jpg'%}"
                     alt="Clinic Image"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
@@ -164,7 +158,6 @@
                       <ul class="experience-list">
                         {% for e in educations %}
                         <li>
-                        
                           <div class="timeline-content">
                             <a href="#" class="name">{{e.degree}}</a>
                             <div class="text-muted">{{e.institute}}</div>
@@ -298,28 +291,28 @@
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                       <img
-                        src="{% static 'HealthStack-System/images/Normal/gyno1.jpg'%}"
+                        src="{% static 'MediCare/images/Normal/gyno1.jpg'%}"
                         class="d-block w-100"
                         alt="Clinic Image"
                       />
                     </div>
                     <div class="carousel-item">
                       <img
-                        src="{% static 'HealthStack-System/images/Normal/gyno2.jpg'%}"
+                        src="{% static 'MediCare/images/Normal/gyno2.jpg'%}"
                         class="d-block w-100"
                         alt="Clinic Image"
                       />
                     </div>
                     <div class="carousel-item">
                       <img
-                        src="{% static 'HealthStack-System/images/Normal/gyno3.jpg'%}"
+                        src="{% static 'MediCare/images/Normal/gyno3.jpg'%}"
                         class="d-block w-100"
                         alt="Clinic Image"
                       />
                     </div>
                     <div class="carousel-item">
                       <img
-                        src="{% static 'HealthStack-System/images/Normal/gyno4.jpg'%}"
+                        src="{% static 'MediCare/images/Normal/gyno4.jpg'%}"
                         class="d-block w-100"
                         alt="Clinic Image"
                       />
@@ -352,10 +345,10 @@
     <!-- /Main Wrapper -->
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/admin.js' %}"></script>
   </body>
 </html>

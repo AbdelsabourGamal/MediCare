@@ -12,25 +12,22 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
   </head>
   <body>
@@ -38,7 +35,7 @@
       <!-- Header -->
       <header class="header">{% include 'doctor-navbar.html' %}</header>
       <!-- /Header -->
-      
+
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
         <nav aria-label="breadcrumb" class="page-breadcrumb">
@@ -53,9 +50,9 @@
         </nav>
       </div>
       <!-- /Breadcrumb -->
-    
+
       <!-- Page Content -->
-      
+
       <div class="doctor add-prescription">
         <div class="container-fluid">
           <div class="row">
@@ -69,30 +66,42 @@
                       class="patient-avatar rounded-circle"
                     />
                   </div>
-    
+
                   <h2 class="card-title patient-name">{{ patient.name }}</h2>
-    
+
                   <div class="patient-meta mb-3">
-                    <div class="patient-id d-flex justify-content-center align-items-center gap-2">
+                    <div
+                      class="patient-id d-flex justify-content-center align-items-center gap-2"
+                    >
                       <span class="fw-medium">ID:</span>
                       <span class="fw-semibold">{{ patient.patient_id }}</span>
                     </div>
-                    <div class="patient-location d-flex justify-content-center align-items-center gap-2">
+                    <div
+                      class="patient-location d-flex justify-content-center align-items-center gap-2"
+                    >
                       <i class="fas fa-map-marker-alt"></i>
                       <span>{{ patient.address }}</span>
                     </div>
                   </div>
-    
+
                   <div class="patient-details bg-light rounded-3 p-3">
-                    <div class="detail-item d-flex justify-content-between py-2 border-bottom">
+                    <div
+                      class="detail-item d-flex justify-content-between py-2 border-bottom"
+                    >
                       <span class="fw-medium">Phone</span>
-                      <span class="fw-semibold">+20{{ patient.phone_number }}</span>
+                      <span class="fw-semibold"
+                        >+20{{ patient.phone_number }}</span
+                      >
                     </div>
-                    <div class="detail-item d-flex justify-content-between py-2 border-bottom">
+                    <div
+                      class="detail-item d-flex justify-content-between py-2 border-bottom"
+                    >
                       <span class="fw-medium">Age</span>
                       <span class="fw-semibold">{{ patient.age }}</span>
                     </div>
-                    <div class="detail-item d-flex justify-content-between py-2">
+                    <div
+                      class="detail-item d-flex justify-content-between py-2"
+                    >
                       <span class="fw-medium">Blood Group</span>
                       <span class="fw-semibold">{{ patient.blood_group }}</span>
                     </div>
@@ -100,179 +109,262 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="col-md-7 col-lg-8 col-xl-9">
               <!-- Prescription Card -->
               <div class="card prescription-card">
                 <div class="card-header">
-                    <h4 class="card-title">Add Prescription</h4>
+                  <h4 class="card-title">Add Prescription</h4>
                 </div>
-                
+
                 <div class="card-body">
-                    <!-- Doctor and Date Info -->
-                    <div class="row  mb-4">
-                        <div class="col-sm-6">
-                            <div class="doctor-info">
-                                <h4 class="doctor-name">{{ doctor.name }}</h4>
-                                <div class="doctor-meta">
-                                    <span class="d-block">{{ doctor.department_name }}</span>
-                                    <span class="d-block">{{ doctor.phone_number }}</span>
-                                    <span class="d-block">{{ doctor.email }}</span>
-                                </div>
-                            </div>
+                  <!-- Doctor and Date Info -->
+                  <div class="row mb-4">
+                    <div class="col-sm-6">
+                      <div class="doctor-info">
+                        <h4 class="doctor-name">{{ doctor.name }}</h4>
+                        <div class="doctor-meta">
+                          <span class="d-block"
+                            >{{ doctor.department_name }}</span
+                          >
+                          <span class="d-block">{{ doctor.phone_number }}</span>
+                          <span class="d-block">{{ doctor.email }}</span>
                         </div>
+                      </div>
                     </div>
-        
-                    <!-- Prescription Form -->
-                    <form method="POST" enctype="multipart/form-data" class="prescription-form">
-                        {% csrf_token %}
-                        
-                        <!-- Medicine Section -->
-                        <section class="medicine-section">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="section-title">Medicine List</h4>
-                                    
-                                    <div class="medicine-entry">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <!-- Medicine Fields -->
-                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
-                                                        <label>Medicine Name</label>
-                                                        <input type="text" class="form-control" name="medicine_name" required>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
-                                                        <label>Quantity</label>
-                                                        <input type="text" class="form-control" name="quantity" required>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
-                                                        <label>Frequency</label>
-                                                        <input type="text" class="form-control" name="frequency" required>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-6 col-lg-3 form-group">
-                                                        <label>Relation with meal</label>
-                                                        <input type="text" class="form-control" name="relation_with_meal">
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-6 col-lg-6 form-group">
-                                                        <label>Duration</label>
-                                                        <input type="text" class="form-control" name="duration" required>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-6 col-lg-6 form-group">
-                                                        <label>Instruction</label>
-                                                        <input type="text" class="form-control" name="instruction">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Delete Button -->
-                                            <div class="col-12 col-md-2 col-lg-1 d-flex align-items-end">
-                                                <button type="button" class="btn btn-danger btn-block delete-item">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Add Medicine Button -->
-                                    <div class="add-medicine">
-                                        <button type="button" class="btn btn-outline-primary add-item">
-                                            <i class="fa fa-plus-circle"></i> Add Medicine
-                                        </button>
-                                    </div>
+                  </div>
+
+                  <!-- Prescription Form -->
+                  <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="prescription-form"
+                  >
+                    {% csrf_token %}
+
+                    <!-- Medicine Section -->
+                    <section class="medicine-section">
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="section-title">Medicine List</h4>
+
+                          <div class="medicine-entry">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="row">
+                                  <!-- Medicine Fields -->
+                                  <div
+                                    class="col-12 col-md-6 col-lg-3 form-group"
+                                  >
+                                    <label>Medicine Name</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="medicine_name"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-6 col-lg-3 form-group"
+                                  >
+                                    <label>Quantity</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="quantity"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-6 col-lg-3 form-group"
+                                  >
+                                    <label>Frequency</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="frequency"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-6 col-lg-3 form-group"
+                                  >
+                                    <label>Relation with meal</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="relation_with_meal"
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-6 col-lg-6 form-group"
+                                  >
+                                    <label>Duration</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="duration"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-6 col-lg-6 form-group"
+                                  >
+                                    <label>Instruction</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="instruction"
+                                    />
+                                  </div>
                                 </div>
+                              </div>
+
+                              <!-- Delete Button -->
+                              <div
+                                class="col-12 col-md-2 col-lg-1 d-flex align-items-end"
+                              >
+                                <button
+                                  type="button"
+                                  class="btn btn-danger btn-block delete-item"
+                                >
+                                  <i class="far fa-trash-alt"></i>
+                                </button>
+                              </div>
                             </div>
-                        </section>
-        
-                        <!-- Test Section -->
-                        <section class="test-section">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="section-title">Test List</h4>
-                                    
-                                    <div class="test-entry">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <!-- Test Fields -->
-                                                    <div class="col-12 col-md-5 col-lg-5 form-group">
-                                                        <label>Test Name</label>
-                                                        <input type="text" class="form-control" name="test_name" required>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-5 col-lg-5 form-group">
-                                                        <label>Description</label>
-                                                        <input type="text" class="form-control" name="description">
-                                                    </div>
-                                                    
-                                                    <div class="col-12 col-md-2 col-lg-2 form-group">
-                                                        <label>ID</label>
-                                                        <input type="number" class="form-control" name="id" min="0">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Delete Button -->
-                                            <div class="col-12 col-md-2 col-lg-1">
-                                                <button type="button" class="btn btn-danger btn-block delete-item">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Add Test Button -->
-                                    <div class="add-test">
-                                        <button type="button" class="btn btn-outline-primary add-item">
-                                            <i class="fa fa-plus-circle"></i> Add Test
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-        
-                        <!-- Additional Information -->
-                        <section class="additional-info">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="section-title">Additional Information</h4>
-                                    <textarea class="form-control" name="extra_information" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </section>
-        
-                        <!-- Submit Button -->
-                        <div class="save-prescription">
-                            <button type="submit" class="btn btn-primary btn-lg submit-btn">
-                                Save Prescription
+                          </div>
+
+                          <!-- Add Medicine Button -->
+                          <div class="add-medicine">
+                            <button
+                              type="button"
+                              class="btn btn-outline-primary add-item"
+                            >
+                              <i class="fa fa-plus-circle"></i> Add Medicine
                             </button>
+                          </div>
                         </div>
-                    </form>
+                      </div>
+                    </section>
+
+                    <!-- Test Section -->
+                    <section class="test-section">
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="section-title">Test List</h4>
+
+                          <div class="test-entry">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="row">
+                                  <!-- Test Fields -->
+                                  <div
+                                    class="col-12 col-md-5 col-lg-5 form-group"
+                                  >
+                                    <label>Test Name</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="test_name"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-5 col-lg-5 form-group"
+                                  >
+                                    <label>Description</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="description"
+                                    />
+                                  </div>
+
+                                  <div
+                                    class="col-12 col-md-2 col-lg-2 form-group"
+                                  >
+                                    <label>ID</label>
+                                    <input
+                                      type="number"
+                                      class="form-control"
+                                      name="id"
+                                      min="0"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Delete Button -->
+                              <div class="col-12 col-md-2 col-lg-1">
+                                <button
+                                  type="button"
+                                  class="btn btn-danger btn-block delete-item"
+                                >
+                                  <i class="far fa-trash-alt"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Add Test Button -->
+                          <div class="add-test">
+                            <button
+                              type="button"
+                              class="btn btn-outline-primary add-item"
+                            >
+                              <i class="fa fa-plus-circle"></i> Add Test
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <!-- Additional Information -->
+                    <section class="additional-info">
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="section-title">Additional Information</h4>
+                          <textarea
+                            class="form-control"
+                            name="extra_information"
+                            rows="3"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </section>
+
+                    <!-- Submit Button -->
+                    <div class="save-prescription">
+                      <button
+                        type="submit"
+                        class="btn btn-primary btn-lg submit-btn"
+                      >
+                        Save Prescription
+                      </button>
+                    </div>
+                  </form>
                 </div>
-            </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    
+
       <!-- Footer -->
       {% include 'footer.html' %}
       <!-- /Footer -->
     </div>
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
-
-	
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
   </body>
-
-  
 </html>

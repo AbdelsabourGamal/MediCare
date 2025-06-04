@@ -1,155 +1,166 @@
 {% load static %}
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-	
-<!-- doccure/my-patients.html  30 Nov 2019 04:12:09 GMT -->
-<head>
-		<meta charset="utf-8">
-		<title>MediCare</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-		
-		<!-- Favicons -->
-		<link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
-		
-		<!-- CSS Files -->
-		<link
-		rel="stylesheet"
-		href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
-	  />
-	  
-	  <link
-		rel="stylesheet"
-		href="{% static 'HealthStack-System/css/all.min.css' %}"
-	  />
-  
-	  <!-- Main CSS -->
-	  <link
-		rel="stylesheet"
-		href="{% static 'HealthStack-System/css/Normal/style.css' %}"
-	  />
-	
-	</head>
-	<body>
+  <!-- doccure/my-patients.html  30 Nov 2019 04:12:09 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <title>MediCare</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
 
-		<!-- Main Wrapper -->
-		<div class="main-wrapper">
-		
-			<!-- Header -->
-			<header class="header">{% include 'doctor-navbar.html' %}</header>
-			<!-- /Header -->
-			
-			<!-- Breadcrumb -->
-			<div class="breadcrumb-bar">
-				<nav aria-label="breadcrumb" class="page-breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
-						<li class="breadcrumb-item active" aria-current="page">My Patients</li>
-					</ol>
-				</nav>
-			</div>
-			<!-- /Breadcrumb -->
-			
-			<!-- Page Content -->
-			
-			<div class="doctor patients">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-							<!-- Profile Sidebar -->
-							<div>{% include 'doctor-sidebar.html' %}</div>
-							<!-- /Profile Sidebar -->
-						</div>
-						<div class="col-md-7 col-lg-8 col-xl-9 p-3">
-						
-							<div class="row row-grid">
-								{% for patient in patients %}
-								
-									<div class="patient-card">
-										<div class="patient-banner" style="background: linear-gradient(135deg, #6e8efb, #a777e3);"></div>
-										
-										<div class="patient-content">
-										  <div class="patient-main">
-											<div class="avatar-wrapper">
-											  <div class="avatar-ring"></div>
-											  <a href="{% url 'doctor:patient-profile' pk=patient.patient_id %}" class="patient-avatar">
-												<img src="{{patient.featured_image.url}}" alt="{{patient.name}}">
-											  </a>
-											</div>
-											
-											<div class="patient-info">
-											  <h3 class="patient-name">
-												<a href="{% url 'doctor:patient-profile' pk=patient.patient_id %}">{{patient.name}}</a>
-												<span class="patient-id">#{{patient.patient_id}}</span>
-											  </h3>
-											  
-											  <div class="patient-location">
-												<i class="fas fa-map-marker-alt"></i>
-												<span>{{patient.address}}</span>
-											  </div>
-											</div>
-										  </div>
-										  
-										  <div class="patient-stats">
-											<div class="stat-item">
-											  <div class="stat-icon phone-icon">
-												<i class="fas fa-phone-alt"></i>
-											  </div>
-											  <div class="stat-details">
-												<span class="stat-value">{{patient.phone_number}}</span>
-												<span class="stat-label">Phone</span>
-											  </div>
-											</div>
-											
-											<div class="stat-item">
-											  <div class="stat-icon age-icon">
-												<i class="fas fa-birthday-cake"></i>
-											  </div>
-											  <div class="stat-details">
-												<span class="stat-value">{{patient.age}} yrs</span>
-												<span class="stat-label">Age</span>
-											  </div>
-											</div>
-											
-											<div class="stat-item">
-											  <div class="stat-icon blood-icon">
-												<i class="fas fa-tint"></i>
-											  </div>
-											  <div class="stat-details">
-												<span class="stat-value">{{patient.blood_group}}</span>
-												<span class="stat-label">Blood Type</span>
-											  </div>
-											</div>
-										  </div>
-										</div>
-									  </div>
-								
-								{% endfor %}
-								
-								
-							</div>
+    <!-- Favicons -->
+    <link href="{% static 'MediCare/images/Normal/favicon.png' %}" rel="icon" />
 
-						</div>
-					</div>
+    <!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
+    />
 
-				</div>
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
-			</div>		
-			<!-- /Page Content -->
-   
-			<!-- Footer -->
-			{% include 'footer.html' %}
-			<!-- /Footer -->
-		   
-		</div>
-		<!-- /Main Wrapper -->
-	  
-		<!-- Scripts -->
-		<script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-		<script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
+    />
+  </head>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">{% include 'doctor-navbar.html' %}</header>
+      <!-- /Header -->
 
-	</body>
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'doctor:doctor-dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              My Patients
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <!-- /Breadcrumb -->
 
+      <!-- Page Content -->
+
+      <div class="doctor patients">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+              <!-- Profile Sidebar -->
+              <div>{% include 'doctor-sidebar.html' %}</div>
+              <!-- /Profile Sidebar -->
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9 p-3">
+              <div class="row row-grid">
+                {% for patient in patients %}
+
+                <div class="patient-card">
+                  <div
+                    class="patient-banner"
+                    style="
+                      background: linear-gradient(135deg, #6e8efb, #a777e3);
+                    "
+                  ></div>
+
+                  <div class="patient-content">
+                    <div class="patient-main">
+                      <div class="avatar-wrapper">
+                        <div class="avatar-ring"></div>
+                        <a
+                          href="{% url 'doctor:patient-profile' pk=patient.patient_id %}"
+                          class="patient-avatar"
+                        >
+                          <img
+                            src="{{patient.featured_image.url}}"
+                            alt="{{patient.name}}"
+                          />
+                        </a>
+                      </div>
+
+                      <div class="patient-info">
+                        <h3 class="patient-name">
+                          <a
+                            href="{% url 'doctor:patient-profile' pk=patient.patient_id %}"
+                            >{{patient.name}}</a
+                          >
+                          <span class="patient-id"
+                            >#{{patient.patient_id}}</span
+                          >
+                        </h3>
+
+                        <div class="patient-location">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <span>{{patient.address}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="patient-stats">
+                      <div class="stat-item">
+                        <div class="stat-icon phone-icon">
+                          <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="stat-details">
+                          <span class="stat-value"
+                            >{{patient.phone_number}}</span
+                          >
+                          <span class="stat-label">Phone</span>
+                        </div>
+                      </div>
+
+                      <div class="stat-item">
+                        <div class="stat-icon age-icon">
+                          <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <div class="stat-details">
+                          <span class="stat-value">{{patient.age}} yrs</span>
+                          <span class="stat-label">Age</span>
+                        </div>
+                      </div>
+
+                      <div class="stat-item">
+                        <div class="stat-icon blood-icon">
+                          <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="stat-details">
+                          <span class="stat-value"
+                            >{{patient.blood_group}}</span
+                          >
+                          <span class="stat-label">Blood Type</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Content -->
+
+      <!-- Footer -->
+      {% include 'footer.html' %}
+      <!-- /Footer -->
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- Scripts -->
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
+  </body>
 </html>

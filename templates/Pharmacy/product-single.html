@@ -6,7 +6,7 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
     <meta charset="utf-8" />
@@ -21,18 +21,15 @@
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/pharmacy/style.css' %}"
+      href="{% static 'MediCare/css/pharmacy/style.css' %}"
     />
   </head>
 
@@ -43,7 +40,7 @@
           <!-- Logo -->
           <a class="navbar-brand" href="#">
             <img
-              src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
+              src="{% static 'MediCare/images/Normal/logo.png' %}"
               alt="MediCare Pharmacy Logo"
             />
           </a>
@@ -72,7 +69,10 @@
               </li>
 
               <li class="nav-item">
-                <a href="{% url 'checkout' %}" class="nav-link">
+                <a
+                  href="{% url 'checkout' pk=patient.patient_id id=order.id %}"
+                  class="nav-link"
+                >
                   <span>Checkout</span>
                 </a>
               </li>
@@ -158,16 +158,15 @@
           </div>
         </div>
       </section>
-
     </div>
 
     {% include 'footer.html' %}
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
   </body>
 </html>

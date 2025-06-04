@@ -1,166 +1,171 @@
 {% load static %}
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-	
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-	<title>MediCare</title>
-	
-	<!-- Favicons -->
-	<link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
-	
-	<!-- CSS Files -->
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>MediCare</title>
+
+    <!-- Favicons -->
+    <link
+      type="image/x-icon"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
+      rel="icon"
+    />
+
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
-	</head>
-	<body>
+  </head>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">
+        {% if user.is_authenticated and user.is_patient %} {% include
+        'patient_navbar.html' %} {% endif %} {% if user.is_authenticated and
+        user.is_doctor %} {% include 'doctor-navbar.html' %} {% endif %}
+      </header>
+      <!-- /Header -->
 
-		<!-- Main Wrapper -->
-		<div class="main-wrapper">
-			<!-- Header -->
-			<header class="header">
-				{% if user.is_authenticated and user.is_patient %}
-				{% include 'patient_navbar.html' %}
-				{% endif %}
-				
-				{% if user.is_authenticated and user.is_doctor %}
-				{% include 'doctor-navbar.html' %}
-				{% endif %}
-			</header>
-			<!-- /Header -->
-			
-			<!-- Breadcrumb -->
-			<div class="breadcrumb-bar">
-				<nav aria-label="breadcrumb" class="page-breadcrumb">
-					<ol class="breadcrumb">
-						{% if user.is_authenticated and user.is_patient %}
-						<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-						{% endif %}
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            {% if user.is_authenticated and user.is_patient %}
+            <li class="breadcrumb-item">
+              <a href="{% url 'patient-dashboard' %}">Home</a>
+            </li>
+            {% endif %} {% if user.is_authenticated and user.is_doctor %}
+            <li class="breadcrumb-item">
+              <a href="{% url 'doctor:doctor-dashboard' %}">Home</a>
+            </li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">
+              Test Cart
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <!-- /Breadcrumb -->
 
-						{% if user.is_authenticated and user.is_doctor %}
-						<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
-						{% endif %}
-						<li class="breadcrumb-item active" aria-current="page">Test Cart</li>
-					</ol>
-				</nav>
-			</div>
-			<!-- /Breadcrumb -->
-          	{% include 'message.html' %}
-			<!-- Page Content -->
-			
-			<div class="patient test-cart">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12 col-lg-4 col-xl-3">
-							<!-- Profile Sidebar -->
-							<div>
-								{% if user.is_authenticated and user.is_patient %}
-								{% include 'patient-sidebar.html' %}
-								{% endif %}
-								{% if user.is_authenticated and user.is_doctor %}
-								{% include 'doctor-sidebar.html' %}
-								{% endif %}
-							</div>
-							<!-- /Profile Sidebar -->
-						</div>
-						<div class="col-md-12 col-lg-8 col-xl-9">
-							<div class="card">
-								<header>
-									<h1 class="card-title">Test Cart</h1>
-								</header>
-									<div class="cart-content">
-										<div class="row">
-											<div class="col-12">
-												<div class="table-container">
-												<table class="table cart-table" role="table" aria-label="Test cart items">
-													<thead>
-													<tr>
-														<th scope="col" aria-label="Remove item">Remove</th>
-														<th scope="col">Test ID</th>
-														<th scope="col">Test Name</th>
-														<th scope="col">Price</th>        
-													</tr>
-													</thead>
-													<tbody>
-													{% for test in test_carts %}
-														<tr>
-														<td class="product-remove"><a href="{% url 'test-remove-cart' pk=test.item_id %}"><span class="icon-close" aria-hidden="true"></span></a></td> 
-														<td>{{test.item.test_info_id}}</td>
-														<td>{{test.item.test_name}}</td>
-														<td class="price">{{test.item.test_info_price}}</td>
-														</tr>
-														{% empty %}
-														<tr>
-															<td colspan="4" class="empty-cart">
-																<p>Your Test Cart is empty</p>
-															</td>
-														</tr>
-														{% endfor %}
-													</tbody>
-												</table>
-											</div>
-											</div>
-											<div class="col-12">
-												<div class="cart-total">
-													<h3>Cart Totals: <span>{{ test_order.get_totals }} EGP</span></h3>
-													<div class="cart-actions">
-														<a href="{% url 'payment_request_test' pk=patient.patient_id id=test_order.id %}" class="btn btn-primary" role="button">
-															Proceed to Checkout
-														</a>
-														<a href="{% url 'prescription-view' pk=prescription.prescription_id %}" class="btn btn-info" role="button">
-															Back to Prescription
-														</a>
-													</div>
-												</div>
-												</div>
-											</div>
-									</div>
-							</div>
-						</div>
-					</div>
-				</div>
+      <!-- Page Content -->
 
-			</div>		
-			<!-- /Page Content -->
-   
-			<!-- Footer -->
-			{% include 'footer.html' %}
-			<!-- /Footer -->
-		   
-		</div>
-		<!-- /Main Wrapper -->
-	  {% include 'footer.html' %}
-		<!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+      <div class="patient test-cart">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 col-lg-4 col-xl-3">
+              <!-- Profile Sidebar -->
+              <div>
+                {% if user.is_authenticated and user.is_patient %} {% include
+                'patient-sidebar.html' %} {% endif %} {% if
+                user.is_authenticated and user.is_doctor %} {% include
+                'doctor-sidebar.html' %} {% endif %}
+              </div>
+              <!-- /Profile Sidebar -->
+            </div>
+            <div class="col-md-12 col-lg-8 col-xl-9">
+              <div class="card">
+                <header>
+                  <h1 class="card-title">Test Cart</h1>
+                </header>
+                <div class="cart-content">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-container">
+                        <table
+                          class="table cart-table"
+                          role="table"
+                          aria-label="Test cart items"
+                        >
+                          <thead>
+                            <tr>
+                              <th scope="col" aria-label="Remove item">
+                                Remove
+                              </th>
+                              <th scope="col">Test ID</th>
+                              <th scope="col">Test Name</th>
+                              <th scope="col">Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for test in test_carts %}
+                            <tr>
+                              <td class="product-remove">
+                                <a
+                                  href="{% url 'test-remove-cart' pk=test.item_id %}"
+                                  ><span
+                                    class="icon-close"
+                                    aria-hidden="true"
+                                  ></span
+                                ></a>
+                              </td>
+                              <td>{{test.item.test_info_id}}</td>
+                              <td>{{test.item.test_name}}</td>
+                              <td class="price">
+                                {{test.item.test_info_price}}
+                              </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                              <td colspan="4" class="empty-cart">
+                                <p>Your Test Cart is empty</p>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="cart-total">
+                        <h3>
+                          Cart Totals:
+                          <span>{{ test_order.get_totals }} EGP</span>
+                        </h3>
+                        <div class="cart-actions">
+                          <a href="#" class="btn btn-primary" role="button">
+                            Proceed to Checkout
+                          </a>
+                          <a href="#" class="btn btn-info" role="button">
+                            Back to Prescription
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Content -->
 
-    {% if messages %}
-    <script>
-      {% for message in messages %}
-          $(document).ready(function () {
-              $('.toast').toast('show');
-          });
-      {% endfor %}
-    </script>
-    {% endif %}
-
-</body>
-
+      <!-- Footer -->
+      {% include 'footer.html' %}
+      <!-- /Footer -->
+    </div>
+    <!-- /Main Wrapper -->
+    {% include 'footer.html' %}
+    <!-- Scripts -->
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
+  </body>
 </html>

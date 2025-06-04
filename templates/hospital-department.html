@@ -8,23 +8,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 		
 		<!-- Favicons -->
-		<link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
+		<link href="{% static 'MediCare/images/Normal/favicon.png' %}" rel="icon">
 		
 		<!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
     
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
+      href="{% static 'MediCare/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
 	
 	</head>
@@ -53,8 +53,9 @@
 						{% endif %}
 
 						{% if user.is_authenticated and user.is_doctor %}
-						<li class="breadcrumb-item"><a href="{% url 'doctor:admin-dashboard' %}">Home</a></li>
+						<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
 						{% endif %}
+						<li class="breadcrumb-item active" aria-current="page">Hospital Departments</li>
 					</ol>
 				</nav>
 			</div>
@@ -75,7 +76,7 @@
 								{% if user.is_authenticated and user.is_doctor %}
 								{% include 'doctor-sidebar.html' %}
 								{% endif %}
-
+								
                             </div>
 							<!-- /Profile Sidebar -->
 							
@@ -109,10 +110,10 @@
 		<!-- /Main Wrapper -->
 	  
 		<!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
 
 </html>

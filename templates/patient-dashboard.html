@@ -12,27 +12,23 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
-
   </head>
   <body>
     <!-- Main Wrapper -->
@@ -43,19 +39,19 @@
 
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-              <nav aria-label="breadcrumb" class="page-breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a href="{% url 'hospital_home' %}">Home</a>
-                  </li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Dashboard
-                  </li>
-                </ol>
-              </nav>
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'hospital_home' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Dashboard
+            </li>
+          </ol>
+        </nav>
       </div>
       <!-- /Breadcrumb -->
-                {% include 'message.html' %}
+      {% include 'message.html' %}
       <!-- Page Content -->
       <div class="patient dashboard">
         <div class="container-fluid">
@@ -160,32 +156,44 @@
                                     >
                                   </td>
                                   <td>{{appointment.appointment_type}}</td>
-                                  
+
                                   {% if appointment.appointment_type == 'checkup' %}
-                                  <td>{{appointment.doctor.consultation_fee}} EGP</td>
+                                  <td>
+                                    {{appointment.doctor.consultation_fee}} EGP
+                                  </td>
                                   {% else %}
                                   <td>{{appointment.doctor.report_fee}} EGP</td>
                                   {% endif %}
                                   <td>
                                     {% if appointment.appointment_status == 'pending' %}
-                                    <span class="badge text-bg-warning">Pending</span>
-                                    {% endif %}
+                                    <span class="badge text-bg-warning"
+                                      >Pending</span
+                                    >
+                                    {% endif %} 
                                     {% if appointment.appointment_status == 'confirmed' %}
-                                    <span class="badge text-bg-success">Confirm</span>
-                                    {% endif %}
+                                    <span class="badge text-bg-success"
+                                      >Confirm</span
+                                    >
+                                    {% endif %} 
                                     {% if appointment.appointment_status == 'cancelled' %}
-                                    <span class="badge text-bg-danger">Cancelled</span>
+                                    <span class="badge text-bg-danger"
+                                      >Cancelled</span
+                                    >
                                     {% endif %}
                                   </td>
                                   <td class="text-center">
                                     {% if appointment.payment_status == 'pending' %}
-                                    <span class="badge text-bg-warning">Pending</span>
-                                    {% endif %}
+                                    <span class="badge text-bg-warning"
+                                      >Pending</span
+                                    >
+                                    {% endif %} 
                                     {% if appointment.payment_status == 'confirmed' %}
-                                    <span class="badge text-bg-success">Paid</span>
+                                    <span class="badge text-bg-success"
+                                      >Paid</span
+                                    >
                                     {% endif %}
                                   </td>
-                                  <td >
+                                  <td>
                                     <div class="table-action">
                                       {% if appointment.payment_status == 'pending' and appointment.appointment_status == 'confirmed'%}
                                       <a
@@ -196,13 +204,19 @@
                                         Now
                                       </a>
                                       {% elif appointment.payment_status == 'confirmed' %}
-                                        <button class="btn btn-sm btn-outline-info" disabled>
-                                          <i class="fas fa-check-circle"></i> Paid
-                                        </button>
-                                        {% elif appointment.appointment_status == 'pending' %}
-                                        <button class="btn btn-sm btn-outline-info" disabled>
-                                          <i class="fas fa-clock"></i> Pending
-                                        </button>
+                                      <button
+                                        class="btn btn-sm btn-outline-info"
+                                        disabled
+                                      >
+                                        <i class="fas fa-check-circle"></i> Paid
+                                      </button>
+                                      {% elif appointment.appointment_status == 'pending' %}
+                                      <button
+                                        class="btn btn-sm btn-outline-info"
+                                        disabled
+                                      >
+                                        <i class="fas fa-clock"></i> Pending
+                                      </button>
                                       {% endif %}
                                     </div>
                                   </td>
@@ -221,7 +235,9 @@
                       <div class="card card-table mb-0">
                         <div class="card-body">
                           <div class="table-responsive">
-                            <table class="table table-hover table-center mb-0 text-center">
+                            <table
+                              class="table table-hover table-center mb-0 text-center"
+                            >
                               <thead>
                                 <tr>
                                   <th>Prescription ID</th>
@@ -234,7 +250,9 @@
                                 {% for prescription in prescription %}
                                 <tr>
                                   <td>
-                                    <a href="javascript:void(0);">{{prescription.prescription_id}}</a>
+                                    <a href="javascript:void(0);"
+                                      >{{prescription.prescription_id}}</a
+                                    >
                                   </td>
                                   <td>{{prescription.doctor.name }}</td>
                                   <td>
@@ -249,8 +267,12 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="{% url 'doctor:doctor-profile' pk=prescription.doctor.doctor_id %}"
-                                        >Dr. {{prescription.doctor}}<span>{{prescription.doctor.department_name }}</span></a
+                                      <a
+                                        href="{% url 'doctor:doctor-profile' pk=prescription.doctor.doctor_id %}"
+                                        >Dr. {{prescription.doctor}}<span
+                                          >{{prescription.doctor.department_name
+                                          }}</span
+                                        ></a
                                       >
                                     </h2>
                                   </td>
@@ -279,7 +301,9 @@
                       <div class="card card-table mb-0">
                         <div class="card-body">
                           <div class="table-responsive">
-                            <table class="table table-hover table-center mb-0 text-center">
+                            <table
+                              class="table table-hover table-center mb-0 text-center"
+                            >
                               <thead>
                                 <tr>
                                   <th>Report ID</th>
@@ -292,7 +316,9 @@
                                 {% for report in report %}
                                 <tr>
                                   <td>
-                                    <a href="javascript:void(0);">{{report.report_id}}</a>
+                                    <a href="javascript:void(0);"
+                                      >{{report.report_id}}</a
+                                    >
                                   </td>
                                   <td>{{report.delivery_date }}</td>
 
@@ -308,8 +334,12 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="{% url 'doctor:doctor-profile' pk=report.doctor.doctor_id %}"
-                                        >Dr.{{report.doctor}}<span>{{report.doctor.department_name }}</span></a
+                                      <a
+                                        href="{% url 'doctor:doctor-profile' pk=report.doctor.doctor_id %}"
+                                        >Dr.{{report.doctor}}<span
+                                          >{{report.doctor.department_name
+                                          }}</span
+                                        ></a
                                       >
                                     </h2>
                                   </td>
@@ -321,10 +351,13 @@
                                       >
                                         <i class="far fa-eye"></i> View
                                       </a>
-                                      <a href="{% url 'delete-report' pk=report.report_id %}" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-sm btn-outline-danger" >
+                                      <a
+                                        href="{% url 'delete-report' pk=report.report_id %}"
+                                        onclick="return confirm('Are you sure you want to Delete?');"
+                                        class="btn btn-sm btn-outline-danger"
+                                      >
                                         <i class="fas fa-trash"></i> Delete
                                       </a>
-                                      
                                     </div>
                                   </td>
                                 </tr>
@@ -355,7 +388,6 @@
                                 </tr>
                               </thead>
                               <tbody>
-
                                 {% for payment in payments %}
                                 <tr>
                                   <td>
@@ -370,8 +402,12 @@
                                           alt="User Image"
                                         />
                                       </a>
-                                      <a href="{% url 'doctor:doctor-profile' pk=payment.appointment.doctor.doctor_id %}"
-                                        >{{payment.appointment.doctor.name}} <span>{{payment.appointment.doctor.department}}</span></a
+                                      <a
+                                        href="{% url 'doctor:doctor-profile' pk=payment.appointment.doctor.doctor_id %}"
+                                        >{{payment.appointment.doctor.name}}
+                                        <span
+                                          >{{payment.appointment.doctor.department}}</span
+                                        ></a
                                       >
                                     </h2>
                                   </td>
@@ -382,12 +418,15 @@
                                   <td>{{payment.card_issuer}}</td>
                                   <td>
                                     {% if payment.status == 'VALID' %}
-                                    <span class="badge text-bg-success">Success</span>
+                                    <span class="badge text-bg-success"
+                                      >Success</span
+                                    >
                                     {% else %}
-                                    <span class="badge text-bg-warning">Pending</span>
+                                    <span class="badge text-bg-warning"
+                                      >Pending</span
+                                    >
                                     {% endif %}
                                   </td>
-                            
                                 </tr>
                                 {% endfor %}
                               </tbody>
@@ -412,22 +451,20 @@
       <!-- /Footer -->
     </div>
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
 
-    
     {% if messages %}
-      <script>
-          {% for message in messages %}
-              $(document).ready(function () {
-                  $('.toast').toast('show');
-              });
-          {% endfor %}
-      </script>
+    <script>
+      {% for message in messages %}
+          $(document).ready(function () {
+              $('.toast').toast('show');
+          });
+      {% endfor %}
+    </script>
     {% endif %}
-    
   </body>
 </html>

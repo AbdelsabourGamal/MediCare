@@ -13,24 +13,18 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/admin/style.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/admin/style.css' %}" />
   </head>
 
   <body>
@@ -67,7 +61,7 @@
           <div class="pharmacists-container">
             <div class="card">
               <div class="card-content">
-                <div class="table-wrapper">
+                <div class="table-wrapper table-responsive">
                   <table class="lab-pharmacists-table">
                     <thead>
                       <tr>
@@ -88,9 +82,7 @@
                               alt="{{p.name}} profile photo"
                               class="user-avatar"
                             />
-                            <a href="profile.html" class="user-name"
-                              >{{p.name}}</a
-                            >
+                            <a href="#" class="user-name">{{p.name}}</a>
                           </div>
                         </td>
                         <td>{{p.username}}</td>
@@ -119,10 +111,10 @@
     <!-- /Main Wrapper -->
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/admin.js' %}"></script>
   </body>
 </html>

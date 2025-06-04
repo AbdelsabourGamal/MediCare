@@ -1,180 +1,171 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>MediCare</title>
 
-<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <title>MediCare</title>
-
-    	<!-- Favicon -->
+    <!-- Favicon -->
 
     <link
-	rel="shortcut icon"
-	type="image/x-icon"
-	href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
-  />
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
+    />
 
-  <!-- CSS Files -->
-  <link
-	rel="stylesheet"
-	href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
-  />
+    <!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
+    />
 
-  <link
-	rel="stylesheet"
-	href="{% static 'HealthStack-System/css/all.min.css' %}"
-  />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
-  <!-- Main CSS -->
-  <link
-	rel="stylesheet"
-	href="{% static 'HealthStack-System/css/admin/style.css' %}"
-  />
-    </head>
-    <body>
-	
-		<!-- Main Wrapper -->
-        <div class="main-wrapper">
-			<header class="header">
-				{% include 'hospital_admin/hospital-admin-navbar.html' %}
-			  </header>
-			  <!-- /Header -->
-		
-			  <!-- Sidebar -->
-			  <aside class="sidebar" id="sidebar">
-				{% include 'hospital_admin/hospital-admin-sidebar.html' %}
-			  </aside>
-			  <div class="sidebar-overlay" id="sidebarOverlay"></div>
-			  <!-- /Sidebar -->
-			
-			<!-- Page Wrapper -->
-            <div class="page-container emergency-edit">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'MediCare/css/admin/style.css' %}" />
+  </head>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="header">
+        {% include 'hospital_admin/hospital-admin-navbar.html' %}
+      </header>
+      <!-- /Header -->
 
-                <div class="content container-fluid">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        {% include 'hospital_admin/hospital-admin-sidebar.html' %}
+      </aside>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      <!-- /Sidebar -->
 
-<!-- Page Header -->
-<div class="page-header">
-	<div class="row">
-	  <div class="col-12">
-		<div class="text-center">
-		  <h1 class="page-title mb-0">
-			<i class="fas fa-hospital me-3"></i>
-			Edit Hospital Emergency information
-		  </h1>
-		  
-		</div>
-	  </div>
-	</div>
-  </div>
-  <div class="profile-edit-container">
-	<div class="profile-card">
-	  <div class="profile-content">
-		<div class="profile-image-container">
-		  <div class="profile-image-wrapper">
-			<img 
-			  src="{{hospital.featured_image.url}}" 
-			  alt="{{hospital.name}} logo" 
-			  class="profile-image"
-			>
-		  </div>
-		</div>
-  
-		<form 
-		  action="{% url 'edit-emergency-information' pk=hospital.hospital_id %}" 
-		  method="POST" 
-		  enctype="multipart/form-data" 
-		  class="profile-form"
-		>
-		  {% csrf_token %}
-		  
-		  <div class="form-fields-grid">
-			{% for field in form %}
-			<div class="form-field">
-			  <label class="form-label">{{field.label}}</label>
-			  {{field}}
-			  {% if field.errors %}
-				<div class="form-errors">{{field.errors}}</div>
-			  {% endif %}
-			</div>
-			{% endfor %}
-		  </div>
-  
-		  <div class="form-actions">
-			<button type="submit" class="submit-button">Save Changes</button>
-		  </div>
-		</form>
-	  </div>
-	</div>
-  </div>
-			{% comment %} <!-- Page Content -->
-			<div class="call-content-full">
-				
-					<div class="row-cols-6">
-						<div class="col-md-7 col-lg-8 col-xl-20">
-							<div class="card">
-								<div class="card-body">
+      <!-- Page Wrapper -->
+      <div class="page-container emergency-edit">
+        <div class="content container-fluid">
+          <!-- Page Header -->
+          <div class="page-header">
+            <div class="row">
+              <div class="col-12">
+                <div class="text-center">
+                  <h1 class="page-title mb-0">
+                    <i class="fas fa-hospital me-3"></i>
+                    Edit Hospital Emergency information
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="profile-edit-container">
+            <div class="profile-card">
+              <div class="profile-content">
+                <div class="profile-image-container">
+                  <div class="profile-image-wrapper">
+                    <img
+                      src="{{hospital.featured_image.url}}"
+                      alt="{{hospital.name}} logo"
+                      class="profile-image"
+                    />
+                  </div>
+                </div>
 
-								<div class="col-12 col-md-12">
-												<div class="form-group">
-													<div class="change-avatar">
-														<div class="profile-img">
-															<img src="{{hospital.featured_image.url}}" width="225 px" alt="User Image">
-														</div>
-													</div>
-												</div>
-											</div>
-									
-									<!-- Profile Settings Form -->
-									<form action="{% url 'edit-emergency-information' pk=hospital.hospital_id  %}" method="POST" enctype="multipart/form-data">
-										{% csrf_token %}
-										<div class="row form-row">
+                <form
+                  action="{% url 'edit-emergency-information' pk=hospital.hospital_id %}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="profile-form"
+                >
+                  {% csrf_token %}
 
-											{% for field in form %}
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>{{field.label}}</label>
-													{{field}}{{field.errors}}
-												</div>
-											</div>
-											{% endfor %}
+                  <div class="form-fields-grid">
+                    {% for field in form %}
+                    <div class="form-field">
+                      <label class="form-label">{{field.label}}</label>
+                      {{field}} {% if field.errors %}
+                      <div class="form-errors">{{field.errors}}</div>
+                      {% endif %}
+                    </div>
+                    {% endfor %}
+                  </div>
 
-		
-										</div>
-										<div class="submit-section">
-											<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
-										</div>
-									</form>
-									<!-- /Profile Settings Form -->
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				
+                  <div class="form-actions">
+                    <button type="submit" class="submit-button">
+                      Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% comment %}
+          <!-- Page Content -->
+          <div class="call-content-full">
+            <div class="row-cols-6">
+              <div class="col-md-7 col-lg-8 col-xl-20">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group">
+                        <div class="change-avatar">
+                          <div class="profile-img">
+                            <img
+                              src="{{hospital.featured_image.url}}"
+                              width="225 px"
+                              alt="User Image"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-			</div>		
-			<!-- /Page Content --> {% endcomment %}
-
-					
-
-
-
-					
-				</div>			
-			</div>
-			<!-- /Page Wrapper -->
-		
+                    <!-- Profile Settings Form -->
+                    <form
+                      action="{% url 'edit-emergency-information' pk=hospital.hospital_id  %}"
+                      method="POST"
+                      enctype="multipart/form-data"
+                    >
+                      {% csrf_token %}
+                      <div class="row form-row">
+                        {% for field in form %}
+                        <div class="col-12 col-md-6">
+                          <div class="form-group">
+                            <label>{{field.label}}</label>
+                            {{field}}{{field.errors}}
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                      <div class="submit-section">
+                        <button
+                          type="submit"
+                          class="btn btn-primary submit-btn"
+                        >
+                          Save Changes
+                        </button>
+                      </div>
+                    </form>
+                    <!-- /Profile Settings Form -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Page Content -->
+          {% endcomment %}
         </div>
-		<!-- /Main Wrapper -->
-		
-			<!-- Scripts -->
-			<script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-			<script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-			<script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-			<script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-			<script src="{% static 'HealthStack-System/js/admin.js' %}"></script>
-		
-    </body>
+      </div>
+      <!-- /Page Wrapper -->
+    </div>
+    <!-- /Main Wrapper -->
 
+    <!-- Scripts -->
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/admin.js' %}"></script>
+  </body>
 </html>

@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- doccure/login.html  30 Nov 2019 04:12:20 GMT -->
+
   <head>
     <meta charset="utf-8" />
     <title>MediCare</title>
@@ -13,25 +13,22 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
   </head>
   <body>
@@ -39,7 +36,9 @@
     <div class="main-wrapper">
       <!-- Header -->
       <header class="header">
-        {% if user.is_authenticated and user.is_patient %} {% include 'patient_navbar.html' %} {% endif %}
+        {% if user.is_authenticated and user.is_patient %} 
+        {% include  'patient_navbar.html' %} 
+        {% endif %}
       </header>
       <!-- /Header -->
       <!-- Breadcrumb -->
@@ -73,13 +72,17 @@
                     <h2>Medical Report</h2>
                     <div class="report-date">
                       <i class="fas fa-calendar-alt me-2"></i>
-                      <span
-                        >{% for report in report %}{{report.delivery_date}}{% endfor %}</span
-                      >
+                      <span>
+                        {% for report in report %}
+                        {{report.delivery_date}} 
+                        {% endfor %}
+                        </span>
                     </div>
                   </div>
                   <div class="report-id-badge">
-                    {% for report in report %}Report #{{report.report_id}}{% endfor %}
+                    {% for report in report %}
+                     Report #{{report.report_id}} 
+                    {% endfor %}
                   </div>
                 </div>
 
@@ -211,7 +214,11 @@
                   <p>{{report.other_information}}</p>
                   <button class="btn btn-download mt-3">
                     <i class="fas fa-download me-2"></i>
-                    <a target="_blank" href="{% url 'report_pdf' pk=report.report_id %}">Download Report</a>
+                    <a
+                      target="_blank"
+                      href="{% url 'report_pdf' pk=report.report_id %}"
+                      >Download Report</a
+                    >
                   </button>
                   {% endfor %}
                 </div>
@@ -229,10 +236,10 @@
     <!-- /Main Wrapper -->
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
   </body>
 </html>

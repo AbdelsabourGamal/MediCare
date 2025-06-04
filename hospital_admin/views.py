@@ -601,20 +601,11 @@ def medicine_list(request):
                             'carts': carts,}
                 return render(request, 'hospital_admin/medicine-list.html',context)
                 
-
-@login_required(login_url='admin_login')
-def generate_random_medicine_ID():
-    N = 4
-    string_var = ""
-    string_var = ''.join(random.choices(string.digits, k=N))
-    string_var = "#M-" + string_var
-    return string_var
-
 @csrf_exempt
 @login_required(login_url='admin_login')
 def add_medicine(request):
     if request.user.is_pharmacist:
-     user = Pharmacist.objects.get(user=request.user)
+     pharmacist = Pharmacist.objects.get(user=request.user)
      
     if request.method == 'POST':
        medicine = Medicine()
@@ -643,19 +634,18 @@ def add_medicine(request):
        medicine.price = price
        medicine.featured_image = featured_image
        medicine.stock_quantity = 80
-       #medicine.medicine_id = generate_random_medicine_ID()
        
        medicine.save()
        
        return redirect('medicine-list')
    
-    return render(request, 'hospital_admin/add-medicine.html',{'admin': user})
+    return render(request, 'hospital_admin/add-medicine.html',{'pharmacist': pharmacist})
 
 @csrf_exempt
 @login_required(login_url='admin_login')
 def edit_medicine(request, pk):
     if request.user.is_pharmacist:
-        user = Pharmacist.objects.get(user=request.user)
+        pharmacist = Pharmacist.objects.get(user=request.user)
         
         medicine = Medicine.objects.get(serial_number=pk)
         old_medicine_image = medicine.featured_image
@@ -665,32 +655,31 @@ def edit_medicine(request, pk):
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = old_medicine_image
-                name = request.POST.get('name')
-                Prescription_reqiuired = request.POST.get('requirement_type')     
-                weight = request.POST.get('weight') 
-                quantity = request.POST.get('quantity')
-                medicine_category = request.POST.get('category_type')
-                medicine_type = request.POST.get('medicine_type')
-                description = request.POST.get('description')
-                price = request.POST.get('price')
-                
-                medicine.name = name
-                medicine.Prescription_reqiuired = Prescription_reqiuired
-                medicine.weight = weight
-                medicine.quantity = quantity
-                medicine.medicine_category = medicine_category
-                medicine.medicine_type = medicine_type
-                medicine.description = description
-                medicine.price = price
-                medicine.featured_image = featured_image
-                medicine.stock_quantity = 80
-                #medicine.medicine_id = generate_random_medicine_ID()
+            name = request.POST.get('name')
+            Prescription_reqiuired = request.POST.get('requirement_type')     
+            weight = request.POST.get('weight') 
+            quantity = request.POST.get('quantity')
+            medicine_category = request.POST.get('category_type')
+            medicine_type = request.POST.get('medicine_type')
+            description = request.POST.get('description')
+            price = request.POST.get('price')
             
-                medicine.save()
-            
-                return redirect('medicine-list')
+            medicine.name = name
+            medicine.Prescription_reqiuired = Prescription_reqiuired
+            medicine.weight = weight
+            medicine.quantity = quantity
+            medicine.medicine_category = medicine_category
+            medicine.medicine_type = medicine_type
+            medicine.description = description
+            medicine.price = price
+            medicine.featured_image = featured_image
+            medicine.stock_quantity = 80
+        
+            medicine.save()
+        
+            return redirect('medicine-list')
    
-    return render(request, 'hospital_admin/edit-medicine.html',{'medicine': medicine,'admin': user})
+    return render(request, 'hospital_admin/edit-medicine.html',{'medicine': medicine,'pharmacist': pharmacist})
 
 
 @csrf_exempt
@@ -1039,9 +1028,9 @@ def pharmacist_dashboard(request):
             total_order_count = Order.objects.annotate(count=Count('orderitems'))
             total_cart_count = Cart.objects.annotate(count=Count('item'))
 
-            medicine = Medicine.objects.all()
+            medicines = Medicine.objects.all()
             
-            context = {'pharmacist':pharmacist, 'medicine':medicine,
+            context = {'pharmacist':pharmacist, 'medicines':medicines,
                        'total_pharmacist_count':total_pharmacist_count, 
                        'total_medicine_count':total_medicine_count, 
                        'total_order_count':total_order_count,

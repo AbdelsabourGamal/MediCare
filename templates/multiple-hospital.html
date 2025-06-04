@@ -1,154 +1,149 @@
 {% load static %}
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-	
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-	<title>MediCare</title>
-	
-	<!-- Favicons -->
-	<link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon">
-	
-	<!-- CSS Files -->
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>MediCare</title>
+
+    <!-- Favicons -->
+    <link
+      type="image/x-icon"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
+      rel="icon"
+    />
+
+    <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
+  </head>
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">
+        {% if user.is_authenticated and user.is_patient %} {% include
+        'patient_navbar.html' %} {% endif %} {% if user.is_authenticated and
+        user.is_doctor %} {% include 'doctor-navbar.html' %} {% endif %}
+      </header>
+      <!-- /Header -->
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+          <ol class="breadcrumb">
+            {% if user.is_authenticated and user.is_patient %}
+            <li class="breadcrumb-item">
+              <a href="{% url 'patient-dashboard' %}">Home</a>
+            </li>
+            {% endif %} {% if user.is_authenticated and user.is_doctor %}
+            <li class="breadcrumb-item">
+              <a href="{% url 'doctor:doctor-dashboard' %}">Home</a>
+            </li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">
+              Hospitals
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <!-- /Breadcrumb -->
 
-	
-	</head>
-	<body>
+      <!-- Page Content -->
+      <div class="patient multiple-hospital">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="top-nav-search">
+              <form action="{% url 'multiple-hospital' %}" method="GET">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search hospital"
+                  name="search_query"
+                  value="{{search_query}}"
+                />
+                <button class="btn" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </form>
+            </div>
+            <div class="col-md-12 col-lg-4 col-xl-3">
+              <!-- Profile Sidebar -->
+              <div>
+                {% if user.is_authenticated and user.is_patient %} {% include
+                'patient-sidebar.html' %} {% endif %} {% if
+                user.is_authenticated and user.is_doctor %} {% include
+                'doctor-sidebar.html' %} {% endif %}
+              </div>
+              <!-- /Profile Sidebar -->
+            </div>
 
-		<!-- Main Wrapper -->
-		<div class="main-wrapper">
-		
-			<!-- Header -->
-			<header class="header">
-				{% if user.is_authenticated and user.is_patient %}
-				{% include 'patient_navbar.html' %}
-				{% endif %}
-				
-				{% if user.is_authenticated and user.is_doctor %}
-				{% include 'doctor-navbar.html' %}
-				{% endif %}
-			</header>
-			<!-- /Header -->
-			<!-- Breadcrumb -->
-			<div class="breadcrumb-bar">
-				<nav aria-label="breadcrumb" class="page-breadcrumb">
-					<ol class="breadcrumb">
-						{% if user.is_authenticated and user.is_patient %}
-						<li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
-						{% endif %}
-						{% if user.is_authenticated and user.is_doctor %}
-						<li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
-						{% endif %}
-						<li class="breadcrumb-item active" aria-current="page">Hospitals</li>
-					</ol>
-				</nav>
-			</div>
-			<!-- /Breadcrumb -->
-			
-			<!-- Page Content -->
-			<div class="patient multiple-hospital">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="top-nav-search">
-							<form action="{% url 'multiple-hospital' %}" method="GET">
-								<input type="text" class="form-control" placeholder="Search hospital" name="search_query" value="{{search_query}}">
-								<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-							</form>
-						</div>
-						<div class="col-md-12 col-lg-4 col-xl-3 ">
-						
-							<!-- Profile Sidebar -->
-							<div>
-								{% if user.is_authenticated and user.is_patient %}
-								{% include 'patient-sidebar.html' %}
-								{% endif %}
-				
-								{% if user.is_authenticated and user.is_doctor %}
-								{% include 'doctor-sidebar.html' %}
-								{% endif %}
-							
-							
-						</div>
-							<!-- /Profile Sidebar -->
-							
-						</div>
-						
-						<div class="col-md-12 col-lg-8 col-xl-9">
-							<section class="wrapper">
-								<div class="container-fostrap">
-									<h1 class="card-title">All Hospitals</h1>
-										
+            <div class="col-md-12 col-lg-8 col-xl-9">
+              <section class="wrapper">
+                <div class="container-fostrap">
+                  <h1 class="card-title">All Hospitals</h1>
 
-									<div class="content">
-										<div class="container">
-											
-												{% for hospital in hospitals %}
+                  <div class="content">
+                    <div class="container">
+                      {% for hospital in hospitals %}
 
-												
-													<div class="card">
-														<a class="img-card" href="../hospital-profile/{{hospital.hospital_id}}/ ">
-														<img src="{{hospital.featured_image.url}}" class="img-fluid"/>
-													  </a>
-														<div class="card-content">
-															<h4 class="card-title">
-																<a href="../hospital-profile/{{hospital.hospital_id}}/ "> {{hospital.name}}
-															  </a>
-															</h4>   
-														</div>
-														
-													</div>
-												
-												{% endfor %}
+                      <div class="card">
+                        <a
+                          class="img-card"
+                          href="../hospital-profile/{{hospital.hospital_id}}/ "
+                        >
+                          <img
+                            src="{{hospital.featured_image.url}}"
+                            class="img-fluid"
+                          />
+                        </a>
+                        <div class="card-content">
+                          <h4 class="card-title">
+                            <a
+                              href="../hospital-profile/{{hospital.hospital_id}}/ "
+                            >
+                              {{hospital.name}}
+                            </a>
+                          </h4>
+                        </div>
+                      </div>
 
-												
-											
-										</div>
-										
-									</div>
-								</div>
-								
-							</section>
-							{% include 'pagination.html' with queryset=hospitals custom_range=custom_range %}
-						</div>
-						
-					</div>
-				</div>
-				
-			</div>		
-			<!-- /Page Content -->
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </section>
+              {% include 'pagination.html' with queryset=hospitals
+              custom_range=custom_range %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Content -->
 
-			
-   
-			<!-- Footer -->
-			{% include 'footer.html' %}
-			<!-- /Footer -->
-		   
-		</div>
-		<!-- /Main Wrapper -->
-	  
-		<!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
-		
-	</body>
+      <!-- Footer -->
+      {% include 'footer.html' %}
+      <!-- /Footer -->
+    </div>
+    <!-- /Main Wrapper -->
 
+    <!-- Scripts -->
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
+  </body>
 </html>

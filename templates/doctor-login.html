@@ -13,28 +13,25 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
   </head>
-  <body >
+  <body>
     <!-- Main Wrapper -->
 
     <div class="main-wrapper">
@@ -48,7 +45,7 @@
           <!-- Image Container -->
           <div class="img-container">
             <img
-              src="{% static 'HealthStack-System/images/Normal/doctors-login.png' %}"
+              src="{% static 'MediCare/images/Normal/doctors-login.png' %}"
               class="img-fluid"
               alt="HealthStack Login"
             />
@@ -67,9 +64,6 @@
             <!-- Login Form -->
             <form method="POST" action="{% url 'doctor:doctor-login' %}">
               {% csrf_token %}
-
-              <!-- Include Message Alerts -->
-              {% include 'message.html' %}
 
               <!-- Username Field -->
               <div class="form-floating mt-3 mb-3">
@@ -142,33 +136,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
-
-
-    <!-- alert js -->
-    <script>
-      var x = document.getElementById("CredentialCheck");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      }
-      $("#CredentialCheck").delay(4000).fadeOut("slow");
-    </script>
-
-
-    {% if messages %}
-    <script>
-      {% for message in messages %}
-          $(document).ready(function () {
-              $('.toast').toast('show');
-          });
-      {% endfor %}
-    </script>
-    {% endif %}
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
   </body>
-
-  
 </html>

@@ -11,7 +11,7 @@
     </a>
     <a href="{% url 'hospital_home'%}" class="navbar-brand logo">
       <img
-        src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
+        src="{% static 'MediCare/images/Normal/logo.png' %}"
         class="img-fluid"
         alt="Logo"
       />
@@ -21,7 +21,7 @@
     <div class="menu-header">
       <a href="{% url 'hospital_home'%}" class="menu-logo">
         <img
-          src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
+          src="{% static 'MediCare/images/Normal/logo.png' %}"
           class="img-fluid"
           alt="Logo"
         />
@@ -45,14 +45,13 @@
       <li>
         <a href="{% url 'about-us'%}">About Us</a>
       </li>
-    
+
       <li class="login-link">
         <a href="{% url 'login' %}">Login / Signup</a>
       </li>
     </ul>
   </div>
   <ul class="nav header-navbar-rht">
-  
     <!-- User Menu -->
     <li class="nav-item dropdown has-arrow logged-item">
       <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
@@ -86,7 +85,9 @@
           href="{% url 'doctor:doctor-profile-settings' %}"
           >Profile Settings</a
         >
-        <a class="dropdown-item" href="{% url 'doctor:doctor-logout' %}">Logout</a>
+        <a class="dropdown-item" href="{% url 'doctor:doctor-logout' %}"
+          >Logout</a
+        >
       </div>
     </li>
     <!-- /User Menu -->

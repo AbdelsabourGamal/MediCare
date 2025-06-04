@@ -12,313 +12,346 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
   </head>
   <body>
     <!-- Main Wrapper -->
-<div class="main-wrapper">
-  <!-- Header -->
-  <header class="header">
-      {% if user.is_authenticated and user.is_patient %}
-          {% include 'patient_navbar.html' %}
-      {% endif %}
-      
-      {% if user.is_authenticated and user.is_doctor %}
-          {% include 'doctor-navbar.html' %}
-      {% endif %}
-  </header>
-  <!-- /Header -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">
+        {% if user.is_authenticated and user.is_patient %} {% include
+        'patient_navbar.html' %} {% endif %} {% if user.is_authenticated and
+        user.is_doctor %} {% include 'doctor-navbar.html' %} {% endif %}
+      </header>
+      <!-- /Header -->
 
-  <!-- Breadcrumb -->
-  <div class="breadcrumb-bar">
-      <nav aria-label="breadcrumb" class="page-breadcrumb">
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
           <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Hospital Doctor Register</li>
+            <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Hospital Doctor Register
+            </li>
           </ol>
-      </nav>
-  </div>
-  <!-- /Breadcrumb -->
-
-  <!-- Page Content -->
-  
-  <div class="doctor hospital-register">
-      <div class="container-fluid">
-          <div class="row">
-              <!-- Profile Sidebar -->
-              <div class="col-md-5 col-lg-4 col-xl-3">
-                  <div>
-                      {% include 'doctor-sidebar.html' %}
-                  </div>
-              </div>
-              <!-- / Profile Sidebar -->
-
-              <!-- Main Content -->
-              <div class="col-md-7 col-lg-8 col-xl-9">
-                <div class="registration-container">
-                  <header class="form-header">
-                      <h1>Hospital Registration</h1>
-                      <p>Complete your doctor registration process</p>
-                  </header>
-          
-                  <form action="{% url 'hospital-doctor-register' pk=hospitals.hospital_id %}" method="POST" enctype="multipart/form-data" class="registration-form">
-                      {% csrf_token %}
-                      
-                      <div class="form-content">
-                          <!-- Department and Specialization Selection -->
-                          <section class="form-section">
-                              <h2 class="section-title">Professional Information</h2>
-                              
-                              <div class="selection-grid">
-                                  <!-- Department Selection -->
-                                  <div class="selection-group">
-                                      <h3>Choose Department</h3>
-                                      <div class="radio-group" role="radiogroup" aria-labelledby="department-label">
-                                          {% for department in departments %}
-                                          <label class="radio-option">
-                                              <input type="radio" 
-                                                     value="{{ department.hospital_department_id }}" 
-                                                     name="department_radio"
-                                                     id="dept_{{ department.hospital_department_id }}"
-                                                     required>
-                                              <span class="radio-content">{{ department.hospital_department_name }}</span>
-                                              <span class="radio-indicator"></span>
-                                          </label>
-                                          {% endfor %}
-                                      </div>
-                                      <div class="error-message" id="department-error">
-                                          Please select a department
-                                      </div>
-                                  </div>
-          
-                                  <!-- Specialization Selection -->
-                                  <div class="selection-group">
-                                      <h3>Choose Specialization</h3>
-                                      <div class="radio-group" role="radiogroup" aria-labelledby="specialization-label">
-                                          {% for specialization in specializations %}
-                                          <label class="radio-option">
-                                              <input type="radio" 
-                                                     value="{{ specialization.specialization_id }}" 
-                                                     name="specialization_radio"
-                                                     id="spec_{{ specialization.specialization_id }}"
-                                                     required>
-                                              <span class="radio-content">{{ specialization.specialization_name }}</span>
-                                              <span class="radio-indicator"></span>
-                                          </label>
-                                          {% endfor %}
-                                      </div>
-                                      <div class="error-message" id="specialization-error">
-                                          Please select a specialization
-                                      </div>
-                                  </div>
-                              </div>
-                          </section>
-          
-                          <!-- Certificate Upload Section -->
-                          <section class="form-section">
-                              <div class="upload-section">
-                                  <h2 class="upload-title">Upload Certificate</h2>
-                                  <div class="drop-zone" id="dropZone">
-                                      <span class="drop-zone__prompt">
-                                          Drop your certificate here or click to browse
-                                      </span>
-                                      <input type="file" 
-                                             name="certificate_image" 
-                                             class="drop-zone__input" 
-                                             id="certificateInput"
-                                             accept=".jpg,.jpeg,.png,.pdf"
-                                             required>
-                                  </div>
-                                  <div class="file-info" id="fileInfo"></div>
-                                  <div class="error-message" id="file-error">
-                                      Please upload a valid certificate file
-                                  </div>
-                              </div>
-                          </section>
-          
-                          <!-- Submit Section -->
-                          <section class="submit-section">
-                              <button type="submit" class="submit-btn" id="submitBtn">
-                                  Complete Registration
-                              </button>
-                          </section>
-                      </div>
-                  </form>
-              </div>
-              </div>
-              <!-- /Main Content -->
-          </div>
+        </nav>
       </div>
-  </div>
-  <!-- /Page Content -->
+      <!-- /Breadcrumb -->
 
-  <!-- Footer -->
-  {% include 'footer.html' %}
-  <!-- /Footer -->
-</div>
-<!-- /Main Wrapper -->
+      <!-- Page Content -->
+
+      <div class="doctor hospital-register">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Profile Sidebar -->
+            <div class="col-md-5 col-lg-4 col-xl-3">
+              <div>{% include 'doctor-sidebar.html' %}</div>
+            </div>
+            <!-- / Profile Sidebar -->
+
+            <!-- Main Content -->
+            <div class="col-md-7 col-lg-8 col-xl-9">
+              <div class="registration-container">
+                <header class="form-header">
+                  <h1>Hospital Registration</h1>
+                  <p>Complete your doctor registration process</p>
+                </header>
+
+                <form
+                  action="{% url 'hospital-doctor-register' pk=hospitals.hospital_id %}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="registration-form"
+                >
+                  {% csrf_token %}
+
+                  <div class="form-content">
+                    <!-- Department and Specialization Selection -->
+                    <section class="form-section">
+                      <h2 class="section-title">Professional Information</h2>
+
+                      <div class="selection-grid">
+                        <!-- Department Selection -->
+                        <div class="selection-group">
+                          <h3>Choose Department</h3>
+                          <div
+                            class="radio-group"
+                            role="radiogroup"
+                            aria-labelledby="department-label"
+                          >
+                            {% for department in departments %}
+                            <label class="radio-option">
+                              <input
+                                type="radio"
+                                value="{{ department.hospital_department_id }}"
+                                name="department_radio"
+                                id="dept_{{ department.hospital_department_id }}"
+                                required
+                              />
+                              <span class="radio-content"
+                                >{{ department.hospital_department_name }}</span
+                              >
+                              <span class="radio-indicator"></span>
+                            </label>
+                            {% endfor %}
+                          </div>
+                          <div class="error-message" id="department-error">
+                            Please select a department
+                          </div>
+                        </div>
+
+                        <!-- Specialization Selection -->
+                        <div class="selection-group">
+                          <h3>Choose Specialization</h3>
+                          <div
+                            class="radio-group"
+                            role="radiogroup"
+                            aria-labelledby="specialization-label"
+                          >
+                            {% for specialization in specializations %}
+                            <label class="radio-option">
+                              <input
+                                type="radio"
+                                value="{{ specialization.specialization_id }}"
+                                name="specialization_radio"
+                                id="spec_{{ specialization.specialization_id }}"
+                                required
+                              />
+                              <span class="radio-content"
+                                >{{ specialization.specialization_name }}</span
+                              >
+                              <span class="radio-indicator"></span>
+                            </label>
+                            {% endfor %}
+                          </div>
+                          <div class="error-message" id="specialization-error">
+                            Please select a specialization
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <!-- Certificate Upload Section -->
+                    <section class="form-section">
+                      <div class="upload-section">
+                        <h2 class="upload-title">Upload Certificate</h2>
+                        <div class="drop-zone" id="dropZone">
+                          <span class="drop-zone__prompt">
+                            Drop your certificate here or click to browse
+                          </span>
+                          <input
+                            type="file"
+                            name="certificate_image"
+                            class="drop-zone__input"
+                            id="certificateInput"
+                            accept=".jpg,.jpeg,.png,.pdf"
+                            required
+                          />
+                        </div>
+                        <div class="file-info" id="fileInfo"></div>
+                        <div class="error-message" id="file-error">
+                          Please upload a valid certificate file
+                        </div>
+                      </div>
+                    </section>
+
+                    <!-- Submit Section -->
+                    <section class="submit-section">
+                      <button type="submit" class="submit-btn" id="submitBtn">
+                        Complete Registration
+                      </button>
+                    </section>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- /Main Content -->
+          </div>
+        </div>
+      </div>
+      <!-- /Page Content -->
+
+      <!-- Footer -->
+      {% include 'footer.html' %}
+      <!-- /Footer -->
+    </div>
+    <!-- /Main Wrapper -->
 
     <!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          const form = document.querySelector('.registration-form');
-          const dropZone = document.getElementById('dropZone');
-          const fileInput = document.getElementById('certificateInput');
-          const fileInfo = document.getElementById('fileInfo');
-          const submitBtn = document.getElementById('submitBtn');
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector(".registration-form");
+        const dropZone = document.getElementById("dropZone");
+        const fileInput = document.getElementById("certificateInput");
+        const fileInfo = document.getElementById("fileInfo");
+        const submitBtn = document.getElementById("submitBtn");
 
-          // File upload handling
-          dropZone.addEventListener('click', () => fileInput.click());
+        // File upload handling
+        dropZone.addEventListener("click", () => fileInput.click());
 
-          dropZone.addEventListener('dragover', (e) => {
-              e.preventDefault();
-              dropZone.classList.add('dragover');
-          });
+        dropZone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          dropZone.classList.add("dragover");
+        });
 
-          dropZone.addEventListener('dragleave', () => {
-              dropZone.classList.remove('dragover');
-          });
+        dropZone.addEventListener("dragleave", () => {
+          dropZone.classList.remove("dragover");
+        });
 
-          dropZone.addEventListener('drop', (e) => {
-              e.preventDefault();
-              dropZone.classList.remove('dragover');
-              const files = e.dataTransfer.files;
-              if (files.length > 0) {
-                  fileInput.files = files;
-                  displayFileInfo(files[0]);
-              }
-          });
+        dropZone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          dropZone.classList.remove("dragover");
+          const files = e.dataTransfer.files;
+          if (files.length > 0) {
+            fileInput.files = files;
+            displayFileInfo(files[0]);
+          }
+        });
 
-          fileInput.addEventListener('change', (e) => {
-              if (e.target.files.length > 0) {
-                  displayFileInfo(e.target.files[0]);
-              }
-          });
+        fileInput.addEventListener("change", (e) => {
+          if (e.target.files.length > 0) {
+            displayFileInfo(e.target.files[0]);
+          }
+        });
 
-          function displayFileInfo(file) {
-              const maxSize = 5 * 1024 * 1024; // 5MB
-              const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-              
-              if (!allowedTypes.includes(file.type)) {
-                  showError('file-error', 'Please upload a valid image or PDF file');
-                  return;
-              }
-              
-              if (file.size > maxSize) {
-                  showError('file-error', 'File size must be less than 5MB');
-                  return;
-              }
+        function displayFileInfo(file) {
+          const maxSize = 5 * 1024 * 1024; // 5MB
+          const allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "application/pdf",
+          ];
 
-              fileInfo.innerHTML = `
-                  <strong>Selected:</strong> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)
+          if (!allowedTypes.includes(file.type)) {
+            showError("file-error", "Please upload a valid image or PDF file");
+            return;
+          }
+
+          if (file.size > maxSize) {
+            showError("file-error", "File size must be less than 5MB");
+            return;
+          }
+
+          fileInfo.innerHTML = `
+                  <strong>Selected:</strong> ${file.name} (${(
+            file.size /
+            1024 /
+            1024
+          ).toFixed(2)} MB)
               `;
-              fileInfo.style.display = 'block';
-              hideError('file-error');
+          fileInfo.style.display = "block";
+          hideError("file-error");
+        }
+
+        // Form validation
+        form.addEventListener("submit", function (e) {
+          let isValid = true;
+
+          // Check department selection
+          const departmentRadios = document.querySelectorAll(
+            'input[name="department_radio"]'
+          );
+          const departmentSelected = Array.from(departmentRadios).some(
+            (radio) => radio.checked
+          );
+
+          if (!departmentSelected) {
+            showError("department-error", "Please select a department");
+            isValid = false;
+          } else {
+            hideError("department-error");
           }
 
-          // Form validation
-          form.addEventListener('submit', function(e) {
-              let isValid = true;
-              
-              // Check department selection
-              const departmentRadios = document.querySelectorAll('input[name="department_radio"]');
-              const departmentSelected = Array.from(departmentRadios).some(radio => radio.checked);
-              
-              if (!departmentSelected) {
-                  showError('department-error', 'Please select a department');
-                  isValid = false;
-              } else {
-                  hideError('department-error');
-              }
+          // Check specialization selection
+          const specializationRadios = document.querySelectorAll(
+            'input[name="specialization_radio"]'
+          );
+          const specializationSelected = Array.from(specializationRadios).some(
+            (radio) => radio.checked
+          );
 
-              // Check specialization selection
-              const specializationRadios = document.querySelectorAll('input[name="specialization_radio"]');
-              const specializationSelected = Array.from(specializationRadios).some(radio => radio.checked);
-              
-              if (!specializationSelected) {
-                  showError('specialization-error', 'Please select a specialization');
-                  isValid = false;
-              } else {
-                  hideError('specialization-error');
-              }
-
-              // Check file upload
-              if (!fileInput.files || fileInput.files.length === 0) {
-                  showError('file-error', 'Please upload a certificate');
-                  isValid = false;
-              } else {
-                  hideError('file-error');
-              }
-
-              if (!isValid) {
-                  e.preventDefault();
-                  return;
-              }
-
-              // Show loading state
-              submitBtn.disabled = true;
-              submitBtn.textContent = 'Processing...';
-          });
-
-          function showError(elementId, message) {
-              const errorElement = document.getElementById(elementId);
-              errorElement.textContent = message;
-              errorElement.style.display = 'block';
+          if (!specializationSelected) {
+            showError("specialization-error", "Please select a specialization");
+            isValid = false;
+          } else {
+            hideError("specialization-error");
           }
 
-          function hideError(elementId) {
-              const errorElement = document.getElementById(elementId);
-              errorElement.style.display = 'none';
+          // Check file upload
+          if (!fileInput.files || fileInput.files.length === 0) {
+            showError("file-error", "Please upload a certificate");
+            isValid = false;
+          } else {
+            hideError("file-error");
           }
 
-          // Enhanced radio button interactions
-          const radioOptions = document.querySelectorAll('.radio-option');
-          radioOptions.forEach(option => {
-              option.addEventListener('click', function() {
-                  const radio = this.querySelector('input[type="radio"]');
-                  const groupName = radio.name;
-                  
-                  // Remove selected state from other options in the same group
-                  document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
-                      r.closest('.radio-option').classList.remove('selected');
-                  });
-                  
-                  // Add selected state to current option
-                  this.classList.add('selected');
-                  radio.checked = true;
-                  
-                  // Hide error if exists
-                  const errorId = groupName.replace('_radio', '-error');
-                  hideError(errorId);
+          if (!isValid) {
+            e.preventDefault();
+            return;
+          }
+
+          // Show loading state
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Processing...";
+        });
+
+        function showError(elementId, message) {
+          const errorElement = document.getElementById(elementId);
+          errorElement.textContent = message;
+          errorElement.style.display = "block";
+        }
+
+        function hideError(elementId) {
+          const errorElement = document.getElementById(elementId);
+          errorElement.style.display = "none";
+        }
+
+        // Enhanced radio button interactions
+        const radioOptions = document.querySelectorAll(".radio-option");
+        radioOptions.forEach((option) => {
+          option.addEventListener("click", function () {
+            const radio = this.querySelector('input[type="radio"]');
+            const groupName = radio.name;
+
+            // Remove selected state from other options in the same group
+            document
+              .querySelectorAll(`input[name="${groupName}"]`)
+              .forEach((r) => {
+                r.closest(".radio-option").classList.remove("selected");
               });
+
+            // Add selected state to current option
+            this.classList.add("selected");
+            radio.checked = true;
+
+            // Hide error if exists
+            const errorId = groupName.replace("_radio", "-error");
+            hideError(errorId);
           });
+        });
       });
-  </script>
-
-    </body>
-
-    </html>
+    </script>
+  </body>
+</html>

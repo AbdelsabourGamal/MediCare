@@ -11,7 +11,7 @@
     </a>
     <a href="{% url 'hospital_home'%}" class="navbar-brand logo">
       <img
-        src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
+        src="{% static 'MediCare/images/Normal/logo.png' %}"
         class="img-fluid"
         alt="Logo"
       />
@@ -21,7 +21,7 @@
     <div class="menu-header">
       <a href="#" class="menu-logo">
         <img
-          src="{% static 'HealthStack-System/images/Normal/logo.png' %}"
+          src="{% static 'MediCare/images/Normal/logo.png' %}"
           class="img-fluid"
           alt="Logo"
         />
@@ -39,13 +39,11 @@
       <li>
         <a href="{% url 'patient-dashboard' %}">Patient Dashboard</a>
       </li>
-      {% endif %} 
-      {% if user.is_authenticated and user.is_doctor %}
+      {% endif %} {% if user.is_authenticated and user.is_doctor %}
       <li>
         <a href="{% url 'doctor:doctor-dashboard' %}">Doctor Dashboard</a>
       </li>
-      {% endif %}
-      {% if user.is_authenticated and user.is_hospital_admin %}
+      {% endif %} {% if user.is_authenticated and user.is_hospital_admin %}
       <li>
         <a href="hospital_admin/admin-dashboard">Admin Dashboard</a>
       </li>

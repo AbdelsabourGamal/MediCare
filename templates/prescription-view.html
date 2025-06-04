@@ -13,25 +13,25 @@
     <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
     
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
+      href="{% static 'MediCare/css/all.min.css' %}"
     />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
   </head>
   <body>
@@ -55,7 +55,7 @@
 			</nav>
       	</div>
       	<!-- /Breadcrumb -->
-              {% include 'message.html' %}
+
       	<!-- Page Content -->
       	<div class="patient prescription-view">
     <div class="container-fluid">
@@ -69,7 +69,7 @@
             <div class="col-md-12 col-lg-8 col-xl-9">
                 <div class="invoice-content">
                     <div class="invoice-item">
-                        {% for prescription in prescriptions %}
+                        {% for prescription in prescription %}
                         <p class="invoice-details">
                             <strong>Prescription ID :</strong> {{prescription.prescription_id}} <br>
                             <strong>Patient ID :</strong> {{prescription.patient.patient_id}} <br>
@@ -172,15 +172,7 @@
                                                 <td>{{pt.test_description}}</td>
                                                 <td>{{pt.test_info_id}}</td>
                                                 <td>{{pt.test_info_price}}</td>
-                                                {% if pt.test_info_pay_status == "confirmed" %}
-                                                    <td>
-                                                        <a href="#" class="btn btn-primary disabled" aria-disabled="true" tabindex="-1">Select</a>
-                                                    </td>
-                                                {% else %}
-                                                    <td>
-                                                        <a href="{% url 'test-add-to-cart' pk=pt.prescription.prescription_id pk2=pt.test_info_id %}" class="btn btn-primary">Select</a>
-                                                    </td>
-                                                {% endif %}
+                                                <td><a href="{% url 'test-add-to-cart' pk=pt.prescription.prescription_id pk2=pt.test_info_id %}" class="btn btn-primary">Select</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -232,20 +224,10 @@
     {% include 'footer.html' %}
 	  
 	<!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
 
-    {% if messages %}
-    <script>
-      {% for message in messages %}
-          $(document).ready(function () {
-              $('.toast').toast('show');
-          });
-      {% endfor %}
-    </script>
-    {% endif %}
-    
 </html>

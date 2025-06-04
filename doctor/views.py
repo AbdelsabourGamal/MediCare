@@ -386,12 +386,12 @@ def doctor_profile_settings(request):
                 education.save()
 
             # Experience
-            for i in range(len(hospital_name)):
+            for x in range(len(hospital_name)):
                 experience = Experience(doctor=doctor)
-                experience.work_place_name = hospital_name[i]
-                experience.from_year = start_year[i]
-                experience.to_year = end_year[i]
-                experience.designation = designation[i]
+                experience.work_place_name = hospital_name[x]
+                experience.from_year = start_year[x]
+                experience.to_year = end_year[x]
+                experience.designation = designation[x]
                 experience.save()
       
             # context = {'degree': degree}

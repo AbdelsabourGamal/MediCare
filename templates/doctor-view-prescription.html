@@ -1,240 +1,287 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
-	<title>MediCare</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>MediCare</title>
 
-	<!-- Favicons -->
+    <!-- Favicons -->
     <link
       type="image/x-icon"
-      href="{% static 'HealthStack-System/images/Normal/favicon.png' %}"
+      href="{% static 'MediCare/images/Normal/favicon.png' %}"
       rel="icon"
     />
 
     <!-- CSS Files -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/bootstrap.min.css' %}"
+      href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'HealthStack-System/css/all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'MediCare/css/all.min.css' %}" />
 
     <!-- Main CSS -->
     <link
       rel="stylesheet"
-      href="{% static 'HealthStack-System/css/Normal/style.css' %}"
+      href="{% static 'MediCare/css/Normal/style.css' %}"
     />
-</head>
+  </head>
 
-<body>
-	<!-- Main Wrapper -->
-<div class="main-wrapper">
-    <!-- Header -->
-    <header class="header">{% include 'doctor-navbar.html' %}</header>
-    <!-- /Header -->
+  <body>
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">{% include 'doctor-navbar.html' %}</header>
+      <!-- /Header -->
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-bar">
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-bar">
         <nav aria-label="breadcrumb" class="page-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'hospital_home'%}">Home</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    View Prescription
-                </li>
-            </ol>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'hospital_home'%}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              View Prescription
+            </li>
+          </ol>
         </nav>
-    </div>
-    <!-- /Breadcrumb -->
+      </div>
+      <!-- /Breadcrumb -->
 
-    <!-- Page Content -->
-	
-    <div class="doctor view-prescription">
+      <!-- Page Content -->
+
+      <div class="doctor view-prescription">
         <div class="container-fluid">
-            <div class="row">
-                <!-- Profile Sidebar -->
-                <div class="col-md-5 col-lg-4 col-xl-3 sidebar-column">
-					<div class="card patient-card shadow-sm">
-						<div class="card-body text-center">
-						  <div class="patient-avatar-container mx-auto mb-3">
-							<img
-							  src="{{ prescription.patient.featured_image.url }}"
-							  alt="{{ prescription.patient.name }}"
-							  class="patient-avatar rounded-circle"
-							/>
-						  </div>
-			
-						  <h2 class="card-title patient-name">{{ prescription.patient.name }}</h2>
-			
-						  <div class="patient-meta mb-3">
-							<div class="patient-id d-flex justify-content-center align-items-center gap-2">
-							  <span class="fw-medium">ID:</span>
-							  <span class="fw-semibold">{{ prescription.patient.patient_id }}</span>
-							</div>
-							<div class="patient-location d-flex justify-content-center align-items-center gap-2">
-							  <i class="fas fa-map-marker-alt"></i>
-							  <span>{{ prescription.patient.address }}</span>
-							</div>
-						  </div>
-			
-						  <div class="patient-details bg-light rounded-3 p-3">
-							<div class="detail-item d-flex justify-content-between py-2 border-bottom">
-							  <span class="fw-medium">Phone</span>
-							  <span class="fw-semibold">+20{{ prescription.patient.phone_number }}</span>
-							</div>
-							<div class="detail-item d-flex justify-content-between py-2 border-bottom">
-							  <span class="fw-medium">Age</span>
-							  <span class="fw-semibold">{{ prescription.patient.age }}</span>
-							</div>
-							<div class="detail-item d-flex justify-content-between py-2">
-							  <span class="fw-medium">Blood Group</span>
-							  <span class="fw-semibold">{{ prescription.patient.blood_group }}</span>
-							</div>
-						  </div>
-						</div>
-					  </div>
+          <div class="row">
+            <!-- Profile Sidebar -->
+            <div class="col-md-5 col-lg-4 col-xl-3 sidebar-column">
+              <div class="card patient-card shadow-sm">
+                <div class="card-body text-center">
+                  <div class="patient-avatar-container mx-auto mb-3">
+                    <img
+                      src="{{ prescription.patient.featured_image.url }}"
+                      alt="{{ prescription.patient.name }}"
+                      class="patient-avatar rounded-circle"
+                    />
+                  </div>
+
+                  <h2 class="card-title patient-name">
+                    {{ prescription.patient.name }}
+                  </h2>
+
+                  <div class="patient-meta mb-3">
+                    <div
+                      class="patient-id d-flex justify-content-center align-items-center gap-2"
+                    >
+                      <span class="fw-medium">ID:</span>
+                      <span class="fw-semibold"
+                        >{{ prescription.patient.patient_id }}</span
+                      >
+                    </div>
+                    <div
+                      class="patient-location d-flex justify-content-center align-items-center gap-2"
+                    >
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>{{ prescription.patient.address }}</span>
+                    </div>
+                  </div>
+
+                  <div class="patient-details bg-light rounded-3 p-3">
+                    <div
+                      class="detail-item d-flex justify-content-between py-2 border-bottom"
+                    >
+                      <span class="fw-medium">Phone</span>
+                      <span class="fw-semibold"
+                        >+20{{ prescription.patient.phone_number }}</span
+                      >
+                    </div>
+                    <div
+                      class="detail-item d-flex justify-content-between py-2 border-bottom"
+                    >
+                      <span class="fw-medium">Age</span>
+                      <span class="fw-semibold"
+                        >{{ prescription.patient.age }}</span
+                      >
+                    </div>
+                    <div
+                      class="detail-item d-flex justify-content-between py-2"
+                    >
+                      <span class="fw-medium">Blood Group</span>
+                      <span class="fw-semibold"
+                        >{{ prescription.patient.blood_group }}</span
+                      >
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-7 col-lg-8 col-xl-9">
-                    <div class="prescription-container">
-						<header class="prescription-header">
-							<h1>Medical Prescription</h1>
-						</header>
-				
-						<main class="prescription-content">
-							<!-- Prescription Meta Information -->
-							<section class="prescription-meta">
-								<div class="meta-grid">
-									<div class="meta-item">
-										<span class="meta-label">Prescription ID:</span>
-										<span class="meta-value">{{prescription.prescription_id}}</span>
-									</div>
-									<div class="meta-item">
-										<span class="meta-label">Patient ID:</span>
-										<span class="meta-value">{{prescription.patient.patient_id}}</span>
-									</div>
-									<div class="meta-item">
-										<span class="meta-label">Date Issued:</span>
-										<span class="meta-value">{{prescription.create_date}}</span>
-									</div>
-								</div>
-							</section>
-				
-							<!-- Doctor and Patient Information -->
-							<section class="section">
-								<div class="info-grid">
-									<article class="info-card doctor">
-										<h3>Prescribing Doctor</h3>
-										<ul class="info-list">
-											<li><strong>Name:</strong> {{prescription.doctor.name}}</li>
-											<li><strong>Department:</strong> {{prescription.doctor.department_name}}</li>
-											<li><strong>Email:</strong> {{prescription.doctor.email}}</li>
-											<li><strong>Phone:</strong> {{prescription.doctor.phone_number}}</li>
-										</ul>
-									</article>
-				
-									<article class="info-card patient">
-										<h3>Patient Information</h3>
-										<ul class="info-list">
-											<li><strong>Name:</strong> {{prescription.patient.name}}</li>
-											<li><strong>Address:</strong> {{prescription.patient.address}}</li>
-											<li><strong>Email:</strong> {{prescription.patient.email}}</li>
-											<li><strong>Phone:</strong> {{prescription.patient.phone_number}}</li>
-										</ul>
-									</article>
-								</div>
-							</section>
-				
-							<!-- Prescribed Medications -->
-							<section class="section">
-								<h2 class="section-title">Prescribed Medications</h2>
-								<div style="overflow-x: auto;">
-									<table class="data-table" role="table">
-										<thead>
-											<tr>
-												<th scope="col">Medicine Name</th>
-												<th scope="col">Quantity</th>
-												<th scope="col">Frequency</th>
-												<th scope="col">Duration</th>
-												<th scope="col">Meal Relation</th>
-												<th scope="col">Instructions</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for pm in medicines %}
-											<tr>
-												<td><strong>{{pm.medicine_name}}</strong></td>
-												<td>{{pm.quantity}}</td>
-												<td>{{pm.frequency}}</td>
-												<td>{{pm.duration}}</td>
-												<td>{{pm.relation_with_meal}}</td>
-												<td>{{pm.instruction}}</td>
-											</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</section>
-				
-							<!-- Recommended Tests -->
-							<section class="section">
-								<h2 class="section-title">Recommended Medical Tests</h2>
-								<div style="overflow-x: auto;">
-									<table class="data-table" role="table">
-										<thead>
-											<tr>
-												<th scope="col">Test Name</th>
-												<th scope="col">Description</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for pt in tests %}
-											<tr>
-												<td><strong>{{pt.test_name}}</strong></td>
-												<td>{{pt.test_description}}</td>
-											</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</section>
-				
-							<!-- Medical Advice -->
-							<section class="section">
-								<h2 class="section-title">Medical Advice & Recommendations</h2>
-								<div class="advice-section">
-									<div class="advice-content">
-										{{prescription.extra_information}}
-									</div>
-								</div>
-							</section>
-						</main>
-					</div>
-                </div>
+              </div>
             </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+              <div class="prescription-container">
+                <header class="prescription-header">
+                  <h1>Medical Prescription</h1>
+                </header>
+
+                <main class="prescription-content">
+                  <!-- Prescription Meta Information -->
+                  <section class="prescription-meta">
+                    <div class="meta-grid">
+                      <div class="meta-item">
+                        <span class="meta-label">Prescription ID:</span>
+                        <span class="meta-value"
+                          >{{prescription.prescription_id}}</span
+                        >
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-label">Patient ID:</span>
+                        <span class="meta-value"
+                          >{{prescription.patient.patient_id}}</span
+                        >
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-label">Date Issued:</span>
+                        <span class="meta-value"
+                          >{{prescription.create_date}}</span
+                        >
+                      </div>
+                    </div>
+                  </section>
+
+                  <!-- Doctor and Patient Information -->
+                  <section class="section">
+                    <div class="info-grid">
+                      <article class="info-card doctor">
+                        <h3>Prescribing Doctor</h3>
+                        <ul class="info-list">
+                          <li>
+                            <strong>Name:</strong> {{prescription.doctor.name}}
+                          </li>
+                          <li>
+                            <strong>Department:</strong>
+                            {{prescription.doctor.department_name}}
+                          </li>
+                          <li>
+                            <strong>Email:</strong>
+                            {{prescription.doctor.email}}
+                          </li>
+                          <li>
+                            <strong>Phone:</strong>
+                            {{prescription.doctor.phone_number}}
+                          </li>
+                        </ul>
+                      </article>
+
+                      <article class="info-card patient">
+                        <h3>Patient Information</h3>
+                        <ul class="info-list">
+                          <li>
+                            <strong>Name:</strong> {{prescription.patient.name}}
+                          </li>
+                          <li>
+                            <strong>Address:</strong>
+                            {{prescription.patient.address}}
+                          </li>
+                          <li>
+                            <strong>Email:</strong>
+                            {{prescription.patient.email}}
+                          </li>
+                          <li>
+                            <strong>Phone:</strong>
+                            {{prescription.patient.phone_number}}
+                          </li>
+                        </ul>
+                      </article>
+                    </div>
+                  </section>
+
+                  <!-- Prescribed Medications -->
+                  <section class="section">
+                    <h2 class="section-title">Prescribed Medications</h2>
+                    <div style="overflow-x: auto">
+                      <table class="data-table" role="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Medicine Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Frequency</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Meal Relation</th>
+                            <th scope="col">Instructions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for pm in medicines %}
+                          <tr>
+                            <td><strong>{{pm.medicine_name}}</strong></td>
+                            <td>{{pm.quantity}}</td>
+                            <td>{{pm.frequency}}</td>
+                            <td>{{pm.duration}}</td>
+                            <td>{{pm.relation_with_meal}}</td>
+                            <td>{{pm.instruction}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <!-- Recommended Tests -->
+                  <section class="section">
+                    <h2 class="section-title">Recommended Medical Tests</h2>
+                    <div style="overflow-x: auto">
+                      <table class="data-table" role="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Test Name</th>
+                            <th scope="col">Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for pt in tests %}
+                          <tr>
+                            <td><strong>{{pt.test_name}}</strong></td>
+                            <td>{{pt.test_description}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <!-- Medical Advice -->
+                  <section class="section">
+                    <h2 class="section-title">
+                      Medical Advice & Recommendations
+                    </h2>
+                    <div class="advice-section">
+                      <div class="advice-content">
+                        {{prescription.extra_information}}
+                      </div>
+                    </div>
+                  </section>
+                </main>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- /Page Content -->
+
+      <!-- Footer -->
+      {% include 'footer.html' %}
+      <!-- /Footer -->
     </div>
-    <!-- /Page Content -->
+    <!-- /Main Wrapper -->
 
-    <!-- Footer -->
-    {% include 'footer.html' %}
-    <!-- /Footer -->
-</div>
-<!-- /Main Wrapper -->
-
-
-	<!-- Scripts -->
-    <script src="{% static 'HealthStack-System/js/jquery.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/all.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/script.js' %}"></script>
-</body>
-
-
+    <!-- Scripts -->
+    <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/all.min.js' %}"></script>
+    <script src="{% static 'MediCare/js/script.js' %}"></script>
+  </body>
 </html>
