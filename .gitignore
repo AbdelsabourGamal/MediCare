@@ -6,7 +6,7 @@
 # Byte-compiled / optimized / DLL files
 **/__pycache__
 *.pyc
-
+db.sqlite3
 
 # Environments
 # .env
