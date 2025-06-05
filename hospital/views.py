@@ -1,17 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
-from doctor.views import patient_id
-from .forms import CustomUserCreationForm, PatientForm, PasswordResetForm
+from .forms import CustomUserCreationForm, PasswordResetForm
 from hospital.models import Hospital_Information, User, Patient 
 from doctor.models import Test, testCart, testOrder
-from hospital_admin.models import Admin_Information, hospital_department, specialization, service, Test_Information
+from hospital_admin.models import hospital_department, specialization, service, Test_Information
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from datetime import datetime
-import datetime
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
 from django.template.loader import get_template
@@ -20,10 +17,8 @@ from .utils import searchDoctors, searchHospitals, searchDepartmentDoctors, pagi
 from .models import Patient, User
 from doctor.models import Doctor_Information, Appointment,Report, Specimen, Test, Prescription, Prescription_medicine, Prescription_test
 from paypal.models import Payment
-from django.db.models import Q, Count
-import re
+from django.db.models import Q
 from io import BytesIO
-from urllib import response
 from django.core.mail import BadHeaderError, send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
@@ -36,7 +31,6 @@ import uuid
 # Create your views here.
 @csrf_exempt
 def hospital_home(request):
-    # .order_by('-created_at')[:6]
     doctors = Doctor_Information.objects.filter(register_status='Accepted')
     hospitals = Hospital_Information.objects.all()
     context = {'doctors': doctors, 'hospitals': hospitals} 
@@ -67,16 +61,6 @@ def change_password(request,pk):
             return redirect("change-password",pk)
     return render(request, 'change-password.html',context)
 
-
-def add_billing(request):
-    return render(request, 'add-billing.html')
-
-def edit_billing(request):
-    return render(request, 'edit-billing.html')
-
-def edit_prescription(request):
-    return render(request, 'edit-prescription.html')
-
 @csrf_exempt
 def resetPassword(request):
     form = PasswordResetForm()
@@ -88,7 +72,6 @@ def resetPassword(request):
             user_email = user.email
        
             subject = "Password Reset Requested"
-            # email_template_name = "password_reset_email.txt"
             values = {
 				"email":user.email,
 				'domain':'127.0.0.1:8000',
@@ -110,37 +93,10 @@ def resetPassword(request):
 
     context = {'form': form}
     return render(request, 'reset_password.html', context)
-    
-    
-def privacy_policy(request):
-    return render(request, 'privacy-policy.html')
 
 def about_us(request):
     return render(request, 'about-us.html')
 
-@csrf_exempt
-@login_required(login_url="login")
-def chat(request, pk):
-    patient = Patient.objects.get(user_id=pk)
-    doctors = Doctor_Information.objects.all()
-
-    context = {'patient': patient, 'doctors': doctors}
-    return render(request, 'chat.html', context)
-
-@csrf_exempt
-@login_required(login_url="login")
-def chat_doctor(request):
-    if request.user.is_doctor:
-        doctor = Doctor_Information.objects.get(user=request.user)
-        patients = Patient.objects.all()
-        
-    context = {'patients': patients, 'doctor': doctor}
-    return render(request, 'chat-doctor.html', context)
-
-@csrf_exempt     
-@login_required(login_url="login")
-def pharmacy_shop(request):
-    return render(request, 'pharmacy/shop.html')
 
 @csrf_exempt
 def login_user(request):
@@ -189,12 +145,10 @@ def patient_register(request):
             # form.save()
             user = form.save(commit=False) # commit=False --> don't save to database yet (we have a chance to modify object)
             user.is_patient = True
-            # user.username = user.username.lower()  # lowercase username
             user.serial_number = str(uuid.uuid4())[:8]
             user.save()
             messages.success(request, 'Patient account was created!')
 
-            # After user is created, we can log them in --> login(request, user)
             return redirect('login')
 
         else:
@@ -278,10 +232,6 @@ def search(request):
         logout(request)
         messages.error(request, 'Not Authorized')
         return render(request, 'patient-login.html')
-    
-
-def checkout_payment(request):
-    return render(request, 'checkout.html')
 
 @csrf_exempt
 @login_required(login_url="login")
@@ -290,7 +240,6 @@ def multiple_hospital(request):
     if request.user.is_authenticated: 
         
         if request.user.is_patient:
-            # patient = Patient.objects.get(user_id=pk)
             patient = Patient.objects.get(user=request.user)
             doctors = Doctor_Information.objects.all()
             hospitals = Hospital_Information.objects.all()
@@ -455,13 +404,6 @@ def hospital_doctor_register(request, pk):
         logout(request)
         messages.info(request, 'Not Authorized')
         return render(request, 'doctor-login.html')
-    
-   
-def testing(request):
-    # hospitals = Hospital_Information.objects.get(hospital_id=1)
-    test = "test"
-    context = {'test': test}
-    return render(request, 'testing.html', context)
 
 @csrf_exempt
 @login_required(login_url="login")
@@ -472,7 +414,6 @@ def view_report(request,pk):
         specimen = Specimen.objects.filter(report__in=report)
         test = Test.objects.filter(report__in=report)
 
-        # current_date = datetime.date.today()
         context = {'patient':patient,'report':report,'test':test,'specimen':specimen}
         return render(request, 'view-report.html',context)
     else:
@@ -617,7 +558,7 @@ def prescription_pdf(request,pk):
     prescription = Prescription.objects.get(prescription_id=pk)
     prescription_medicine = Prescription_medicine.objects.filter(prescription=prescription)
     prescription_test = Prescription_test.objects.filter(prescription=prescription)
-    # current_date = datetime.date.today()
+
     context={'patient':patient,'prescription':prescription,'prescription_test':prescription_test,'prescription_medicine':prescription_medicine}
     pres_pdf=render_to_pdf('prescription_pdf.html', context)
     if pres_pdf:
@@ -675,15 +616,3 @@ def delete_report(request,pk):
         logout(request)
         messages.error(request, 'Not Authorized')
         return render(request, 'patient-login.html')
-
-@csrf_exempt
-@receiver(user_logged_in)
-def got_online(sender, user, request, **kwargs):    
-    user.login_status = True
-    user.save()
-
-@csrf_exempt
-@receiver(user_logged_out)
-def got_offline(sender, user, request, **kwargs):   
-    user.login_status = False
-    user.save()

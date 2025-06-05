@@ -1,6 +1,3 @@
-import email
-from email.mime import image
-from unicodedata import name
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -8,16 +5,15 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from doctor import admin
 from hospital.models import Hospital_Information, User, Patient
 from django.db.models import Q
 from pharmacy.models import Medicine, Pharmacist
 from doctor.models import Doctor_Information, Prescription, Prescription_test, Report, Appointment, Experience , Education,Specimen,Test
 from pharmacy.models import Order, Cart
-from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditHospitalForm, EditEmergencyForm,AdminForm , PharmacistCreationForm 
+from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditEmergencyForm,AdminForm , PharmacistCreationForm 
 
 from .models import Admin_Information,specialization,service,hospital_department, Clinical_Laboratory_Technician, Test_Information
-import random,re
+import random
 import string
 from django.db.models import  Count
 from datetime import datetime
@@ -89,9 +85,7 @@ def admin_dashboard(request):
         context = {'admin': user,'total_patient_count': total_patient_count,'total_doctor_count':total_doctor_count,'pending_appointment':pending_appointment,'doctors':doctors,'patients':patients,'hospitals':hospitals,'lab_workers':lab_workers,'total_pharmacist_count':total_pharmacist_count,'total_hospital_count':total_hospital_count,'total_labworker_count':total_labworker_count,'sat_count': sat_count, 'sun_count': sun_count, 'mon_count': mon_count, 'tues_count': tues_count, 'wed_count': wed_count, 'thurs_count': thurs_count, 'fri_count': fri_count, 'sat': sat, 'sun': sun, 'mon': mon, 'tues': tues, 'wed': wed, 'thurs': thurs, 'fri': fri, 'pharmacists': pharmacists}
         return render(request, 'hospital_admin/admin-dashboard.html', context)
     elif request.user.is_labworker:
-        # messages.error(request, 'You are not authorized to access this page')
         return redirect('labworker-dashboard')
-    # return render(request, 'hospital_admin/admin-dashboard.html', context)
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -144,16 +138,12 @@ def admin_register(request):
     if request.method == 'POST':
         form = AdminUserCreationForm(request.POST)
         if form.is_valid():
-            # form.save()
             # commit=False --> don't save to database yet (we have a chance to modify object)
             user = form.save(commit=False)
             user.is_hospital_admin = True
             user.save()
 
             messages.success(request, 'User account was created!')
-            
-            # After user is created, we can log them in
-            #login(request, user)
             return redirect('admin_login')
 
         else:
@@ -161,43 +151,6 @@ def admin_register(request):
 
     context = {'page': page, 'form': form}
     return render(request, 'hospital_admin/register.html', context)
-
-
-@csrf_exempt
-@login_required(login_url='admin_login')
-def invoice(request):
-    return render(request, 'hospital_admin/invoice.html')
-
-@csrf_exempt
-@login_required(login_url='admin_login')
-def invoice_report(request):
-    return render(request, 'hospital_admin/invoice-report.html')
-
-@login_required(login_url='admin_login')
-def lock_screen(request):
-    return render(request, 'hospital_admin/lock-screen.html')
-
-@csrf_exempt
-@login_required(login_url='admin_login')
-def patient_list(request):
-    if request.user.is_hospital_admin:
-        user = Admin_Information.objects.get(user=request.user)
-    patients = Patient.objects.all()
-    return render(request, 'hospital_admin/patient-list.html', {'all': patients, 'admin': user})
-
-@csrf_exempt
-@login_required(login_url='admin_login')
-def specialitites(request):
-    return render(request, 'hospital_admin/specialities.html')
-
-@csrf_exempt
-@login_required(login_url='admin_login')
-def appointment_list(request):
-    return render(request, 'hospital_admin/appointment-list.html')
-
-@login_required(login_url='admin_login')
-def transactions_list(request):
-    return render(request, 'hospital_admin/transactions-list.html')
 
 @csrf_exempt
 @login_required(login_url='admin_login')
@@ -214,26 +167,6 @@ def hospital_list(request):
     hospitals = Hospital_Information.objects.all()
     context = { 'admin': user, 'hospitals': hospitals}
     return render(request, 'hospital_admin/hospital-list.html', context)
-
-@csrf_exempt
-@login_required(login_url='admin_login')
-def appointment_list(request):
-    return render(request, 'hospital_admin/appointment-list.html')
-
-@csrf_exempt
-@login_required(login_url='login')
-def hospital_profile(request,pk):
-    doctor = Doctor_Information.objects.all()
-    hospitals = Hospital_Information.objects.get(hospital_id=pk)
-
-    admin = Admin_Information.objects.get(user=request.user)
-
-    departments = hospital_department.objects.filter(hospital=hospitals)
-    specializations = specialization.objects.filter(hospital=hospitals)
-    services = service.objects.filter(hospital=hospitals)
-
-    context = {'admin':admin, 'doctor': doctor, 'hospitals': hospitals, 'departments': departments, 'specializations': specializations, 'services': services}
-    return render(request, 'hospital-profile.html', context)
 
 @csrf_exempt
 @login_required(login_url='admin_login')
@@ -487,17 +420,9 @@ def create_report(request, pk):
             delivery_date = request.POST.get('delivery_date')
             other_information= request.POST.get('other_information')
 
-            # # Save to report table
-            # report.test_name = test_name
-            # report.result = result
             report.delivery_date = delivery_date
             report.other_information = other_information
-            # #report.specimen_id =generate_random_specimen()
-            # report.specimen_type = specimen_type
-            # report.collection_date  = collection_date 
-            # report.receiving_date = receiving_date
-            # report.unit = unit
-            # report.referred_value = referred_value
+
 
             report.save()
 
@@ -954,7 +879,8 @@ def labworker_dashboard(request):
             
             lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
             doctor = Doctor_Information.objects.all()
-            context = {'doctor': doctor,'lab_workers':lab_workers}
+            patients = Patient.objects.all()
+            context = {'doctor': doctor,'lab_workers':lab_workers,'patients':patients}
             return render(request, 'hospital_admin/labworker-dashboard.html',context)
 
 @csrf_exempt
@@ -1036,14 +962,3 @@ def pharmacist_dashboard(request):
                        'total_order_count':total_order_count,
                        'total_cart_count':total_cart_count}
             return render(request, 'hospital_admin/pharmacist-dashboard.html',context)
-
-@csrf_exempt
-def report_history(request):
-    if request.user.is_authenticated:
-        if request.user.is_labworker:
-
-            lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
-            report = Report.objects.all()
-            context = {'report':report,'lab_workers':lab_workers}
-            return render(request, 'hospital_admin/report-list.html',context)
-

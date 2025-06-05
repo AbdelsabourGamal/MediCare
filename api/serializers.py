@@ -5,7 +5,6 @@ from hospital.models import Hospital_Information, Patient, User
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report, Specimen, Test
 from hospital_admin.models import Admin_Information,hospital_department
 from paypal.models import Payment
-from hospital_admin.views import appointment_list
 from rest_framework_simplejwt.tokens import RefreshToken  # type: ignore
 from django.contrib.auth import authenticate
 import uuid

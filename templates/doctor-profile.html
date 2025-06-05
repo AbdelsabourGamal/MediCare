@@ -33,269 +33,205 @@
     <div class="main-wrapper">
       <!-- Header -->
       <header class="header">
-        {% if user.is_authenticated %} {% if user.is_patient %} {% include
-        'patient_navbar.html' %} {% elif user.is_doctor %} {% include
-        'doctor-navbar.html' %} {% endif %} {% endif %}
+          {% if user.is_authenticated %}
+              {% if user.is_patient %}
+                  {% include 'patient_navbar.html' %}
+              {% elif user.is_doctor %}
+                  {% include 'doctor-navbar.html' %}
+              {% endif %}
+          {% endif %}
       </header>
-
+      
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
-        <nav aria-label="breadcrumb" class="page-breadcrumb">
-          <ol class="breadcrumb">
-            {% if user.is_authenticated %} {% if user.is_patient %}
-            <li class="breadcrumb-item">
-              <a href="{% url 'patient-dashboard' %}">Home</a>
-            </li>
-            {% elif user.is_doctor %}
-            <li class="breadcrumb-item">
-              <a href="{% url 'doctor:doctor-dashboard' %}">Home</a>
-            </li>
-            {% endif %} {% endif %}
-            <li class="breadcrumb-item active" aria-current="page">
-              Doctor Profile
-            </li>
-          </ol>
-        </nav>
+          <nav aria-label="breadcrumb" class="page-breadcrumb">
+              <ol class="breadcrumb">
+                  {% if user.is_authenticated %}
+                      {% if user.is_patient %}
+                          <li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
+                      {% elif user.is_doctor %}
+                          <li class="breadcrumb-item"><a href="{% url 'doctor:doctor-dashboard' %}">Home</a></li>
+                      {% endif %}
+                  {% endif %}
+                  <li class="breadcrumb-item active" aria-current="page">Doctor Profile</li>
+              </ol>
+          </nav>
       </div>
-
+      
       <!-- Page Content -->
       <div class="doctor-profile">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- Sidebar Column -->
-            <div class="col-md-12 col-lg-4 col-xl-3">
-              {% if user.is_authenticated %} {% if user.is_patient %} {% include
-              'patient-sidebar.html' %} {% elif user.is_doctor %} {% include
-              'doctor-sidebar.html' %} {% endif %} {% endif %}
-            </div>
-
-            <!-- Main Content Column -->
-            <div class="col-md-12 col-lg-8 col-xl-9">
-              <!-- Doctor Profile Card -->
-              <div class="card">
-                <div class="card-body">
-                  <div class="doctor-widget">
-                    <!-- Doctor Info Left Section -->
-                    <div class="doc-info-left">
-                      <div class="doctor-img">
-                        <img
-                          src="{{ doctor.featured_image.url }}"
-                          class="img-fluid"
-                          alt="Doctor Image"
-                        />
-                      </div>
-                      <div class="doc-info-cont">
-                        <h4 class="doc-name">Dr. {{ doctor.name }}</h4>
-                        <p class="doc-specialty">
-                          {{ doctor.department_name.hospital_department_name }}
-                        </p>
-                        <h4 class="doc-hospital">{{ doctor.hospital_name }}</h4>
-                        <p class="doc-department">
-                          {{ doctor.specialization.specialization_name }}
-                        </p>
-                        <div class="clinic-details">
-                          <p class="doc-location">
-                            <i class="fas fa-map-marker-alt"></i> Dhaka,
-                            Bangladesh
-                          </p>
-                          <ul class="clinic-gallery">
-                            {% for i in "1234" %}
-                            <li>
-                              <a
-                                href="{% static 'MediCare/images/Normal/gyno'|add:i|add:'.jpg' %}"
-                                data-fancybox="gallery"
-                              >
-                                <img
-                                  src="{% static 'MediCare/images/Normal/gyno'|add:i|add:'.jpg' %}"
-                                  alt="Clinic Image"
-                                />
-                              </a>
-                            </li>
-                            {% endfor %}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Doctor Info Right Section -->
-                    <div class="doc-info-right">
-                      <div class="clinic-infos">
-                        <ul>
-                          <li><i class="fas fa-map-marker-alt"></i> Qena</li>
-                          <li>
-                            <i class="far fa-money-bill-alt"></i> {{
-                            doctor.consultation_fee }} EGP
-                          </li>
-                        </ul>
-                      </div>
-
-                      {% if user.is_authenticated and user.is_patient %}
-                      <div class="clinic-booking">
-                        <a
-                          class="apt-btn"
-                          href="{% url 'doctor:booking' pk=doctor.doctor_id %}"
-                          >Book Your Appointment</a
-                        >
-                      </div>
+          <div class="container-fluid">
+              <div class="row">
+                  <!-- Sidebar Column -->
+                  <div class="col-md-12 col-lg-4 col-xl-3">
+                      {% if user.is_authenticated %}
+                          {% if user.is_patient %}
+                              {% include 'patient-sidebar.html' %}
+                          {% elif user.is_doctor %}
+                              {% include 'doctor-sidebar.html' %}
+                          {% endif %}
                       {% endif %}
-                    </div>
                   </div>
-                </div>
-              </div>
 
-              <!-- Doctor Details Tab -->
-              <div class="card">
-                <div class="card-body pt-0">
-                  <!-- Tab Menu -->
-                  <nav class="user-tabs mb-4">
-                    <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                      <li class="nav-item">
-                        <a
-                          class="nav-link active"
-                          href="#doc_overview"
-                          data-bs-toggle="tab"
-                          >Overview</a
-                        >
-                      </li>
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          href="#doc_certificate"
-                          data-bs-toggle="tab"
-                          >Certificate</a
-                        >
-                      </li>
-                      {% comment %}
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          href="#doc_reviews"
-                          data-bs-toggle="tab"
-                          >Reviews</a
-                        >
-                      </li>
-                      {% endcomment %}
-                    </ul>
-                  </nav>
-
-                  <!-- Tab Content -->
-                  <div class="tab-content pt-0">
-                    <!-- Overview Tab -->
-                    <div
-                      role="tabpanel"
-                      id="doc_overview"
-                      class="tab-pane fade show active"
-                    >
-                      <div class="row">
-                        <div class="col-md-12 col-lg-12">
-                          <!-- About Section -->
-                          <div class="widget about-widget">
-                            <h4 class="widget-title">About Me</h4>
-                            <p>{{ doctor.description }}</p>
-                          </div>
-
-                          <!-- Education Section -->
-                          <div class="widget education-widget">
-                            <h4 class="widget-title">Education</h4>
-                            <div class="experience-box">
-                              <ul class="experience-list">
-                                {% for education in educations %}
-                                <li>
-                                  <div class="experience-user">
-                                    <div class="before-circle"></div>
+                  <!-- Main Content Column -->
+                  <div class="col-md-12 col-lg-8 col-xl-9">
+                      <!-- Doctor Profile Card -->
+                      <div class="card">
+                          <div class="card-body">
+                              <div class="doctor-widget">
+                                  <!-- Doctor Info Left Section -->
+                                  <div class="doc-info-left">
+                                      <div class="doctor-img">
+                                          <img src="{{ doctor.featured_image.url }}" class="img-fluid" alt="Doctor Image">
+                                      </div>
+                                      <div class="doc-info-cont">
+                                          <h4 class="doc-name">Dr. {{ doctor.name }}</h4>
+                                          <p class="doc-specialty">{{ doctor.department_name.hospital_department_name }}</p>
+                                          <h4 class="doc-hospital">{{ doctor.hospital_name }}</h4>
+                                          <p class="doc-department">{{ doctor.specialization.specialization_name }}</p>
+                                          <div class="clinic-details">
+                                              <p class="doc-location"><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
+                                              <ul class="clinic-gallery">
+                                                  {% for i in "1234" %}
+                                                      <li>
+                                                          <a href="{% static 'HealthStack-System/images/Normal/gyno'|add:i|add:'.jpg' %}" data-fancybox="gallery">
+                                                              <img src="{% static 'HealthStack-System/images/Normal/gyno'|add:i|add:'.jpg' %}" alt="Clinic Image">
+                                                          </a>
+                                                      </li>
+                                                  {% endfor %}
+                                              </ul>
+                                          </div>
+                                      </div>
                                   </div>
-                                  <div class="experience-content">
-                                    <div class="timeline-content">
-                                      <a href="#" class="name"
-                                        >{{ education.degree }}</a
-                                      >
-                                      <div>{{ education.institute }}</div>
-                                      <span class="time"
-                                        >{{ education.year_of_completion
-                                        }}</span
-                                      >
-                                    </div>
+                                  
+                                  <!-- Doctor Info Right Section -->
+                                  <div class="doc-info-right">
+                                      <div class="clinic-infos">
+                                          <ul>
+                                              <li><i class="fas fa-map-marker-alt"></i> Qena</li>
+                                              <li><i class="far fa-money-bill-alt"></i> {{ doctor.consultation_fee }} EGP</li>
+                                          </ul>
+                                      </div>
+                                      
+                                      {% if user.is_authenticated and user.is_patient %}
+                                          <div class="clinic-booking">
+                                              <a class="apt-btn" href="{% url 'doctor:booking' pk=doctor.doctor_id %}">Book Your Appointment</a>
+                                          </div>
+                                      {% endif %}
                                   </div>
-                                </li>
-                                {% endfor %}
-                              </ul>
-                            </div>
+                              </div>
                           </div>
-
-                          <!-- Experience Section -->
-                          <div class="widget experience-widget">
-                            <h4 class="widget-title">Work & Experience</h4>
-                            <div class="experience-box">
-                              <ul class="experience-list">
-                                {% for experience in experiences %}
-                                <li>
-                                  <div class="experience-user">
-                                    <div class="before-circle"></div>
-                                  </div>
-                                  <div class="experience-content">
-                                    <div class="timeline-content">
-                                      <a href="#" class="name"
-                                        >{{ experience.designation }}</a
-                                      >
-                                      <span class="time"
-                                        >{{ experience.work_place_name }}</span
-                                      >
-                                      <span class="time"
-                                        >{{ experience.from_year }} - {{
-                                        experience.to_year }}</span
-                                      >
-                                    </div>
-                                  </div>
-                                </li>
-                                {% endfor %}
-                              </ul>
-                            </div>
-                          </div>
-
-                          <!-- Visiting Time Section -->
-                          <div class="service-list">
-                            <h4>Visiting Time</h4>
-                            <ul class="clearfix">
-                              <li>
-                                <i class="fa-solid fa-clock"></i> {{
-                                doctor.visiting_hour }}
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
                       </div>
-                    </div>
-
-                    <!-- Certificate Tab -->
-                    <div
-                      role="tabpanel"
-                      id="doc_certificate"
-                      class="tab-pane fade"
-                    >
-                      <div class="row">
-                        <div class="col-md-6 offset-md-3 zoom">
-                          <img
-                            src="{{ doctor.certificate_image.url }}"
-                            alt="Doctor Certificate"
-                            class="img-fluid"
-                          />
-                        </div>
-                        <div class="text-center mt-3">
-                          <h6 class="text-muted">Official Certificate</h6>
-                        </div>
+                      
+                      <!-- Doctor Details Tab -->
+                      <div class="card">
+                          <div class="card-body pt-0">
+                              <!-- Tab Menu -->
+                              <nav class="user-tabs mb-4">
+                                  <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                                      <li class="nav-item">
+                                          <a class="nav-link active" href="#doc_overview" data-bs-toggle="tab">Overview</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link" href="#doc_certificate" data-bs-toggle="tab">Certificate</a>
+                                      </li>
+                                      
+                                  </ul>
+                              </nav>
+                              
+                              <!-- Tab Content -->
+                              <div class="tab-content pt-0">
+                                  <!-- Overview Tab -->
+                                  <div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
+                                      <div class="row">
+                                          <div class="col-md-12 col-lg-12">
+                                              <!-- About Section -->
+                                              <div class="widget about-widget">
+                                                  <h4 class="widget-title">About Me</h4>
+                                                  <p>{{ doctor.description }}</p>
+                                              </div>
+                                              
+                                              <!-- Education Section -->
+                                              <div class="widget education-widget">
+                                                  <h4 class="widget-title">Education</h4>
+                                                  <div class="experience-box">
+                                                      <ul class="experience-list">
+                                                          {% for education in educations %}
+                                                              <li>
+                                                                  <div class="experience-user">
+                                                                      <div class="before-circle"></div>
+                                                                  </div>
+                                                                  <div class="experience-content">
+                                                                      <div class="timeline-content">
+                                                                          <a href="#" class="name">{{ education.degree }}</a>
+                                                                          <div>{{ education.institute }}</div>
+                                                                          <span class="time">{{ education.year_of_completion }}</span>
+                                                                      </div>
+                                                                  </div>
+                                                              </li>
+                                                          {% endfor %}
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                              
+                                              <!-- Experience Section -->
+                                              <div class="widget experience-widget">
+                                                  <h4 class="widget-title">Work & Experience</h4>
+                                                  <div class="experience-box">
+                                                      <ul class="experience-list">
+                                                          {% for experience in experiences %}
+                                                              <li>
+                                                                  <div class="experience-user">
+                                                                      <div class="before-circle"></div>
+                                                                  </div>
+                                                                  <div class="experience-content">
+                                                                      <div class="timeline-content">
+                                                                          <a href="#" class="name">{{ experience.designation }}</a>
+                                                                          <span class="time">{{ experience.work_place_name }}</span>
+                                                                          <span class="time">{{ experience.from_year }} - {{ experience.to_year }}</span>
+                                                                      </div>
+                                                                  </div>
+                                                              </li>
+                                                          {% endfor %}
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                              
+                                              <!-- Visiting Time Section -->
+                                              <div class="service-list">
+                                                  <h4>Visiting Time</h4>
+                                                  <ul class="clearfix">
+                                                      <li><i class="fa-solid fa-clock"></i> {{ doctor.visiting_hour }}</li>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  
+                                  <!-- Certificate Tab -->
+                                  <div role="tabpanel" id="doc_certificate" class="tab-pane fade">
+                                      <div class="row">
+                                          <div class="col-md-6 offset-md-3 zoom">
+                                              <img src="{{ doctor.certificate_image.url }}" alt="Doctor Certificate" class="img-fluid">
+                                          </div>
+                    <div class="text-center mt-3">
+  <h6 class="text-muted">Official Certificate</h6>
+</div>
+                                      </div>
+                                  </div>
+                                  
+                                  
+                              </div>
+                          </div>
                       </div>
-                    </div>
                   </div>
-                </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
-
+      
       <!-- Footer -->
       {% include 'footer.html' %}
-    </div>
+  </div>
 
     <!-- Scripts -->
     <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>

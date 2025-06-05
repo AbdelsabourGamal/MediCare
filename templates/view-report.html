@@ -37,7 +37,7 @@
       <!-- Header -->
       <header class="header">
         {% if user.is_authenticated and user.is_patient %} 
-        {% include  'patient_navbar.html' %} 
+        {% include 'patient_navbar.html' %} 
         {% endif %}
       </header>
       <!-- /Header -->
@@ -73,16 +73,12 @@
                     <div class="report-date">
                       <i class="fas fa-calendar-alt me-2"></i>
                       <span>
-                        {% for report in report %}
-                        {{report.delivery_date}} 
-                        {% endfor %}
-                        </span>
+                        {% for report in report %} {{report.delivery_date}} {% endfor %}</span
+                      >
                     </div>
                   </div>
                   <div class="report-id-badge">
-                    {% for report in report %}
-                     Report #{{report.report_id}} 
-                    {% endfor %}
+                    {% for report in report %} Report #{{report.report_id}} {% endfor %}
                   </div>
                 </div>
 

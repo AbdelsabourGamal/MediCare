@@ -3,32 +3,22 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-
 urlpatterns = [
     path('', views.admin_login, name='admin-login'),
     path('admin-dashboard/',views.admin_dashboard, name='admin-dashboard'),
     path('hospital-admin-profile/<int:pk>/', views.hospital_admin_profile,name='hospital-admin-profile'),
-    path('appointment-list',views.appointment_list, name='appointment-list'),
     path('register-doctor-list/', views.register_doctor_list,name='register-doctor-list'),
     path('pending-doctor-list/', views.pending_doctor_list,name='pending-doctor-list'),
     path('hospital-list/', views.hospital_list,name='hospital-list'),
     path('add-hospital/', views.add_hospital,name='add-hospital'),
     path('edit-hospital/<int:pk>/', views.edit_hospital,name='edit-hospital'),
     path('delete-hospital/<int:pk>/', views.delete_hospital,name='delete-hospital'),
-    path('hospital-list/', views.hospital_list,name='hospital-list'),
     path('add-pharmacist/', views.add_pharmacist,name='add-pharmacist'),
-    path('invoice/',views.invoice, name='invoice'),
-    path('invoice-report/',views.invoice_report, name='invoice_report'),
-    path('lock-screen/', views.lock_screen,name='lock_screen'),
     path('login/',views.admin_login,name='admin_login'),
-    path('patient-list/',views.patient_list, name='patient-list'),
     path('admin_register/',views.admin_register,name='admin_register'),
-    path('transactions-list/',views.transactions_list, name='transactions_list'),
     path('admin-logout/', views.logoutAdmin, name='admin-logout'),
     path('emergency/', views.emergency_details,name='emergency'),
     path('edit-emergency-information/<int:pk>/', views.edit_emergency_information,name='edit-emergency-information'),
-    path('hospital-profile/<int:pk>/', views.hospital_profile ,name='hospital-profile'),
     path('hospital-admin-profile/<int:pk>/', views.hospital_admin_profile,name='hospital-admin-profile'),
     path('create-invoice/<int:pk>/', views.create_invoice,name='create-invoice'),
     path('create-report/<int:pk>/', views.create_report,name='create-report'),
@@ -56,7 +46,6 @@ urlpatterns = [
     path('test-list/', views.test_list,name='test-list'),
     path('delete-test/<int:pk>/', views.delete_test,name='delete-test'),
     path('pharmacist-dashboard/', views.pharmacist_dashboard,name='pharmacist-dashboard'),
-    path('report-history/', views.report_history,name='report-history'),
     
     
 ]
