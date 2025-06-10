@@ -1,6 +1,5 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-# from django.contrib.auth.models import User
 from .models import Patient, User
 from doctor.models import Doctor_Information
 from hospital_admin.models import Admin_Information, Clinical_Laboratory_Technician
@@ -9,19 +8,6 @@ from pharmacy.models import Pharmacist
 
 import random
 import string
-
-
-# # from django.core.mail import send_mail
-# # from django.conf import settings
-
-
-# error here --> two signals are working at the same time
-
-
-# @receiver(post_save, sender=User)
-# def createPatient(sender, instance, created, **kwargs):
-#     if created:
-#         Patient.objects.create(user=instance)
 
 def generate_random_string():
     N = 6
@@ -52,8 +38,6 @@ def createPatient(sender, instance, created, **kwargs):
         elif instance.is_labworker:
             user = instance
             Clinical_Laboratory_Technician.objects.create(user=user, username=user.username, email=user.email)
-        
-
 
 @receiver(post_save, sender=Patient)
 def updateUser(sender, instance, created, **kwargs):
@@ -66,9 +50,3 @@ def updateUser(sender, instance, created, **kwargs):
         user.username = patient.username
         user.email = patient.email
         user.save()
-
-
-# @receiver(post_save, sender=User)
-# def createDoctor(sender, instance, created, **kwargs):
-#     if created:
-#         Doctor_Information.objects.create(user=instance)
