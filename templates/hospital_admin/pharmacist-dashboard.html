@@ -123,7 +123,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for medicine in medicines %}
+                    {% for medicine in medicine %}
                     <tr>
                       <td>
                         <div class="user-avatar">
@@ -133,7 +133,7 @@
                             alt="Medicine Image"
                             class="avatar"
                           />
-                          <a href="/hospital_admin/edit-medicine/{{medicine.serial_number}}" class="user-name">{{medicine.name}}</a>
+                          <a href="#" class="user-name">{{medicine.name}}</a>
                         </div>
                       </td>
                       <td>{{medicine.stock_quantity}}</td>

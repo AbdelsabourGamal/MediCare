@@ -78,6 +78,15 @@
                 </div>
               </div>
             </div>
+
+            <div class="doctor-actions">
+              <a
+                href="{% url 'create-report' pk=doctor.doctor_id %}"
+                class="action-button"
+              >
+                <i class="fas fa-file-alt"></i> Create Report
+              </a>
+            </div>
           </div>
           {% endfor %}
         </div>

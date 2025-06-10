@@ -140,7 +140,7 @@
                             class="avatar"
                           />
                           <a
-                            href="/hospital_admin/edit-hospital/{{hospital.hospital_id}}"
+                            href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
                             class="user-name"
                             >{{hospital.name}}</a
                           >

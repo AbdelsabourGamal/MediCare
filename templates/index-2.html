@@ -38,7 +38,7 @@
       <!-- header -->
 
       <!-- Landing Section -->
-      <search class="section section-landing">
+      <section class="section section-landing">
         <div class="container-fluid">
           <div class="image-container">
             <img
@@ -47,145 +47,20 @@
             />
           </div>
           <div class="description-container">
-            <h1><span>Welcome to Our</span><br />Hospital Management System</h1>
+            <h1>Welcome to Our<br />Hospital Management System <br> <span class="project-name">MediCare</span></h1>
             <p>
               Streamline your hospital operations with our cutting-edge Hospital
               Management System. From patient records to appointment scheduling,
               our platform ensures accuracy, efficiency, and seamless
               communication across all departments.
             </p>
-            <a href="#clinics">Our Clinics</a>
-          </div>
-        </div>
-      </search>
-
-      <!-- Clinics Section -->
-      <section id="clinics" class="section section-clinics">
-        <div class="container">
-          <div class="text-center mb-4">
-            <h2 class="section-title">Our Clinics</h2>
-            <p class="section-subtitle">
-              Explore our range of specialist clinics
-            </p>
-          </div>
-
-          <div class="clinics-container">
-            <!-- Clinic Item -->
-            <div class="clinic-item">
-              <div class="clinic-img">
-                <img
-                  src="{% static 'MediCare/images/Normal/specialties/specialties-01.png' %}"
-                  class="img-fluid"
-                  alt="Urology Clinic"
-                />
-              </div>
-              <p class="clinic-name">Urology</p>
-            </div>
-
-            <!-- Clinic Item -->
-            <div class="clinic-item">
-              <div class="clinic-img">
-                <img
-                  src="{% static 'MediCare/images/Normal/specialties/specialties-02.png' %}"
-                  class="img-fluid"
-                  alt="Neurology Clinic"
-                />
-              </div>
-              <p class="clinic-name">Neurology</p>
-            </div>
-
-            <!-- Clinic Item -->
-            <div class="clinic-item">
-              <div class="clinic-img">
-                <img
-                  src="{% static 'MediCare/images/Normal/specialties/specialties-03.png' %}"
-                  class="img-fluid"
-                  alt="Orthopedic Clinic"
-                />
-              </div>
-              <p class="clinic-name">Orthopedic</p>
-            </div>
-
-            <!-- Clinic Item -->
-            <div class="clinic-item">
-              <div class="clinic-img">
-                <img
-                  src="{% static 'MediCare/images/Normal/specialties/specialties-04.png' %}"
-                  class="img-fluid"
-                  alt="Cardiology Clinic"
-                />
-              </div>
-              <p class="clinic-name">Cardiologist</p>
-            </div>
-
-            <!-- Clinic Item -->
-            <div class="clinic-item">
-              <div class="clinic-img">
-                <img
-                  src="{% static 'MediCare/images/Normal/specialties/specialties-05.png' %}"
-                  class="img-fluid"
-                  alt="Dentistry Clinic"
-                />
-              </div>
-              <p class="clinic-name">Dentist</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Doctors Section -->
-      <section class="section section-doctors">
-        <div class="container">
-          <div class="text-center mb-4">
-            <h2 class="section-title">Our Doctors</h2>
-            <p class="section-subtitle">
-              You can book doctors from any hospital here.
-            </p>
-          </div>
-
-          <div class="doctors-container">
-            {% for doctor in doctors %}
-            <div class="doctor">
-              <div class="doctor-img">
-                {% if user.is_authenticated and user.is_hospital_admin %}
-                <a href="hospital_admin/admin-doctor-profile/{{doctor.pk}}"></a>
-                {% else %}
-                <a href="{% url 'doctor:doctor-profile' doctor.pk %}">
-                {% endif %}
-                  <img
-                    src="{{ doctor.featured_image.url }}"
-                    alt="{{ doctor.name }}"
-                    class="img-fluid"
-                  />
-                </a>
-              </div>
-
-              <div class="doctor-name">{{ doctor.name }}</div>
-              <p class="text-muted">
-                {{ doctor.department_name.hospital_department_name }}
-              </p>
-
-              <ul>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2"></i>
-                  {{doctor.hospital_name }}
-                </li>
-                <li>
-                  <i class="far fa-clock me-2"></i> {{ doctor.visiting_hour }}
-                </li>
-                <li>
-                  <i class="far fa-money-bill-alt me-2"></i> Consultation Fee:
-                  {{ doctor.consultation_fee }} EGP
-                </li>
-              </ul>
-            </div>
-            {% endfor %}
+            <a href="#hospitals">Our Hospitals</a>
           </div>
         </div>
       </section>
 
       <!-- Our Hospitals -->
-      <section class="section section-hospitals">
+      <section id="hospitals" class="section section-hospitals">
         <div class="container">
           <div class="text-center mb-4">
             <h2 class="section-title">Our Hospitals</h2>
@@ -272,7 +147,131 @@
           </div>
         </div>
       </section>
-      <!-- Available Features -->
+
+      <!-- Doctors Section -->
+      <section class="section section-doctors">
+        <div class="container">
+          <div class="text-center mb-4">
+            <h2 class="section-title">Our Doctors</h2>
+            <p class="section-subtitle">
+              You can book doctors from any hospital here.
+            </p>
+          </div>
+
+          <div class="doctors-container">
+            {% for doctor in doctors %}
+            <div class="doctor">
+              <div class="doctor-img">
+                {% if user.is_authenticated and user.is_hospital_admin %}
+                <a href="hospital_admin/admin-doctor-profile/{{doctor.pk}}"></a>
+                {% else %}
+                <a href="{% url 'doctor:doctor-profile' doctor.pk %}">
+                {% endif %}
+                  <img
+                    src="{{ doctor.featured_image.url }}"
+                    alt="{{ doctor.name }}"
+                    class="img-fluid"
+                  />
+                </a>
+              </div>
+
+              <div class="doctor-name">{{ doctor.name }}</div>
+              <p class="text-muted">
+                {{ doctor.department_name.hospital_department_name }}
+              </p>
+
+              <ul>
+                <li>
+                  <i class="fas fa-map-marker-alt me-2"></i>
+                  {{doctor.hospital_name }}
+                </li>
+                <li>
+                  <i class="far fa-clock me-2"></i> {{ doctor.visiting_hour }}
+                </li>
+                <li>
+                  <i class="far fa-money-bill-alt me-2"></i> Consultation Fee:
+                  {{ doctor.consultation_fee }} EGP
+                </li>
+              </ul>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <!-- Clinics Section -->
+      <section id="clinics" class="section section-clinics">
+        <div class="container">
+          <div class="text-center mb-4">
+            <h2 class="section-title">Our Clinics</h2>
+            <p class="section-subtitle">
+              Explore our range of specialist clinics
+            </p>
+          </div>
+
+          <div class="clinics-container">
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'MediCare/images/Normal/specialties/specialties-01.png' %}"
+                  class="img-fluid"
+                  alt="Urology Clinic"
+                />
+              </div>
+              <p class="clinic-name">Urology</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'MediCare/images/Normal/specialties/specialties-02.png' %}"
+                  class="img-fluid"
+                  alt="Neurology Clinic"
+                />
+              </div>
+              <p class="clinic-name">Neurology</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'MediCare/images/Normal/specialties/specialties-03.png' %}"
+                  class="img-fluid"
+                  alt="Orthopedic Clinic"
+                />
+              </div>
+              <p class="clinic-name">Orthopedic</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'MediCare/images/Normal/specialties/specialties-04.png' %}"
+                  class="img-fluid"
+                  alt="Cardiology Clinic"
+                />
+              </div>
+              <p class="clinic-name">Cardiologist</p>
+            </div>
+
+            <!-- Clinic Item -->
+            <div class="clinic-item">
+              <div class="clinic-img">
+                <img
+                  src="{% static 'MediCare/images/Normal/specialties/specialties-05.png' %}"
+                  class="img-fluid"
+                  alt="Dentistry Clinic"
+                />
+              </div>
+              <p class="clinic-name">Dentist</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Footer -->
       {% include 'footer.html' %}
