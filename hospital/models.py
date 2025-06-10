@@ -27,6 +27,7 @@ class User(AbstractUser):
     is_hospital_admin = models.BooleanField(default=False)
     is_labworker = models.BooleanField(default=False)
     is_pharmacist = models.BooleanField(default=False)
+    login_status = models.BooleanField(default=False)
     
 class Hospital_Information(models.Model):
     # ('database value', 'display_name')
