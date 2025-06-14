@@ -7,9 +7,9 @@
 4. Sidebar
 5. Dashboard
 6. Admin Profile
-7. Doctor Profile 
+7. Doctor Profile
 8. Hospital List
-9. Edit Hospital 
+9. Edit Hospital
 10. Departments List
 11. Add Hospital
 12. Emergency Info
@@ -25,7 +25,7 @@
 22. Lab-Worker Prescription List
 23. Lab-Worker Create Report
 24. Lab-Worker Test List
-25. Lab-Worker Add Test 
+25. Lab-Worker Add Test
 
 ========================================*/
 
@@ -1521,7 +1521,7 @@ textarea.form-control {
 }
 
 /*-----------------
-	7. Doctor Profile 
+	7. Doctor Profile
 -----------------------*/
 .page-container.doctor-profile .doctor-profile-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -1774,7 +1774,7 @@ textarea.form-control {
   }
 }
 /*-----------------
-	8. Hospital List 
+	8. Hospital List
 -----------------------*/
 
 .page-container.hospital-list .hospital-card {
@@ -1857,7 +1857,7 @@ textarea.form-control {
 }
 
 /*-----------------
-	9. Edit Hospital 
+	9. Edit Hospital
 -----------------------*/
 
 .page-container.edit-hospital .profile-section {
@@ -2689,6 +2689,8 @@ textarea.form-control {
 }
 
 .emergency-info .card-content {
+  max-height: 100vh;
+  overflow-y: auto;
   padding: 1.5rem;
 }
 
@@ -2922,6 +2924,8 @@ textarea.form-control {
 }
 
 .registered-docs .card-content {
+  overflow-y: auto;
+  max-height: 100vh;
   padding: 1.5rem;
 }
 
@@ -4707,7 +4711,7 @@ textarea.form-control {
 }
 
 /*-----------------
-	25. Lab-Worker Add Test 
+	25. Lab-Worker Add Test
 -----------------------*/
 
 .add-test .page-header {

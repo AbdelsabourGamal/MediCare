@@ -156,7 +156,7 @@
                                     >
                                   </td>
                                   <td>{{appointment.appointment_type}}</td>
-                                  
+
                                   {% if appointment.appointment_type == 'checkup' %}
                                   <td>{{appointment.doctor.consultation_fee}} EGP</td>
                                   {% else %}
@@ -320,7 +320,7 @@
                                       <a href="{% url 'delete-report' pk=report.report_id %}" onclick="return confirm('Are you sure you want to Delete?');" class="btn btn-sm btn-outline-danger" >
                                         <i class="fas fa-trash"></i> Delete
                                       </a>
-                                      
+
                                     </div>
                                   </td>
                                 </tr>
@@ -345,8 +345,6 @@
                                   <th>Tranx ID</th>
                                   <th>Tranx Date</th>
                                   <th>Amount</th>
-                                  <th>Card Type</th>
-                                  <th>Card Issuer</th>
                                   <th>Payment Status</th>
                                 </tr>
                               </thead>
@@ -374,16 +372,14 @@
                                   <td>{{payment.transaction_id}}</td>
                                   <td>{{payment.transaction_date}}</td>
                                   <td>{{payment.currency_amount}} EGP</td>
-                                  <td>{{payment.card_type}}</td>
-                                  <td>{{payment.card_issuer}}</td>
                                   <td>
-                                    {% if payment.status == 'VALID' %}
+                                    {% if payment.status == 'confirmed' %}
                                     <span class="badge text-bg-success">Success</span>
                                     {% else %}
                                     <span class="badge text-bg-warning">Pending</span>
                                     {% endif %}
                                   </td>
-                            
+
                                 </tr>
                                 {% endfor %}
                               </tbody>

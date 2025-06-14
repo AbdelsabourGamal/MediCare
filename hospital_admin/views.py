@@ -10,7 +10,7 @@ from django.db.models import Q
 from pharmacy.models import Medicine, Pharmacist
 from doctor.models import Doctor_Information, Prescription, Prescription_test, Report, Appointment, Experience , Education,Specimen,Test
 from pharmacy.models import Order, Cart
-from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditEmergencyForm,AdminForm , PharmacistCreationForm 
+from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditEmergencyForm,AdminForm , PharmacistCreationForm
 
 from .models import Admin_Information,specialization,service,hospital_department, Clinical_Laboratory_Technician, Test_Information
 import random
@@ -45,35 +45,35 @@ def admin_dashboard(request):
         hospitals = Hospital_Information.objects.all()
         lab_workers = Clinical_Laboratory_Technician.objects.all()
         pharmacists = Pharmacist.objects.all()
-        
+
         sat_date = datetime.date.today()
         sat_date_str = str(sat_date)
         sat = sat_date.strftime("%A")
 
-        sun_date = sat_date + datetime.timedelta(days=1) 
+        sun_date = sat_date + datetime.timedelta(days=1)
         sun_date_str = str(sun_date)
         sun = sun_date.strftime("%A")
-        
-        mon_date = sat_date + datetime.timedelta(days=2) 
+
+        mon_date = sat_date + datetime.timedelta(days=2)
         mon_date_str = str(mon_date)
         mon = mon_date.strftime("%A")
-        
-        tues_date = sat_date + datetime.timedelta(days=3) 
+
+        tues_date = sat_date + datetime.timedelta(days=3)
         tues_date_str = str(tues_date)
         tues = tues_date.strftime("%A")
-        
-        wed_date = sat_date + datetime.timedelta(days=4) 
+
+        wed_date = sat_date + datetime.timedelta(days=4)
         wed_date_str = str(wed_date)
         wed = wed_date.strftime("%A")
-        
-        thurs_date = sat_date + datetime.timedelta(days=5) 
+
+        thurs_date = sat_date + datetime.timedelta(days=5)
         thurs_date_str = str(thurs_date)
         thurs = thurs_date.strftime("%A")
-        
-        fri_date = sat_date + datetime.timedelta(days=6) 
+
+        fri_date = sat_date + datetime.timedelta(days=6)
         fri_date_str = str(fri_date)
         fri = fri_date.strftime("%A")
-        
+
         sat_count = Appointment.objects.filter(date=sat_date_str).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed')).count()
         sun_count = Appointment.objects.filter(date=sun_date_str).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed')).count()
         mon_count = Appointment.objects.filter(date=mon_date_str).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed')).count()
@@ -93,7 +93,7 @@ def logoutAdmin(request):
     logout(request)
     messages.error(request, 'User Logged out')
     return redirect('admin_login')
-            
+
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_login(request):
@@ -125,7 +125,7 @@ def admin_login(request):
                 return redirect('admin-logout')
         else:
             messages.error(request, 'Invalid username or password')
-        
+
 
     return render(request, 'hospital_admin/login.html')
 
@@ -197,49 +197,49 @@ def add_hospital(request):
 
         if request.method == 'POST':
             hospital = Hospital_Information()
-            
+
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = "departments/default.png"
-            
+
             hospital_name = request.POST.get('hospital_name')
             address = request.POST.get('address')
             description = request.POST.get('description')
             email = request.POST.get('email')
-            phone_number = request.POST.get('phone_number') 
+            phone_number = request.POST.get('phone_number')
             hospital_type = request.POST.get('type')
             specialization_name = request.POST.getlist('specialization')
             department_name = request.POST.getlist('department')
             service_name = request.POST.getlist('service')
-            
-        
+
+
             hospital.name = hospital_name
             hospital.description = description
             hospital.address = address
             hospital.email = email
             hospital.phone_number =phone_number
-            hospital.featured_image=featured_image 
+            hospital.featured_image=featured_image
             hospital.hospital_type=hospital_type
 
             hospital.save()
-            
+
             for i in range(len(department_name)):
                 departments = hospital_department(hospital=hospital)
                 # print(department_name[i])
                 departments.hospital_department_name = department_name[i]
                 departments.save()
-                
+
             for i in range(len(specialization_name)):
                 specializations = specialization(hospital=hospital)
                 specializations.specialization_name=specialization_name[i]
                 specializations.save()
-                
+
             for i in range(len(service_name)):
                 services = service(hospital=hospital)
                 services.service_name = service_name[i]
                 services.save()
-            
+
             messages.success(request, 'Hospital Added')
             return redirect('hospital-list')
 
@@ -266,14 +266,14 @@ def edit_hospital(request, pk):
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = old_featured_image
-                               
+
             hospital_name = request.POST.get('hospital_name')
             address = request.POST.get('address')
             description = request.POST.get('description')
             email = request.POST.get('email')
-            phone_number = request.POST.get('phone_number') 
+            phone_number = request.POST.get('phone_number')
             hospital_type = request.POST.get('type')
-            
+
             specialization_name = request.POST.getlist('specialization')
             department_name = request.POST.getlist('department')
             service_name = request.POST.getlist('service')
@@ -283,7 +283,7 @@ def edit_hospital(request, pk):
             hospital.address = address
             hospital.email = email
             hospital.phone_number =phone_number
-            hospital.featured_image =featured_image 
+            hospital.featured_image =featured_image
             hospital.hospital_type =hospital_type
 
             hospital.save()
@@ -299,7 +299,7 @@ def edit_hospital(request, pk):
                 services = service(hospital=hospital)
                 services.service_name = service_name[i]
                 services.save()
-                
+
             for i in range(len(department_name)):
                 departments = hospital_department(hospital=hospital)
                 departments.hospital_department_name = department_name[i]
@@ -329,11 +329,11 @@ def delete_service(request, pk, pk2):
 def edit_emergency_information(request, pk):
     admin = Admin_Information.objects.get(user=request.user)
     hospital = Hospital_Information.objects.get(hospital_id=pk)
-    form = EditEmergencyForm(instance=hospital)  
+    form = EditEmergencyForm(instance=hospital)
 
     if request.method == 'POST':
         form = EditEmergencyForm(request.POST, request.FILES,
-                           instance=hospital)  
+                           instance=hospital)
         if form.is_valid():
             form.save()
             messages.success(request, 'Emergency information added')
@@ -370,7 +370,7 @@ def create_invoice(request, pk):
 
     if request.method == 'POST':
         invoice = Payment(patient=patient)
-        
+
         consulation_fee = request.POST['consulation_fee']
         report_fee = request.POST['report_fee']
         #total_ammount = request.POST['currency_amount']
@@ -380,7 +380,7 @@ def create_invoice(request, pk):
         invoice.invoice_number = generate_random_invoice()
         invoice.name = patient
         invoice.status = 'Pending'
-    
+
         invoice.save()
         return redirect('patient-list')
 
@@ -405,11 +405,11 @@ def create_report(request, pk):
         patient = Patient.objects.get(patient_id=prescription.patient_id)
         doctor = Doctor_Information.objects.get(doctor_id=prescription.doctor_id)
         tests = Prescription_test.objects.filter(prescription=prescription).filter(test_info_pay_status='Paid')
-        
+
 
         if request.method == 'POST':
             report = Report(doctor=doctor, patient=patient)
-            
+
             specimen_type = request.POST.getlist('specimen_type')
             collection_date  = request.POST.getlist('collection_date')
             receiving_date = request.POST.getlist('receiving_date')
@@ -432,7 +432,7 @@ def create_report(request, pk):
                 specimens.collection_date = collection_date[i]
                 specimens.receiving_date = receiving_date[i]
                 specimens.save()
-                
+
             for i in range(len(test_name)):
                 tests = Test(report=report)
                 tests.test_name=test_name[i]
@@ -440,7 +440,7 @@ def create_report(request, pk):
                 tests.unit=unit[i]
                 tests.referred_value=referred_value[i]
                 tests.save()
-            
+
             # mail
             doctor_name = doctor.name
             doctor_email = doctor.email
@@ -448,7 +448,7 @@ def create_report(request, pk):
             patient_email = patient.email
             report_id = report.report_id
             delivery_date = report.delivery_date
-            
+
             subject = "Report Delivery"
 
             values = {
@@ -465,7 +465,7 @@ def create_report(request, pk):
             try:
                 send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
             except BadHeaderError:
-                return HttpResponse('Invalid header found') 
+                return HttpResponse('Invalid header found')
 
             return redirect('mypatient-list')
 
@@ -478,7 +478,7 @@ def add_pharmacist(request):
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
         form = PharmacistCreationForm()
-     
+
         if request.method == 'POST':
             form = PharmacistCreationForm(request.POST)
             if form.is_valid():
@@ -494,10 +494,10 @@ def add_pharmacist(request):
                 return redirect('pharmacist-list')
             else:
                 messages.error(request, 'An error has occurred during registration')
-    
+
     context = {'form': form, 'admin': user}
     return render(request, 'hospital_admin/add-pharmacist.html', context)
-  
+
 @csrf_exempt
 @login_required(login_url='admin_login')
 def medicine_list(request):
@@ -507,9 +507,9 @@ def medicine_list(request):
             medicine = Medicine.objects.all()
             orders = Order.objects.filter(user=request.user, ordered=False)
             carts = Cart.objects.filter(user=request.user, purchased=False)
-            
+
             medicine, search_query = searchMedicines(request)
-            
+
             if carts.exists() and orders.exists():
                 order = orders[0]
                 context = {'medicine':medicine,
@@ -525,30 +525,30 @@ def medicine_list(request):
                             'orders': orders,
                             'carts': carts,}
                 return render(request, 'hospital_admin/medicine-list.html',context)
-                
+
 @csrf_exempt
 @login_required(login_url='admin_login')
 def add_medicine(request):
     if request.user.is_pharmacist:
      pharmacist = Pharmacist.objects.get(user=request.user)
-     
+
     if request.method == 'POST':
        medicine = Medicine()
-       
+
        if 'featured_image' in request.FILES:
            featured_image = request.FILES['featured_image']
        else:
            featured_image = "medicines/default.png"
-       
+
        name = request.POST.get('name')
-       Prescription_reqiuired = request.POST.get('requirement_type')     
-       weight = request.POST.get('weight') 
+       Prescription_reqiuired = request.POST.get('requirement_type')
+       weight = request.POST.get('weight')
        quantity = request.POST.get('quantity')
        medicine_category = request.POST.get('category_type')
        medicine_type = request.POST.get('medicine_type')
        description = request.POST.get('description')
        price = request.POST.get('price')
-       
+
        medicine.name = name
        medicine.Prescription_reqiuired = Prescription_reqiuired
        medicine.weight = weight
@@ -559,11 +559,11 @@ def add_medicine(request):
        medicine.price = price
        medicine.featured_image = featured_image
        medicine.stock_quantity = 80
-       
+
        medicine.save()
-       
+
        return redirect('medicine-list')
-   
+
     return render(request, 'hospital_admin/add-medicine.html',{'pharmacist': pharmacist})
 
 @csrf_exempt
@@ -571,24 +571,24 @@ def add_medicine(request):
 def edit_medicine(request, pk):
     if request.user.is_pharmacist:
         pharmacist = Pharmacist.objects.get(user=request.user)
-        
+
         medicine = Medicine.objects.get(serial_number=pk)
         old_medicine_image = medicine.featured_image
-        
+
         if request.method == 'POST':
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = old_medicine_image
             name = request.POST.get('name')
-            Prescription_reqiuired = request.POST.get('requirement_type')     
-            weight = request.POST.get('weight') 
+            Prescription_reqiuired = request.POST.get('requirement_type')
+            weight = request.POST.get('weight')
             quantity = request.POST.get('quantity')
             medicine_category = request.POST.get('category_type')
             medicine_type = request.POST.get('medicine_type')
             description = request.POST.get('description')
             price = request.POST.get('price')
-            
+
             medicine.name = name
             medicine.Prescription_reqiuired = Prescription_reqiuired
             medicine.weight = weight
@@ -599,11 +599,11 @@ def edit_medicine(request, pk):
             medicine.price = price
             medicine.featured_image = featured_image
             medicine.stock_quantity = 80
-        
+
             medicine.save()
-        
+
             return redirect('medicine-list')
-   
+
     return render(request, 'hospital_admin/edit-medicine.html',{'medicine': medicine,'pharmacist': pharmacist})
 
 
@@ -622,9 +622,9 @@ def add_lab_worker(request):
     admin = Admin_Information.objects.get(user=request.user)
     if request.user.is_hospital_admin:
         user = None
-        
+
         form = LabWorkerCreationForm()
-     
+
         if request.method == 'POST':
             form = LabWorkerCreationForm(request.POST)
             if form.is_valid():
@@ -642,9 +642,9 @@ def add_lab_worker(request):
                     return redirect('admin-dashboard')
             else:
                 messages.error(request, 'An error has occurred during registration')
-    
+
     context = {'form': form, 'admin': user,'admin':admin}
-    return render(request, 'hospital_admin/add-lab-worker.html', context)  
+    return render(request, 'hospital_admin/add-lab-worker.html', context)
 
 @csrf_exempt
 @login_required(login_url='admin_login')
@@ -652,7 +652,7 @@ def view_lab_worker(request):
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
         lab_workers = Clinical_Laboratory_Technician.objects.all()
-        
+
     return render(request, 'hospital_admin/lab-worker-list.html', {'lab_workers': lab_workers, 'admin': user})
 
 @csrf_exempt
@@ -661,7 +661,7 @@ def view_pharmacist(request):
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
         pharmcists = Pharmacist.objects.all()
-        
+
     return render(request, 'hospital_admin/pharmacist-list.html', {'pharmacist': pharmcists, 'admin': user})
 
 @csrf_exempt
@@ -670,29 +670,29 @@ def edit_lab_worker(request, pk):
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
         lab_worker = Clinical_Laboratory_Technician.objects.get(technician_id=pk)
-        
+
         if request.method == 'POST':
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = "technician/user-default.png"
-                
+
             name = request.POST.get('name')
-            email = request.POST.get('email')     
+            email = request.POST.get('email')
             phone_number = request.POST.get('phone_number')
-            age = request.POST.get('age')  
-    
+            age = request.POST.get('age')
+
             lab_worker.name = name
             lab_worker.email = email
             lab_worker.phone_number = phone_number
             lab_worker.age = age
             lab_worker.featured_image = featured_image
-    
+
             lab_worker.save()
-            
+
             messages.success(request, 'Clinical Laboratory Technician account updated!')
             return redirect('lab-worker-list')
-        
+
     return render(request, 'hospital_admin/edit-lab-worker.html', {'lab_worker': lab_worker, 'admin': user})
 
 @csrf_exempt
@@ -701,28 +701,28 @@ def edit_pharmacist(request, pk):
     if request.user.is_hospital_admin:
         user = Admin_Information.objects.get(user=request.user)
         pharmacist = Pharmacist.objects.get(pharmacist_id=pk)
-        
+
         if request.method == 'POST':
             if 'featured_image' in request.FILES:
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = "technician/user-default.png"
-                
+
             name = request.POST.get('name')
-            email = request.POST.get('email')     
+            email = request.POST.get('email')
             phone_number = request.POST.get('phone_number')
-            age = request.POST.get('age')  
-    
+            age = request.POST.get('age')
+
             pharmacist.name = name
             pharmacist.email = email
             pharmacist.phone_number = phone_number
             pharmacist.age = age
             pharmacist.featured_image = featured_image
-    
+
             pharmacist.save()
             messages.success(request, 'Pharmacist updated!')
             return redirect('pharmacist-list')
-        
+
     return render(request, 'hospital_admin/edit-pharmacist.html', {'pharmacist': pharmacist, 'admin': user})
 
 @csrf_exempt
@@ -757,21 +757,23 @@ def admin_doctor_profile(request,pk):
     admin = Admin_Information.objects.get(user=request.user)
     experience= Experience.objects.filter(doctor_id=pk).order_by('-from_year','-to_year')
     education = Education.objects.filter(doctor_id=pk).order_by('-year_of_completion')
-    
+
     context = {'doctor': doctor, 'admin': admin, 'experiences': experience, 'educations': education}
     return render(request, 'hospital_admin/doctor-profile.html',context)
 
 
 @csrf_exempt
 @login_required(login_url='admin_login')
-def accept_doctor(request,pk):
+def accept_doctor(request,pk,id):
     doctor = Doctor_Information.objects.get(doctor_id=pk)
     doctor.register_status = 'Accepted'
+    hospital = Hospital_Information.objects.get(hospital_id=id)
+    doctor.hospital_name = hospital
     doctor.save()
 
     experience= Experience.objects.filter(doctor_id=pk)
     education = Education.objects.filter(doctor_id=pk)
-    
+
     # Mailtrap
     doctor_name = doctor.name
     doctor_email = doctor.email
@@ -807,7 +809,7 @@ def reject_doctor(request,pk):
     doctor = Doctor_Information.objects.get(doctor_id=pk)
     doctor.register_status = 'Rejected'
     doctor.save()
-    
+
     # Mailtrap
     doctor_name = doctor.name
     doctor_email = doctor.email
@@ -832,7 +834,7 @@ def reject_doctor(request,pk):
         send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [doctor_email], html_message=html_message, fail_silently=False)
     except BadHeaderError:
         return HttpResponse('Invalid header found')
-    
+
     messages.success(request, 'Doctor Rejected!')
     return redirect('register-doctor-list')
 
@@ -867,7 +869,7 @@ def edit_department(request,pk):
                 department.save()
                 messages.success(request, 'Department Updated!')
                 return redirect('hospital-list')
-                
+
             context = {'department': department}
             return render(request, 'hospital_admin/edit-hospital.html',context)
 
@@ -876,7 +878,7 @@ def edit_department(request,pk):
 def labworker_dashboard(request):
     if request.user.is_authenticated:
         if request.user.is_labworker:
-            
+
             lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
             doctor = Doctor_Information.objects.all()
             patients = Patient.objects.all()
@@ -921,7 +923,7 @@ def add_test(request):
         tests.save()
 
         return redirect('test-list')
-        
+
     context = {'lab_workers': lab_workers}
     return render(request, 'hospital_admin/add-test.html', context)
 
@@ -955,10 +957,10 @@ def pharmacist_dashboard(request):
             total_cart_count = Cart.objects.annotate(count=Count('item'))
 
             medicines = Medicine.objects.all()
-            
+
             context = {'pharmacist':pharmacist, 'medicines':medicines,
-                       'total_pharmacist_count':total_pharmacist_count, 
-                       'total_medicine_count':total_medicine_count, 
+                       'total_pharmacist_count':total_pharmacist_count,
+                       'total_medicine_count':total_medicine_count,
                        'total_order_count':total_order_count,
                        'total_cart_count':total_cart_count}
             return render(request, 'hospital_admin/pharmacist-dashboard.html',context)

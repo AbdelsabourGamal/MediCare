@@ -196,8 +196,8 @@
                           >
                         </div>
                       </td>
-                      {% if doctor.department %}
-                      <td>{{doctor.department}}</td>
+                      {% if doctor.department_name %}
+                      <td>{{doctor.department_name.hospital_department_name}}</td>
                       {% else %}
                       <td>Unavailable</td>
                       {% endif %} {% if doctor.specialization %}
@@ -250,7 +250,11 @@
                           <a href="#" class="user-name">{{patient.name}}</a>
                         </div>
                       </td>
-                      <td>{{patient.phone_number}}</td>
+                      {% if patient.phone_number %}
+                      <td>+20{{patient.phone_number}}</td>
+                      {% else %}
+                      <td> </td>
+                      {% endif %}
                       <td>{{patient.email}}</td>
                       <td>{{patient.address}}</td>
                     </tr>
@@ -296,7 +300,11 @@
                         </div>
                       </td>
                       <td>{{p.email}}</td>
-                      <td>{{p.phone_number}}</td>
+                      {% if p.phone_number %}
+                      <td>+20{{p.phone_number}}</td>
+                      {% else %}
+                      <td> </td>
+                      {% endif %}
                     </tr>
                     {% endfor %}
                   </tbody>

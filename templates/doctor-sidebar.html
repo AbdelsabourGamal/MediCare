@@ -9,7 +9,7 @@
       <div class="profile-det-info">
         <h3>{{ doctor.name }}</h3>
 
-        <div class="patient-details">
+        <div class="user-details">
           <h5 class="mb-0">{{doctor.specialization.specialization_name}}</h5>
         </div>
       </div>
@@ -26,7 +26,7 @@
         </li>
 
         <li>
-          <a href="{% url 'doctor:doctor-profile' pk=request.user.pk %}">
+          <a href="{% url 'doctor:doctor-profille' %}">
             <i class="fas fa-user"></i>
             <span>Profile</span>
           </a>
@@ -38,7 +38,7 @@
             <span>Appointments</span>
           </a>
         </li>
-        
+
 
         <li>
           <a href="{% url 'multiple-hospital' %}">

@@ -108,7 +108,7 @@
                   <i class="far fa-eye"></i> View
                 </a>
                 <a
-                  href="{% url 'accept-doctor' pk=doctor.doctor_id %}"
+                  href="{% url 'accept-doctor' pk=doctor.doctor_id id=doctor.department_name.hospital.hospital_id %}"
                   class="action-btn accept-btn"
                   data-confirm="Accept Doctor?"
                 >

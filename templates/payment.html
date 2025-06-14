@@ -204,7 +204,7 @@
           <div class="detail-item">
             <span>Doctor :</span>
             <span class="highlight"
-              >Dr. {{appointment.doctor.user.get_full_name}}</span
+              >Dr. {{appointment.doctor.name}}</span
             >
           </div>
 
@@ -305,7 +305,7 @@
 
                       document.getElementById('payment-success').style.display = 'block';
 
-                      fetch('/paypal/payment-complete/', {
+                      fetch('/paypal/payment_complete/', {
                           method: 'POST',
                           headers: {
                               'Content-Type': 'application/json',

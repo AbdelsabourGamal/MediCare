@@ -64,10 +64,12 @@
                   </div>
                   <div class="doctor-hospital">{{doctor.hospital_name}}</div>
                   <div class="info-badges">
+                      {% if doctor.department_name.hospital.address %}
                     <span class="info-badge">
                       <i class="fas fa-map-marker-alt me-1"></i>
-                      Dhaka, Bangladesh
+                      {{doctor.department_name.hospital.address}}
                     </span>
+                      {% endif %}
                     <span class="info-badge">
                       <i class="fas fa-stethoscope me-1"></i>
                       {{doctor.specialization.specialization_name}}

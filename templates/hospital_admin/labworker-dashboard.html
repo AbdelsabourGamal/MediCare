@@ -65,7 +65,7 @@
 
             <div class="doctor-info">
               <h3 class="doctor-name">
-                <a href="#">{{doctor.name}}</a>
+                <a>{{doctor.name}}</a>
               </h3>
               <div class="doctor-contact">
                 <div class="contact-item">
@@ -79,14 +79,6 @@
               </div>
             </div>
 
-            <div class="doctor-actions">
-              <a
-                href="{% url 'create-report' pk=doctor.doctor_id %}"
-                class="action-button"
-              >
-                <i class="fas fa-file-alt"></i> Create Report
-              </a>
-            </div>
           </div>
           {% endfor %}
         </div>

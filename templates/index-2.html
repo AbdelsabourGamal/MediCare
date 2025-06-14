@@ -163,7 +163,7 @@
             <div class="doctor">
               <div class="doctor-img">
                 {% if user.is_authenticated and user.is_hospital_admin %}
-                <a href="hospital_admin/admin-doctor-profile/{{doctor.pk}}"></a>
+                <a href="/hospital_admin/admin-doctor-profile/{{doctor.pk}}"></a>
                 {% else %}
                 <a href="{% url 'doctor:doctor-profile' doctor.pk %}">
                 {% endif %}

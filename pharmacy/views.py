@@ -16,7 +16,7 @@ from paypal.models import Payment
 @login_required(login_url="login")
 def pharmacy_single_product(request,pk):
      if request.user.is_authenticated and request.user.is_patient:
-         
+
         patient = Patient.objects.get(user=request.user)
         medicines = Medicine.objects.get(serial_number=pk)
         orders = Order.objects.filter(user=request.user, ordered=False)
@@ -24,27 +24,27 @@ def pharmacy_single_product(request,pk):
         if carts.exists() and orders.exists():
             order = orders[0]
             context = {'patient': patient, 'medicines': medicines,'carts': carts,'order': order, 'orders': orders}
-            return render(request, 'pharmacy/product-single.html',context)
+            return render(request, 'Pharmacy/product-single.html',context)
         else:
             context = {'patient': patient, 'medicines': medicines,'carts': carts,'orders': orders}
-            return render(request, 'pharmacy/product-single.html',context)
+            return render(request, 'Pharmacy/product-single.html',context)
      else:
         logout(request)
         messages.error(request, 'Not Authorized')
-        return render(request, 'patient-login.html')  
+        return render(request, 'patient-login.html')
 
 @csrf_exempt
 @login_required(login_url="login")
 def pharmacy_shop(request):
     if request.user.is_authenticated and request.user.is_patient:
-        
+
         patient = Patient.objects.get(user=request.user)
         medicines = Medicine.objects.all()
         orders = Order.objects.filter(user=request.user, ordered=False)
         carts = Cart.objects.filter(user=request.user, purchased=False)
-        
+
         medicines, search_query = searchMedicines(request)
-        
+
         if carts.exists() and orders.exists():
             order = orders[0]
             context = {'patient': patient, 'medicines': medicines,'carts': carts,'order': order, 'orders': orders, 'search_query': search_query}
@@ -52,17 +52,17 @@ def pharmacy_shop(request):
         else:
             context = {'patient': patient, 'medicines': medicines,'carts': carts,'orders': orders, 'search_query': search_query}
             return render(request, 'Pharmacy/shop.html', context)
-    
+
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
-        return render(request, 'patient-login.html')  
+        return render(request, 'patient-login.html')
 
 @csrf_exempt
 @login_required(login_url="login")
 def add_to_cart(request, pk):
     if request.user.is_authenticated and request.user.is_patient:
-        
+
         item = get_object_or_404(Medicine, pk=pk)
         order_item = Cart.objects.get_or_create(item=item, user=request.user, purchased=False)
         order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -83,7 +83,7 @@ def add_to_cart(request, pk):
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
-        return render(request, 'patient-login.html')  
+        return render(request, 'patient-login.html')
 
 @csrf_exempt
 @login_required(login_url="login")
@@ -102,13 +102,13 @@ def cart_view(request):
     else:
         logout(request)
         messages.info(request, 'Not Authorized')
-        return render(request, 'patient-login.html') 
+        return render(request, 'patient-login.html')
 
 @csrf_exempt
 @login_required(login_url="login")
 def remove_from_cart(request, pk):
     if request.user.is_authenticated and request.user.is_patient:
-        
+
         item = get_object_or_404(Medicine, pk=pk)
         order_qs = Order.objects.filter(user=request.user, ordered=False)
         if order_qs.exists():
@@ -135,7 +135,7 @@ def remove_from_cart(request, pk):
 @login_required(login_url="login")
 def increase_cart(request, pk):
     if request.user.is_authenticated and request.user.is_patient:
-         
+
         patient = Patient.objects.get(user=request.user)
         medicines = Medicine.objects.all()
         carts = Cart.objects.filter(user=request.user, purchased=False)
@@ -154,22 +154,22 @@ def increase_cart(request, pk):
             else:
                 messages.warning(request, f"{item.name} is not in your cart")
                 context = {'patient': patient,'medicines': medicines}
-                return render(request, 'pharmacy/shop.html', context)
+                return render(request, 'Pharmacy/shop.html', context)
         else:
             messages.warning(request, "You don't have an active order")
             context = {'patient': patient,'medicines': medicines}
-            return render(request, 'pharmacy/shop.html', context)
+            return render(request, 'Pharmacy/shop.html', context)
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
-        return render(request, 'patient-login.html') 
+        return render(request, 'patient-login.html')
 
 
 @csrf_exempt
 @login_required(login_url="login")
 def decrease_cart(request, pk):
     if request.user.is_authenticated and request.user.is_patient:
-         
+
         patient = Patient.objects.get(user=request.user)
         medicines = Medicine.objects.all()
         carts = Cart.objects.filter(user=request.user, purchased=False)
@@ -194,15 +194,15 @@ def decrease_cart(request, pk):
             else:
                 messages.info(request, f"{item.name} is not in your cart")
                 context = {'patient': patient,'medicines': medicines}
-                return render(request, 'pharmacy/shop.html', context)
+                return render(request, 'Pharmacy/shop.html', context)
         else:
             messages.info(request, "You don't have an active order")
             context = {'patient': patient,'medicines': medicines}
-            return render(request, 'pharmacy/shop.html', context)
+            return render(request, 'Pharmacy/shop.html', context)
     else:
         logout(request)
         messages.error(request, 'Not Authorized')
-        return render(request, 'patient-login.html') 
+        return render(request, 'patient-login.html')
 
 
 @csrf_exempt
@@ -221,7 +221,7 @@ def checkout(request, pk, id):
         "order": order,
         "patient": patient,
     }
-    return render(request, 'pharmacy/checkout.html', context)
+    return render(request, 'Pharmacy/checkout.html', context)
 
 
 @csrf_exempt
@@ -230,7 +230,7 @@ def checkout_complete(request):
 
     patient_id = data.get('patient_id')
     order_id = data.get('order_id')
-    
+
     patient = Patient.objects.get(patient_id=patient_id)
     order = Order.objects.get(id=order_id)
 
@@ -243,7 +243,7 @@ def checkout_complete(request):
         order.payment_status = "confirmed"
         order.trans_ID = data.get('paymentID')
         order.save()
-        
+
         for cart_item in cart:
             cart_item.purchased = True
             cart_item.save()

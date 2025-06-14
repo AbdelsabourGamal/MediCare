@@ -35,9 +35,11 @@
     <div class="main-wrapper">
       <!-- Header -->
       <header class="header">
-        {% if user.is_authenticated and user.is_patient %} {% include
-        'patient_navbar.html' %} {% endif %} {% if user.is_authenticated and
-        user.is_doctor %} {% include 'doctor-navbar.html' %} {% endif %}
+        {% if user.is_authenticated and user.is_patient %}
+        {% include 'patient_navbar.html' %}
+        {% endif %}
+        {% if user.is_authenticated and user.is_doctor %}
+        {% include 'doctor-navbar.html' %} {% endif %}
       </header>
       <!-- /Header -->
 
@@ -70,10 +72,12 @@
             <div class="col-md-12 col-lg-4 col-xl-3">
               <!-- Profile Sidebar -->
               <div>
-                {% if user.is_authenticated and user.is_patient %} {% include
-                'patient-sidebar.html' %} {% endif %} {% if
-                user.is_authenticated and user.is_doctor %} {% include
-                'doctor-sidebar.html' %} {% endif %}
+                {% if user.is_authenticated and user.is_patient %}
+                {% include 'patient-sidebar.html' %}
+                {% endif %}
+                {% if user.is_authenticated and user.is_doctor %}
+                {% include 'doctor-sidebar.html' %}
+                {% endif %}
               </div>
               <!-- /Profile Sidebar -->
             </div>
@@ -137,10 +141,10 @@
                           <span>{{ test_order.get_totals }} EGP</span>
                         </h3>
                         <div class="cart-actions">
-                          <a href="#" class="btn btn-primary" role="button">
+                          <a href="{% url 'payment_request_test' pk=patient.patient_id id=test_order.id %}" class="btn btn-primary" role="button">
                             Proceed to Checkout
                           </a>
-                          <a href="#" class="btn btn-info" role="button">
+                          <a href="{% url 'prescription-view' pk=prescription.prescription_id %}" class="btn btn-info" role="button">
                             Back to Prescription
                           </a>
                         </div>

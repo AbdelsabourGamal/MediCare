@@ -96,8 +96,9 @@
                         <td>{{doctor.email}}</td>
                         {% else %}
                         <td>Unavailable</td>
-                        {% endif %} {% if doctor.department %}
-                        <td>{{doctor.department}}</td>
+                        {% endif %}
+                        {% if doctor.department_name %}
+                        <td>{{doctor.department_name.hospital_department_name}}</td>
                         {% else %}
                         <td>Unavailable</td>
                         {% endif %} {% if doctor.hospital_name %}

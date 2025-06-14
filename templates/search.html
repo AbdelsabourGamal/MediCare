@@ -78,7 +78,10 @@
             </div>
             <!-- / Profile Sidebar -->
 
-            <div class="col-md-12 col-lg-8 col-xl-9">
+            <div
+              class="col-md-12 col-lg-8 col-xl-9"
+              style="max-height: 100vh; overflow-y: auto"
+            >
               {% for doctor in doctors %}
               <!-- Doctor Widget -->
               <div class="card">

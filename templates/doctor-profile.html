@@ -41,7 +41,7 @@
               {% endif %}
           {% endif %}
       </header>
-      
+
       <!-- Breadcrumb -->
       <div class="breadcrumb-bar">
           <nav aria-label="breadcrumb" class="page-breadcrumb">
@@ -57,7 +57,7 @@
               </ol>
           </nav>
       </div>
-      
+
       <!-- Page Content -->
       <div class="doctor-profile">
           <div class="container-fluid">
@@ -82,20 +82,20 @@
                                   <!-- Doctor Info Left Section -->
                                   <div class="doc-info-left">
                                       <div class="doctor-img">
-                                          <img src="{{ doctor.featured_image.url }}" class="img-fluid" alt="Doctor Image">
+                                          <img src="{{ doctorr.featured_image.url }}" class="img-fluid" alt="Doctor Image">
                                       </div>
                                       <div class="doc-info-cont">
-                                          <h4 class="doc-name">Dr. {{ doctor.name }}</h4>
-                                          <p class="doc-specialty">{{ doctor.department_name.hospital_department_name }}</p>
-                                          <h4 class="doc-hospital">{{ doctor.hospital_name }}</h4>
-                                          <p class="doc-department">{{ doctor.specialization.specialization_name }}</p>
+                                          <h4 class="doc-name">Dr. {{ doctorr.name }}</h4>
+                                          <p class="doc-specialty">{{ doctorr.department_name.hospital_department_name }}</p>
+                                          <h4 class="doc-hospital">{{ doctorr.hospital_name }}</h4>
+                                          <p class="doc-department">{{ doctorr.specialization.specialization_name }}</p>
                                           <div class="clinic-details">
-                                              <p class="doc-location"><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
+
                                               <ul class="clinic-gallery">
                                                   {% for i in "1234" %}
                                                       <li>
-                                                          <a href="{% static 'HealthStack-System/images/Normal/gyno'|add:i|add:'.jpg' %}" data-fancybox="gallery">
-                                                              <img src="{% static 'HealthStack-System/images/Normal/gyno'|add:i|add:'.jpg' %}" alt="Clinic Image">
+                                                          <a href="{% static 'MediCare/images/Normal/gyno'|add:i|add:'.jpg' %}" data-fancybox="gallery">
+                                                              <img src="{% static 'MediCare/images/Normal/gyno'|add:i|add:'.jpg' %}" alt="Clinic Image">
                                                           </a>
                                                       </li>
                                                   {% endfor %}
@@ -103,26 +103,26 @@
                                           </div>
                                       </div>
                                   </div>
-                                  
+
                                   <!-- Doctor Info Right Section -->
                                   <div class="doc-info-right">
                                       <div class="clinic-infos">
                                           <ul>
                                               <li><i class="fas fa-map-marker-alt"></i> Qena</li>
-                                              <li><i class="far fa-money-bill-alt"></i> {{ doctor.consultation_fee }} EGP</li>
+                                              <li><i class="far fa-money-bill-alt"></i> {{ doctorr.consultation_fee }} EGP</li>
                                           </ul>
                                       </div>
-                                      
+
                                       {% if user.is_authenticated and user.is_patient %}
                                           <div class="clinic-booking">
-                                              <a class="apt-btn" href="{% url 'doctor:booking' pk=doctor.doctor_id %}">Book Your Appointment</a>
+                                              <a class="apt-btn" href="{% url 'doctor:booking' pk=doctorr.doctor_id %}">Book Your Appointment</a>
                                           </div>
                                       {% endif %}
                                   </div>
                               </div>
                           </div>
                       </div>
-                      
+
                       <!-- Doctor Details Tab -->
                       <div class="card">
                           <div class="card-body pt-0">
@@ -135,10 +135,10 @@
                                       <li class="nav-item">
                                           <a class="nav-link" href="#doc_certificate" data-bs-toggle="tab">Certificate</a>
                                       </li>
-                                      
+
                                   </ul>
                               </nav>
-                              
+
                               <!-- Tab Content -->
                               <div class="tab-content pt-0">
                                   <!-- Overview Tab -->
@@ -148,9 +148,9 @@
                                               <!-- About Section -->
                                               <div class="widget about-widget">
                                                   <h4 class="widget-title">About Me</h4>
-                                                  <p>{{ doctor.description }}</p>
+                                                  <p>{{ doctorr.description }}</p>
                                               </div>
-                                              
+
                                               <!-- Education Section -->
                                               <div class="widget education-widget">
                                                   <h4 class="widget-title">Education</h4>
@@ -173,7 +173,7 @@
                                                       </ul>
                                                   </div>
                                               </div>
-                                              
+
                                               <!-- Experience Section -->
                                               <div class="widget experience-widget">
                                                   <h4 class="widget-title">Work & Experience</h4>
@@ -196,31 +196,31 @@
                                                       </ul>
                                                   </div>
                                               </div>
-                                              
+
                                               <!-- Visiting Time Section -->
                                               <div class="service-list">
                                                   <h4>Visiting Time</h4>
                                                   <ul class="clearfix">
-                                                      <li><i class="fa-solid fa-clock"></i> {{ doctor.visiting_hour }}</li>
+                                                      <li><i class="fa-solid fa-clock"></i> {{ doctorr.visiting_hour }}</li>
                                                   </ul>
                                               </div>
                                           </div>
                                       </div>
                                   </div>
-                                  
+
                                   <!-- Certificate Tab -->
                                   <div role="tabpanel" id="doc_certificate" class="tab-pane fade">
                                       <div class="row">
                                           <div class="col-md-6 offset-md-3 zoom">
-                                              <img src="{{ doctor.certificate_image.url }}" alt="Doctor Certificate" class="img-fluid">
+                                              <img src="{{ doctorr.certificate_image.url }}" alt="Doctor Certificate" class="img-fluid">
                                           </div>
                     <div class="text-center mt-3">
   <h6 class="text-muted">Official Certificate</h6>
 </div>
                                       </div>
                                   </div>
-                                  
-                                  
+
+
                               </div>
                           </div>
                       </div>
@@ -228,7 +228,7 @@
               </div>
           </div>
       </div>
-      
+
       <!-- Footer -->
       {% include 'footer.html' %}
   </div>

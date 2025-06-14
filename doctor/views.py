@@ -51,7 +51,7 @@ def doctor_change_password(request,pk):
                 request.user.save()
                 messages.success(request,"Password Changed Successfully")
                 return redirect("doctor:doctor-login")
-                
+
             else:
                 messages.error(request,"New Password and Confirm Password is not same")
                 return redirect("doctor:doctor-change-password",pk)
@@ -68,7 +68,7 @@ def logoutDoctor(request):
     if user.is_doctor:
         user.save()
         logout(request)
-    
+
     messages.success(request, 'User Logged out')
     return render(request,'doctor-login.html')
 
@@ -105,16 +105,16 @@ def doctor_login(request):
     elif request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        
+
         try:
             user = User.objects.get(username=username)
         except:
             messages.error(request, 'Username does not exist')
-                
+
         user = authenticate(username=username, password=password)
-        
+
         if user is not None:
-            
+
             login(request, user)
             if request.user.is_doctor:
                 # user.login_status = "online"
@@ -123,32 +123,32 @@ def doctor_login(request):
                 return redirect('doctor:doctor-dashboard')
             else:
                 messages.error(request, 'Invalid credentials. Not a Doctor')
-                return redirect('doctor:doctor-logout')   
+                return redirect('doctor:doctor-logout')
         else:
             messages.error(request, 'Invalid username or password')
-            
+
     return render(request, 'doctor-login.html')
 
 @csrf_exempt
 @login_required(login_url="doctor:doctor-login")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def doctor_dashboard(request):
-        if request.user.is_authenticated:    
+        if request.user.is_authenticated:
             if request.user.is_doctor:
                 doctor = Doctor_Information.objects.get(user=request.user)
                 current_date = datetime.date.today()
-                current_date_str = str(current_date)  
+                current_date_str = str(current_date)
                 today_appointments = Appointment.objects.filter(date=current_date_str).filter(doctor=doctor)
-                
-                next_date = current_date + datetime.timedelta(days=1) # next days date 
-                next_date_str = str(next_date)  
+
+                next_date = current_date + datetime.timedelta(days=1) # next days date
+                next_date_str = str(next_date)
                 next_days_appointment = Appointment.objects.filter(date=next_date_str).filter(doctor=doctor).filter(Q(appointment_status='pending') | Q(appointment_status='confirmed')).count()
-                
+
                 today_patient_count = Appointment.objects.filter(date=current_date_str).filter(doctor=doctor).annotate(count=Count('patient'))
                 total_appointments_count = Appointment.objects.filter(doctor=doctor).annotate(count=Count('id'))
             else:
                 return redirect('doctor:doctor-logout')
-            
+
             context = {'doctor': doctor, 'today_appointments': today_appointments, 'today_patient_count': today_patient_count, 'total_appointments_count': total_appointments_count, 'next_days_appointment': next_days_appointment, 'current_date': current_date_str, 'next_date': next_date_str}
             return render(request, 'doctor-dashboard.html', context)
         else:
@@ -159,13 +159,13 @@ def doctor_dashboard(request):
 @login_required(login_url="doctor:doctor-login")
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def appointments(request):
-        if request.user.is_authenticated:    
+        if request.user.is_authenticated:
             if request.user.is_doctor:
                 doctor = Doctor_Information.objects.get(user=request.user)
                 total_appointments = Appointment.objects.filter(doctor=doctor).order_by('-id')
             else:
                 return redirect('doctor:doctor-login')
-            
+
             context = {'doctor': doctor, 'total_appointments': total_appointments}
             return render(request, 'appointments.html', context)
         else:
@@ -178,9 +178,9 @@ def accept_appointment(request, pk):
     appointment = Appointment.objects.get(id=pk)
     appointment.appointment_status = 'confirmed'
     appointment.save()
-    
+
     # Mailtrap
-    
+
     patient_email = appointment.patient.email
     patient_name = appointment.patient.name
     patient_username = appointment.patient.username
@@ -191,9 +191,9 @@ def accept_appointment(request, pk):
     appointment_date = appointment.date
     appointment_time = appointment.time
     appointment_status = appointment.appointment_status
-    
+
     subject = "Appointment Acceptance Email"
-    
+
     values = {
             "email":patient_email,
             "name":patient_name,
@@ -205,17 +205,17 @@ def accept_appointment(request, pk):
             "appointment_time":appointment_time,
             "appointment_status":appointment_status,
     }
-    
+
     html_message = render_to_string('appointment_accept_mail.html', {'values': values})
     plain_message = strip_tags(html_message)
-    
+
     try:
         send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
     except BadHeaderError:
         return HttpResponse('Invalid header found')
-    
+
     messages.success(request, 'Appointment Accepted')
-    
+
     return redirect('doctor:doctor-dashboard')
 
 @csrf_exempt
@@ -224,31 +224,31 @@ def reject_appointment(request, pk):
     appointment = Appointment.objects.get(id=pk)
     appointment.appointment_status = 'cancelled'
     appointment.save()
-    
+
     # Mailtrap
-    
+
     patient_email = appointment.patient.email
     patient_name = appointment.patient.name
     doctor_name = appointment.doctor.name
 
     subject = "Appointment Rejection Email"
-    
+
     values = {
             "email":patient_email,
             "name":patient_name,
             "doctor_name":doctor_name,
     }
-    
+
     html_message = render_to_string('appointment_reject_mail.html', {'values': values})
     plain_message = strip_tags(html_message)
-    
+
     try:
         send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
     except BadHeaderError:
         return HttpResponse('Invalid header found')
-    
+
     messages.error(request, 'Appointment Rejected')
-    
+
     return redirect('doctor:doctor-dashboard')
 
 
@@ -258,16 +258,33 @@ def doctor_profile(request, pk):
     # request.user --> get logged in user
     if request.user.is_patient:
         patient = request.user.patient
-        doctor = Doctor_Information.objects.get(doctor_id=pk)
+        doctorr = Doctor_Information.objects.get(doctor_id=pk)
+        doctor = None
     else:
-        patient = None
         doctor = Doctor_Information.objects.get(user=request.user)
+        patient = None
+        doctorr = Doctor_Information.objects.get(doctor_id=pk)
 
-    educations = Education.objects.filter(doctor=doctor).order_by('-year_of_completion')
-    experiences = Experience.objects.filter(doctor=doctor).order_by('-from_year','-to_year')
-    doctor_review = Doctor_review.objects.filter(doctor=doctor)
-            
-    context = {'doctor': doctor, 'patient': patient, 'educations': educations, 'experiences': experiences, 'doctor_review': doctor_review}
+    educations = Education.objects.filter(doctor=doctorr).order_by('-year_of_completion')
+    experiences = Experience.objects.filter(doctor=doctorr).order_by('-from_year','-to_year')
+    doctor_review = Doctor_review.objects.filter(doctor=doctorr)
+
+    context = {'doctor': doctor,'doctorr': doctorr, 'patient': patient, 'educations': educations, 'experiences': experiences, 'doctor_review': doctor_review}
+    return render(request, 'doctor-profile.html', context)
+
+@csrf_exempt
+@login_required(login_url="login")
+def doctor_profille(request):
+    # request.user --> get logged in user
+    if request.user.is_doctor:
+        doctorr = Doctor_Information.objects.get(user=request.user)
+        doctor = doctorr
+
+    educations = Education.objects.filter(doctor=doctorr).order_by('-year_of_completion')
+    experiences = Experience.objects.filter(doctor=doctorr).order_by('-from_year','-to_year')
+    doctor_review = Doctor_review.objects.filter(doctor=doctorr)
+
+    context = {'doctor':doctor, 'doctorr': doctorr,'educations': educations, 'experiences': experiences, 'doctor_review': doctor_review}
     return render(request, 'doctor-profile.html', context)
 
 @csrf_exempt
@@ -275,37 +292,37 @@ def doctor_profile(request, pk):
 def delete_education(request, pk):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
-        
+
         educations = Education.objects.get(education_id=pk)
         educations.delete()
-        
+
         messages.success(request, 'Education Deleted')
         return redirect('doctor:doctor-profile-settings')
 
-@csrf_exempt  
+@csrf_exempt
 @login_required(login_url="doctor:doctor-login")
 def delete_experience(request, pk):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
-        
+
         experiences = Experience.objects.get(experience_id=pk)
         experiences.delete()
-        
+
         messages.success(request, 'Experience Deleted')
         return redirect('doctor:doctor-profile-settings')
-      
-@csrf_exempt      
+
+@csrf_exempt
 @login_required(login_url="doctor:doctor-login")
 def doctor_profile_settings(request):
     if request.user.is_doctor:
         doctor = Doctor_Information.objects.get(user=request.user)
         old_featured_image = doctor.featured_image
-        
+
 
         if request.method == 'GET':
             educations = Education.objects.filter(doctor=doctor)
             experiences = Experience.objects.filter(doctor=doctor)
-                    
+
             context = {'doctor': doctor, 'educations': educations, 'experiences': experiences}
             return render(request, 'doctor-profile-settings.html', context)
         elif request.method == 'POST':
@@ -313,7 +330,7 @@ def doctor_profile_settings(request):
                 featured_image = request.FILES['featured_image']
             else:
                 featured_image = old_featured_image
-                
+
             name = request.POST.get('name')
             number = request.POST.get('number')
             gender = request.POST.get('gender')
@@ -323,11 +340,11 @@ def doctor_profile_settings(request):
             report_fee = request.POST.get('report_fee')
             nid = request.POST.get('nid')
             visit_hour = request.POST.get('visit_hour')
-            
+
             degree = request.POST.getlist('degree')
             institute = request.POST.getlist('institute')
             year_complete = request.POST.getlist('year_complete')
-            hospital_name = request.POST.getlist('hospital_name')     
+            hospital_name = request.POST.getlist('hospital_name')
             start_year= request.POST.getlist('from')
             end_year = request.POST.getlist('to')
             designation = request.POST.getlist('designation')
@@ -343,9 +360,9 @@ def doctor_profile_settings(request):
             doctor.report_fee = report_fee
             doctor.description = description
             doctor.dob = dob
-            
+
             doctor.save()
-            
+
             # Education
             for i in range(len(degree)):
                 education = Education(doctor=doctor)
@@ -362,7 +379,7 @@ def doctor_profile_settings(request):
                 experience.to_year = end_year[x]
                 experience.designation = designation[x]
                 experience.save()
-      
+
             # context = {'degree': degree}
             messages.success(request, 'Profile Updated')
             return redirect('doctor:doctor-dashboard')
@@ -382,7 +399,7 @@ def booking(request, pk):
         time = request.POST['appoint_time']
         appointment_type = request.POST['appointment_type']
         message = request.POST['message']
-         
+
         try:
             hour = int(time)
             if 8 <= hour <= 20:
@@ -405,7 +422,7 @@ def booking(request, pk):
             return HttpResponse("You must book an appointment at least 3 hours in advance.", status=400)
 
         appointment.save()
-        
+
         if message:
             # Mailtrap
             patient_email = appointment.patient.email
@@ -413,9 +430,9 @@ def booking(request, pk):
             patient_username = appointment.patient.username
             patient_phone_number = appointment.patient.phone_number
             doctor_name = appointment.doctor.name
-        
+
             subject = "Appointment Request"
-            
+
             values = {
                     "email":patient_email,
                     "name":patient_name,
@@ -424,16 +441,16 @@ def booking(request, pk):
                     "doctor_name":doctor_name,
                     "message":message,
                 }
-            
+
             html_message = render_to_string('appointment-request-mail.html', {'values': values})
             plain_message = strip_tags(html_message)
-            
+
             try:
                 send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found')
-        
-        
+
+
         messages.success(request, 'Appointment Booked')
         return redirect('patient-dashboard')
 
@@ -448,8 +465,8 @@ def my_patients(request):
         patients = Patient.objects.filter(appointment__doctor=doctor).distinct()
     else:
         redirect('doctor:doctor-logout')
-    
-    
+
+
     context = {'doctor': doctor, 'patients': patients}
     return render(request, 'my-patients.html', context)
 
@@ -461,10 +478,10 @@ def patient_profile(request, pk):
         patient = Patient.objects.get(patient_id=pk)
         appointments = Appointment.objects.filter(doctor=doctor).filter(patient=patient)
         prescription = Prescription.objects.filter(doctor=doctor).filter(patient=patient)
-        report = Report.objects.filter(doctor=doctor).filter(patient=patient) 
+        report = Report.objects.filter(doctor=doctor).filter(patient=patient)
     else:
         redirect('doctor:doctor-logout')
-    context = {'doctor': doctor, 'appointments': appointments, 'patient': patient, 'prescription': prescription, 'report': report}  
+    context = {'doctor': doctor, 'appointments': appointments, 'patient': patient, 'prescription': prescription, 'report': report}
     return render(request, 'patient-profile.html', context)
 
 
@@ -473,9 +490,9 @@ def patient_profile(request, pk):
 def create_prescription(request,pk):
         if request.user.is_doctor:
             doctor = Doctor_Information.objects.get(user=request.user)
-            patient = Patient.objects.get(patient_id=pk) 
+            patient = Patient.objects.get(patient_id=pk)
             create_date = datetime.date.today()
-            
+
 
             if request.method == 'POST':
                 prescription = Prescription(doctor=doctor, patient=patient)
@@ -491,10 +508,10 @@ def create_prescription(request,pk):
                 extra_information = request.POST.get('extra_information')
                 # test_info_id = request.POST.getlist('id')
                 test_info_id = [int(x) for x in request.POST.getlist('id') if x.isdigit()]
-            
+
                 prescription.extra_information = extra_information
                 prescription.create_date = create_date
-                
+
                 prescription.save()
 
                 for i in range(len(medicine_name)):
@@ -515,17 +532,17 @@ def create_prescription(request,pk):
                         tests.test_info_id = test_info_id[i]
                         test_info = Test_Information.objects.get(test_id=test_info_id[i])
                         tests.test_info_price = test_info.test_price
-                    
+
                     tests.save()
 
                 messages.success(request, 'Prescription Created')
                 return redirect('doctor:patient-profile', pk=patient.patient_id)
-             
-        context = {'doctor': doctor,'patient': patient}  
+
+        context = {'doctor': doctor,'patient': patient}
         return render(request, 'create-prescription.html',context)
 
-        
-@csrf_exempt      
+
+@csrf_exempt
 def render_to_pdf(template_src, context_dict={}):
     template=get_template(template_src)
     html=template.render(context_dict)
@@ -575,13 +592,13 @@ def doctor_test_list(request):
         tests = Test_Information.objects.all
         context = {'doctor': doctor, 'tests': tests}
         return render(request, 'doctor-test-list.html', context)
-    
+
     elif request.user.is_authenticated and request.user.is_patient:
         patient = Patient.objects.get(user=request.user)
         tests = Test_Information.objects.all
         context = {'patient': patient, 'tests': tests}
         return render(request, 'doctor-test-list.html', context)
-        
+
     else:
         logout(request)
         messages.info(request, 'Not Authorized')
@@ -620,10 +637,10 @@ def doctor_review(request, pk):
     if request.user.is_doctor:
         # doctor = Doctor_Information.objects.get(user_id=pk)
         doctor = Doctor_Information.objects.get(user=request.user)
-            
+
         doctor_review = Doctor_review.objects.filter(doctor=doctor)
-        
-        context = {'doctor': doctor, 'doctor_review': doctor_review}  
+
+        context = {'doctor': doctor, 'doctor_review': doctor_review}
         return render(request, 'doctor-profile.html', context)
 
     if request.user.is_patient:
@@ -633,17 +650,17 @@ def doctor_review(request, pk):
         if request.method == 'POST':
             title = request.POST.get('title')
             message = request.POST.get('message')
-            
+
             doctor_review = Doctor_review(doctor=doctor, patient=patient, title=title, message=message)
             doctor_review.save()
 
-        context = {'doctor': doctor, 'patient': patient, 'doctor_review': doctor_review}  
+        context = {'doctor': doctor, 'patient': patient, 'doctor_review': doctor_review}
         return render(request, 'doctor-profile.html', context)
     else:
         logout(request)
- 
- 
-   
- 
+
+
+
+
 
 
