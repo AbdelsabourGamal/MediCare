@@ -176,7 +176,7 @@ class Prescription_test(models.Model):
     test_info_id = models.CharField(max_length=200, null=True, blank=True)
     test_info_price = models.CharField(max_length=200, null=True, blank=True)
     test_info_pay_status = models.CharField(max_length=200, null=True, blank=True)
-    purchased = models.BooleanField(default=False)
+    purchased = models.CharField(max_length=200, default="pending", null=True, blank=True)
 
     """
     (create prescription)

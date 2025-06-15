@@ -408,7 +408,7 @@ def create_report(request, pk):
         prescription =Prescription.objects.get(prescription_id=pk)
         patient = Patient.objects.get(patient_id=prescription.patient_id)
         doctor = Doctor_Information.objects.get(doctor_id=prescription.doctor_id)
-        prescription_test = Prescription_test.objects.filter(prescription=prescription).first()
+        prescription_test = Prescription_test.objects.filter(prescription=prescription).filter(purchased="confirmed").first()
 
         print(prescription_test)
 
@@ -429,7 +429,7 @@ def create_report(request, pk):
             report.other_information = other_information
             report.save()
 
-            prescription_test.purchased = True
+            prescription_test.purchased = "confirmed"
             prescription_test.save()
 
             for i in range(len(specimen_type)):
@@ -467,11 +467,7 @@ def create_report(request, pk):
 
             html_message = render_to_string('hospital_admin/report-mail-delivery.html', {'values': values})
             plain_message = strip_tags(html_message)
-
-            try:
-                send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
-            except BadHeaderError:
-                return HttpResponse('Invalid header found')
+            #send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
 
             return redirect('mypatient-list')
 
@@ -902,7 +898,7 @@ def mypatient_list(request):
             prescriptions = Prescription.objects.filter(patient=patient)
             tests = Prescription_test.objects.filter(
                 prescription__in=prescriptions,
-                purchased=False,
+                purchased="pending",
                 test_info_pay_status='confirmed'
             )
             patient.test_count = tests.count()
@@ -920,7 +916,7 @@ def prescription_test_list(request,pk):
         lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
         patient = Patient.objects.get(patient_id=pk)
         prescription = Prescription.objects.filter(patient=patient)
-        prescription_test = Prescription_test.objects.filter(prescription__in=prescription).filter(purchased=False).filter(test_info_pay_status='confirmed')
+        prescription_test = Prescription_test.objects.filter(prescription__in=prescription).filter(purchased="pending").filter(test_info_pay_status='confirmed')
 
         context = {
             'prescription': prescription,
