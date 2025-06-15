@@ -42,7 +42,6 @@
         {% include 'hospital_admin/hospital-admin-sidebar.html' %}
       </aside>
       <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
       <!-- /Sidebar -->
 
       <!-- Dashboard Page -->
@@ -60,6 +59,7 @@
               <div class="stat-icon primary">
                 <i class="fas fa-user-md"></i>
               </div>
+
               <div class="stat-count">{{total_doctor_count.count}}</div>
             </div>
             <div class="stat-label">Total Doctors</div>
@@ -148,7 +148,7 @@
                       </td>
                       <td>{{hospital.address}}</td>
                       <td>{{hospital.email}}</td>
-                      <td>{{hospital.phone_number}}</td>
+                      <td>+20{{hospital.phone_number}}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -347,7 +347,7 @@
                           <a href="#" class="user-name">{{lab_worker.name}}</a>
                         </div>
                       </td>
-                      <td>{{lab_worker.phone_number}}</td>
+                      <td>+20{{lab_worker.phone_number}}</td>
                       <td>{{lab_worker.email}}</td>
                       <td>{{lab_worker.age}}</td>
                     </tr>

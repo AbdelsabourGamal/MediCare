@@ -47,35 +47,35 @@
       <div class="page-container lab-w-prescription-list">
         <div class="dashboard-header">
           <div class="header-content">
-            <h1>Prescription Management</h1>
+            <h1>Prescription Test Management</h1>
             <p class="subtitle">Report results for paid patients</p>
           </div>
         </div>
 
         <div class="prescription-list">
-          {% for ps in prescription %}
+          {% for ps in prescription_test %}
           <div class="prescription-card">
             <div class="prescription-header">
-              <span class="prescription-id">#{{ps.prescription_id}}</span>
+              <span class="prescription-id">#{{ps.test_id}}</span>
               <span class="status-badge">Pending Report</span>
             </div>
 
             <div class="doctor-info">
               <div class="doctor-avatar">
                 <img
-                  src="{{ps.doctor.featured_image.url}}"
-                  alt="{{ps.doctor.name}}"
+                  src="{{ps.prescription.doctor.featured_image.url}}"
+                  alt="{{ps.prescription.doctor.name}}"
                   class="avatar-image"
                 />
               </div>
               <div class="doctor-details">
-                <h3 class="doctor-name">{{ps.doctor.name}}</h3>
+                <h3 class="doctor-name">Dr. {{ps.prescription.doctor.name}}</h3>
               </div>
             </div>
 
             <div class="prescription-actions">
               <a
-                href="{% url 'create-report' ps.prescription_id %}"
+                href="{% url 'create-report' ps.test_id %}"
                 class="action-btn primary"
               >
                 <i class="fas fa-file-alt"></i> Create Report

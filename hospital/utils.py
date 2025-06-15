@@ -1,38 +1,38 @@
 from django.db.models import Q
 from .models import Patient, User, Hospital_Information
 from doctor.models import Doctor_Information, Appointment
-from hospital_admin.models import hospital_department, specialization, service
+from hospital_admin.models import Hospital_department, Specialization, Service
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def searchDoctors(request):
-    
+
     search_query = ''
-    
+
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
-        
+
     #skills = Skill.objects.filter(name__icontains=search_query)
-    
+
     doctors = Doctor_Information.objects.filter(register_status='Accepted').distinct().filter(
         Q(name__icontains=search_query) |
-        Q(hospital_name__name__icontains=search_query) |  
+        Q(hospital_name__name__icontains=search_query) |
         Q(department__icontains=search_query))
-    
+
     return doctors, search_query
 
 
 
 def searchHospitals(request):
-    
+
     search_query = ''
-    
+
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
-        
-    
+
+
     hospitals = Hospital_Information.objects.distinct().filter(Q(name__icontains=search_query))
-    
+
     return hospitals, search_query
 
 
@@ -50,9 +50,9 @@ def paginateHospitals(request, hospitals, results):
         # display last page if page is out of range
         page = paginator.num_pages
         hospitals = paginator.page(page)
-        
-    
-    # leftIndex(left button) = current page no. - 4 
+
+
+    # leftIndex(left button) = current page no. - 4
     leftIndex = (int(page) - 4)
     if leftIndex < 1:
         # if leftIndex is less than 1, we will start from 1
@@ -68,17 +68,17 @@ def paginateHospitals(request, hospitals, results):
 
 
 def searchDepartmentDoctors(request, pk):
-    
+
     search_query = ''
-    
+
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
-        
-    departments = hospital_department.objects.get(hospital_department_id=pk)
-    
+
+    departments = Hospital_department.objects.get(hospital_department_id=pk)
+
     doctors = Doctor_Information.objects.filter(department_name=departments).filter(
         Q(name__icontains=search_query))
-    
+
     return doctors, search_query
 
 

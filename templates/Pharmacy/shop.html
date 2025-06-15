@@ -67,7 +67,7 @@
                 </a>
               </li>
 
-              
+
               <li class="nav-item cart d-none d-lg-block">
                 <a href="{% url 'cart' %}" class="nav-link">
                   <div class="cart-icon-wrapper">
@@ -120,6 +120,7 @@
           </div>
         </div>
       </nav>
+        {% include 'message.html' %}
       <section class="medicine-section">
         <div class="section-container">
           <!-- Section Header -->
@@ -230,5 +231,15 @@
     <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'MediCare/js/all.min.js' %}"></script>
     <script src="{% static 'MediCare/js/script.js' %}"></script>
+
+		{% if messages %}
+		<script>
+			{% for message in messages %}
+				$(document).ready(function () {
+					$('.toast').toast('show');
+				});
+			{% endfor %}
+		</script>
+	  {% endif %}
   </body>
 </html>

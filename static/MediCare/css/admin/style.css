@@ -3049,7 +3049,7 @@ textarea.form-control {
 
 .doctors-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 
@@ -3122,6 +3122,7 @@ textarea.form-control {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex-wrap: wrap
 }
 
 .pending-docs .info-item i {
@@ -3196,11 +3197,6 @@ textarea.form-control {
   /* JavaScript will handle this */
 }
 
-@media (max-width: 992px) {
-  .doctors-container {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -3214,9 +3210,13 @@ textarea.form-control {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .pending-docs .doctor-card {
     padding: 1rem;
+  }
+  .pending-docs .doctor-profile {
+      flex-direction: column;
+      text-align: center;
   }
 
   .pending-docs .doctor-actions {

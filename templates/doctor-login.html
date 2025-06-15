@@ -38,7 +38,7 @@
       <!-- Header -->
       <header class="header">{% include 'navbar_home.html' %}</header>
       <!-- /Header -->
-
+			{% include 'message.html' %}
       <!-- Page Content -->
       <div class="page doctor-login">
         <div class="container-fluid">
@@ -47,7 +47,7 @@
             <img
               src="{% static 'MediCare/images/Normal/doctors-login.png' %}"
               class="img-fluid"
-              alt="HealthStack Login"
+              alt="MediCare Login"
             />
           </div>
 
@@ -73,6 +73,7 @@
                   name="username"
                   id="floatingInput"
                   placeholder="User Name"
+                  required
                 />
                 <label for="floatingInput">User Name</label>
               </div>
@@ -85,6 +86,7 @@
                   name="password"
                   id="myInput"
                   placeholder="Password"
+                  required
                 />
                 <label for="floatingInput">Password</label>
 
@@ -141,5 +143,15 @@
     <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'MediCare/js/all.min.js' %}"></script>
     <script src="{% static 'MediCare/js/script.js' %}"></script>
+
+		{% if messages %}
+		<script>
+			{% for message in messages %}
+				$(document).ready(function () {
+					$('.toast').toast('show');
+				});
+			{% endfor %}
+		</script>
+	  {% endif %}
   </body>
 </html>

@@ -1,9 +1,9 @@
 import datetime
 
 from rest_framework import serializers
-from hospital.models import Hospital_Information, Patient, User 
+from hospital.models import Hospital_Information, Patient, User
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report, Specimen, Test
-from hospital_admin.models import Admin_Information,hospital_department
+from hospital_admin.models import Admin_Information,Hospital_department
 from paypal.models import Payment
 from rest_framework_simplejwt.tokens import RefreshToken  # type: ignore
 from django.contrib.auth import authenticate
@@ -13,7 +13,7 @@ import uuid
 
 class PatientRegisterSerializer(serializers.ModelSerializer):
     is_patient = serializers.BooleanField(default=True, read_only=True)
-    serial_number = serializers.CharField(read_only=True)  
+    serial_number = serializers.CharField(read_only=True)
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'first_name', 'last_name', 'is_patient','serial_number']
@@ -101,7 +101,7 @@ class AdminRegisterSerializer(serializers.ModelSerializer):
         )
         admin.save()
         return user
-"""    
+"""
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -146,7 +146,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         if data['new_password'] != data['confirm_password']:
             raise serializers.ValidationError({"confirm_password": "New passwords do not match."})
         return data
-    
+
 ##############################################################################################################
 
 class HospitalSerializer(serializers.ModelSerializer):
@@ -222,5 +222,5 @@ class CombinedDataSerializer(serializers.Serializer):
 
 class HospitalDepartmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = hospital_department
+        model = Hospital_department
         fields = '__all__'

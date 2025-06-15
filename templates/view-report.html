@@ -36,8 +36,8 @@
     <div class="main-wrapper">
       <!-- Header -->
       <header class="header">
-        {% if user.is_authenticated and user.is_patient %} 
-        {% include 'patient_navbar.html' %} 
+        {% if user.is_authenticated and user.is_patient %}
+        {% include 'patient_navbar.html' %}
         {% endif %}
       </header>
       <!-- /Header -->
@@ -132,7 +132,7 @@
                             <span class="label-info">Email:</span>
                             {{report.patient.email}} <br />
                             <span class="label-info">Phone:</span>
-                            {{report.patient.phone_number}}<br />
+                            +20{{report.patient.phone_number}}<br />
                           </p>
                         </div>
                       </div>

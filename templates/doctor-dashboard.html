@@ -21,7 +21,7 @@
       rel="stylesheet"
       href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
+
     <link
       rel="stylesheet"
       href="{% static 'MediCare/css/all.min.css' %}"
@@ -56,7 +56,7 @@
               </nav>
       </div>
       <!-- /Breadcrumb -->
-
+	    {% include 'message.html' %}
       <!-- Page Content -->
       <div class="doctor dashboard">
         <div class="container-fluid">
@@ -129,14 +129,14 @@
                       </div>
                     </div>
                   </div>
-                
-              
+
+
 
               <div class="row">
                 <div class="col-md-12">
                   <h4 class="mb-4">Today's Patient Appointment</h4>
                   <div class="appointment-tab">
-            
+
                       <!-- Today Appointment Tab -->
                       <div class="tab-pane" id="today-appointments">
                         <div class="card card-table mb-0">
@@ -190,10 +190,10 @@
                                       <span class="badge badge-pill bg-danger-light">Cancelled</span>
                                       {% endif %}
                                     </td>
-                                  
+
                                   </tr>
                                   {% endfor %}
-                 
+
                                 </tbody>
                               </table>
                             </div>
@@ -216,8 +216,8 @@
       <!-- /Footer -->
     </div>
     <!-- /Main Wrapper -->
-  {% else %} 
-  <p> You are not logged in </p> 
+  {% else %}
+  <p> You are not logged in </p>
   {% endif %}
     <!-- jQuery -->
     <!-- Scripts -->
@@ -226,8 +226,8 @@
     <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'MediCare/js/all.min.js' %}"></script>
     <script src="{% static 'MediCare/js/script.js' %}"></script>
-    
-    
+
+
     {% if messages %}
       <script>
           {% for message in messages %}

@@ -8,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title>HealthStack</title>
+    <title>MediCare</title>
 
     <!-- Favicons -->
     <link
@@ -43,14 +43,14 @@
   <body>
     <!-- Main Wrapper -->
     <div class="main-wrapper">
-  
-  
+
+
 
       <!-- Page Content -->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-           
+
 
 					<div class="row" style="font-size:14px ;">
 						<div class="col-lg-8 offset-lg-2">
@@ -65,7 +65,7 @@
 										</div>
 										<div class="col-md-6" style="float: right;
 										width: 50%;">
-								
+
 											<p class="invoice-details">
 												<strong>Patient ID:</strong> {{prescription.patient.patient_id}} <br>
 												<strong>Date:</strong> {{prescription.create_date}}
@@ -73,7 +73,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<!-- Invoice Item -->
 								<div class="invoice-item">
 									<div class="row">
@@ -84,7 +84,7 @@
 													<b>Name: </b>{{prescription.doctor.name}} <br>
 													<b>Department: </b>{{prescription.doctor.department_name}}<br>
 													<b>Email: </b>{{prescription.doctor.email}} <br>
-													<b>Phone Number: </b>{{prescription.doctor.phone_number}}
+													<b>Phone Number: </b>+20{{prescription.doctor.phone_number}}
 												</p>
 											</div>
 										</div>
@@ -98,9 +98,9 @@
 													<b>Address: </b>{{prescription.patient.address}}<br>
 													<b>Email: </b>{{prescription.patient.email}}<br>
 													<b>Phone Number: </b>{{prescription.patient.phone_number}}
-													
+
 												</p>
-												
+
 											</div>
 										</div>
 									</div>
@@ -113,20 +113,20 @@
 											<div class="table-responsive">
 												<hr>
 												<h2 class="text-center" style="color: rgb(84, 147, 199);margin-bottom: 4px;text-align: center;"><b>Medicine</b></h2>
-												
+
 												<table class="invoice-table table table-bordered" style="text-align:center;border: 1px dashed black">
-													
+
 														<tr style="background-color: rgb(84, 147, 199);vertical-align: center;height: 50px;">
-														
-														
+
+
 															<th>Medicine Name</th>
 															<th>Quantity</th>
 															<th>Frequency</th>
 															<th>Duration</th>
 															<th>Relation with meal</th>
 															<th>Instruction</th>
-															
-															
+
+
 														</tr>
 														{% for pm in prescription_medicine %}
 														<tr style="vertical-align: center; height: 30px;">
@@ -136,44 +136,44 @@
 															<td class="text-center">{{pm.duration}}</td>
 															<td class="text-center">{{pm.relation_with_meal}}</td>
 															<td class="text-center">{{pm.instruction}}</td>
-															
-															
+
+
 														</tr>
 														{% endfor %}
-													
+
 												</table>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 
-								
+
                                 <!-- Invoice Item -->
 								<div class="invoice-item invoice-table-wrap" style="margin-top: 3px;">
 									<div class="row">
 										<div class="col-md-12">
 											<div class="table-responsive">
-												
+
 												<h2 class="text-center" style="margin-bottom: 4px;color:rgb(84, 147, 199);text-align: center;"><b>Test</b></h2>
-												
+
 												<table class="invoice-table table table-bordered" style="text-align: center;border: 1px dashed black">
-													
+
 														<tr style="background-color: rgb(84, 147, 199);vertical-align: center;height: 50px;">
 															<th>Test Name</th>
 															<th>Description</th>
 														</tr>
 														{% for pt in prescription_test %}
-														<tr style="vertical-align: center;height: 30px;">		
+														<tr style="vertical-align: center;height: 30px;">
 															<td class="text-center">{{pt.test_name}}</td>
-															<td class="text-center">{{pt.test_description}}</td>		
+															<td class="text-center">{{pt.test_description}}</td>
 														</tr>
 														{% endfor %}
-													
+
 												</table>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 
@@ -191,32 +191,32 @@
 														<tr>
 															<td class="text-center">{{prescription.extra_information}}</td>
 														</tr>
-														
-														
+
+
 													</tbody>
 												</table>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 								<!-- /Invoice Information -->
-								
+
 							</div>
 						</div>
 					</div>
 
 				</div>
-				
-			
-			</div>		
+
+
+			</div>
 			<!-- /Page Content -->
-			
-			
-		   
+
+
+
 		</div>
 		<!-- /Main Wrapper -->
-	  
+
 		<!-- jQuery -->
 		<script src="{% static 'MediCare/js/Normal/jquery.min.js' %}"></script>
 

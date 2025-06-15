@@ -318,7 +318,6 @@ def doctor_profile_settings(request):
         doctor = Doctor_Information.objects.get(user=request.user)
         old_featured_image = doctor.featured_image
 
-
         if request.method == 'GET':
             educations = Education.objects.filter(doctor=doctor)
             experiences = Experience.objects.filter(doctor=doctor)
@@ -355,7 +354,6 @@ def doctor_profile_settings(request):
             doctor.gender = gender
             doctor.featured_image = featured_image
             doctor.phone_number = number
-            #doctor.visiting_hour
             doctor.consultation_fee = consultation_fee
             doctor.report_fee = report_fee
             doctor.description = description

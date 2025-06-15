@@ -12,7 +12,7 @@ from doctor.models import Doctor_Information, Prescription, Prescription_test, R
 from pharmacy.models import Order, Cart
 from .forms import AdminUserCreationForm, LabWorkerCreationForm, EditEmergencyForm,AdminForm , PharmacistCreationForm
 
-from .models import Admin_Information,specialization,service,hospital_department, Clinical_Laboratory_Technician, Test_Information
+from .models import Admin_Information,Specialization,Service,Hospital_department, Clinical_Laboratory_Technician, Test_Information
 import random
 import string
 from django.db.models import  Count
@@ -225,18 +225,18 @@ def add_hospital(request):
             hospital.save()
 
             for i in range(len(department_name)):
-                departments = hospital_department(hospital=hospital)
+                departments = sospital_department(hospital=hospital)
                 # print(department_name[i])
                 departments.hospital_department_name = department_name[i]
                 departments.save()
 
             for i in range(len(specialization_name)):
-                specializations = specialization(hospital=hospital)
+                specializations = Specialization(hospital=hospital)
                 specializations.specialization_name=specialization_name[i]
                 specializations.save()
 
             for i in range(len(service_name)):
-                services = service(hospital=hospital)
+                services = Service(hospital=hospital)
                 services.service_name = service_name[i]
                 services.save()
 
@@ -255,9 +255,9 @@ def edit_hospital(request, pk):
         old_featured_image = hospital.featured_image
 
         if request.method == 'GET':
-            specializations = specialization.objects.filter(hospital=hospital)
-            services = service.objects.filter(hospital=hospital)
-            departments = hospital_department.objects.filter(hospital=hospital)
+            specializations = Specialization.objects.filter(hospital=hospital)
+            services = Service.objects.filter(hospital=hospital)
+            departments = Hospital_department.objects.filter(hospital=hospital)
             context = {'hospital': hospital, 'specializations': specializations, 'services': services,'departments':departments, 'admin': user}
             return render(request, 'hospital_admin/edit-hospital.html',context)
 
@@ -274,9 +274,9 @@ def edit_hospital(request, pk):
             phone_number = request.POST.get('phone_number')
             hospital_type = request.POST.get('type')
 
-            specialization_name = request.POST.getlist('specialization')
-            department_name = request.POST.getlist('department')
-            service_name = request.POST.getlist('service')
+            specialization_name = request.POST.getlist('specialization_name')
+            department_name = request.POST.getlist('department_name')
+            service_name = request.POST.getlist('service_name')
 
             hospital.name = hospital_name
             hospital.description = description
@@ -288,21 +288,25 @@ def edit_hospital(request, pk):
 
             hospital.save()
 
+            Specialization.objects.filter(hospital=hospital).delete()
+            Service.objects.filter(hospital=hospital).delete()
+            Hospital_department.objects.filter(hospital=hospital).delete()
+
             # Specialization
-            for i in range(len(specialization_name)):
-                specializations = specialization(hospital=hospital)
-                specializations.specialization_name = specialization_name[i]
+            for x in range(len(specialization_name)):
+                specializations = Specialization(hospital=hospital)
+                specializations.specialization_name = specialization_name[x]
                 specializations.save()
 
             # Experience
-            for i in range(len(service_name)):
-                services = service(hospital=hospital)
-                services.service_name = service_name[i]
+            for x in range(len(service_name)):
+                services = Service(hospital=hospital)
+                services.service_name = service_name[x]
                 services.save()
 
-            for i in range(len(department_name)):
-                departments = hospital_department(hospital=hospital)
-                departments.hospital_department_name = department_name[i]
+            for x in range(len(department_name)):
+                departments = Hospital_department(hospital=hospital)
+                departments.hospital_department_name = department_name[x]
                 departments.save()
 
             messages.success(request, 'Hospital Updated')
@@ -311,7 +315,7 @@ def edit_hospital(request, pk):
 @csrf_exempt
 @login_required(login_url='admin_login')
 def delete_specialization(request, pk, pk2):
-    specializations = specialization.objects.get(specialization_id=pk)
+    specializations = Specialization.objects.get(specialization_id=pk)
     specializations.delete()
     messages.success(request, 'Delete Specialization')
     return redirect('edit-hospital', pk2)
@@ -319,7 +323,7 @@ def delete_specialization(request, pk, pk2):
 @csrf_exempt
 @login_required(login_url='admin_login')
 def delete_service(request, pk, pk2):
-    services = service.objects.get(service_id=pk)
+    services = Service.objects.get(service_id=pk)
     services.delete()
     messages.success(request, 'Delete Service')
     return redirect('edit-hospital', pk2)
@@ -416,7 +420,7 @@ def create_report(request, pk):
             test_name = request.POST.getlist('test_name')
             result = request.POST.getlist('result')
             unit = request.POST.getlist('unit')
-            referred_value = request.POST.getlist('referred_value')
+            referred_value = request.POST.getlist('reference_value')
             delivery_date = request.POST.get('delivery_date')
             other_information= request.POST.get('other_information')
 
@@ -729,7 +733,7 @@ def edit_pharmacist(request, pk):
 @login_required(login_url='admin_login')
 def department_image_list(request,pk):
     admin = Admin_Information.objects.get(user=request.user)
-    departments = hospital_department.objects.filter(hospital_id=pk)
+    departments = Hospital_department.objects.filter(hospital_id=pk)
     #departments = hospital_department.objects.all()
     context = {'departments': departments,'admin':admin}
     return render(request, 'hospital_admin/department-image-list.html',context)
@@ -755,10 +759,10 @@ def pending_doctor_list(request):
 def admin_doctor_profile(request,pk):
     doctor = Doctor_Information.objects.get(doctor_id=pk)
     admin = Admin_Information.objects.get(user=request.user)
-    experience= Experience.objects.filter(doctor_id=pk).order_by('-from_year','-to_year')
-    education = Education.objects.filter(doctor_id=pk).order_by('-year_of_completion')
+    experience= Experience.objects.filter(doctor=doctor)
+    education = Education.objects.filter(doctor=doctor)
 
-    context = {'doctor': doctor, 'admin': admin, 'experiences': experience, 'educations': education}
+    context = {'doctor': doctor, 'admin': admin, 'experience': experience, 'education': education}
     return render(request, 'hospital_admin/doctor-profile.html',context)
 
 
@@ -843,7 +847,7 @@ def reject_doctor(request,pk):
 def delete_department(request,pk):
     if request.user.is_authenticated:
         if request.user.is_hospital_admin:
-            department = hospital_department.objects.get(hospital_department_id=pk)
+            department = Hospital_department.objects.get(hospital_department_id=pk)
             department.delete()
             messages.success(request, 'Department Deleted!')
             return redirect('hospital-list')
@@ -854,7 +858,7 @@ def edit_department(request,pk):
     if request.user.is_authenticated:
         if request.user.is_hospital_admin:
             # old_featured_image = department.featured_image
-            department = hospital_department.objects.get(hospital_department_id=pk)
+            department = Hospital_department.objects.get(hospital_department_id=pk)
             old_featured_image = department.featured_image
 
             if request.method == 'POST':
@@ -898,14 +902,21 @@ def mypatient_list(request):
 
 @csrf_exempt
 @login_required(login_url='admin-login')
-def prescription_list(request,pk):
-    if request.user.is_authenticated:
-        if request.user.is_labworker:
-            lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
-            patient = Patient.objects.get(patient_id=pk)
-            prescription = Prescription.objects.filter(patient=patient)
-            context = {'prescription': prescription,'lab_workers':lab_workers,'patient':patient}
-            return render(request, 'hospital_admin/prescription-list.html',context)
+def prescription_test_list(request,pk):
+    if request.user.is_authenticated and request.user.is_labworker:
+
+        lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
+        patient = Patient.objects.get(patient_id=pk)
+        prescription = Prescription.objects.filter(patient=patient)
+        prescription_test = Prescription_test.objects.filter(prescription__in=prescription).filter(purchased=False).filter(test_info_pay_status='confirmed')
+        test_count = prescription_test.count()
+        context = {
+            'prescription': prescription,
+            'lab_workers': lab_workers,
+            'patient': patient,
+            'prescription_test': prescription_test,
+                'test_count': test_count
+        }
 
 @csrf_exempt
 @login_required(login_url='admin-login')

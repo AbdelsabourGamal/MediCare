@@ -1,21 +1,21 @@
 {% load static %}
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-	
+
 <head>
 		<meta charset="utf-8">
 		<title>MediCare</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-		
+
 		<!-- Favicons -->
 		<link type="image/x-icon" href=" {% static 'MediCare/images/Normal/favicon.png' %}" rel="icon">
-		
+
 		<!-- CSS Files -->
     <link
       rel="stylesheet"
       href="{% static 'MediCare/css/bootstrap.min.css' %}"
     />
-    
+
     <link
       rel="stylesheet"
       href="{% static 'MediCare/css/all.min.css' %}"
@@ -28,17 +28,17 @@
     />
 
 
-	
+
 	</head>
 	<body>
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
 			<!-- Header -->
-			<header class="header">	
+			<header class="header">
 				{% if user.is_authenticated and user.is_patient %}
 				{% include 'patient_navbar.html' %}
 				{% endif %}
-				
+
 				{% if user.is_authenticated and user.is_doctor %}
 				{% include 'doctor-navbar.html' %}
 				{% endif %}
@@ -60,7 +60,7 @@
 							</nav>
 			</div>
 			<!-- /Breadcrumb -->
-			
+
 			<!-- Page Content -->
 			<div class="hospital hospital-profile">
 				<div class="container-fluid">
@@ -71,7 +71,7 @@
 								{% if user.is_authenticated and user.is_patient %}
 								{% include 'patient-sidebar.html' %}
 								{% endif %}
-				
+
 								{% if user.is_authenticated and user.is_doctor %}
 								{% include 'doctor-sidebar.html' %}
 								{% endif %}
@@ -93,7 +93,6 @@
 												<h4 class="doc-name">{{hospitals.name}}</h4>
 												<p class="doc-specialty">{{hospitals.hospital_type}} Hospital</p>
 												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> {{hospitals.address}}</p>
 
 													<ul class="clinic-gallery">
 														<li>
@@ -116,25 +115,25 @@
 																<img src="{% static 'MediCare/images/Normal/features/feature-04.jpg'%}" alt="Feature">
 															</a>
 														</li>
-													</ul> 
+													</ul>
 
 												</div>
 
 												<div class="clinic-services">
 													<span>children special</span>
 													<span>Always available emergency doctors</span>
-													
+
 												</div>
-												
+
 											</div>
 											</div>
 										</div>
 										<div class="doc-info-right col-md-6" >
 											<div class="clinic-infos">
 												<ul>
-													<li><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</li>
+													<li><i class="fas fa-map-marker-alt"></i> {{hospitals.address}} </li>
 												</ul>
-											</div>		
+											</div>
 											<div class="clinic-booking">
 												<a class="apt-btn" href="{% url 'hospital-department-list' pk=hospitals.hospital_id %}">Department & Doctor List</a>
 											</div>
@@ -149,11 +148,11 @@
 								</div>
 							</div>
 							<!-- /Doctor Widget -->
-							
+
 							<!-- Doctor Details Tab -->
 							<div class="card">
 								<div class="card-body pt-0">
-								
+
 									<!-- Tab Menu -->
 									<nav class="user-tabs mb-4">
 										<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
@@ -166,20 +165,20 @@
 											<li class="nav-item">
 												<a class="nav-link" href="#doc_emergency" data-bs-toggle="tab">Emergency Info</a>
 											</li>
-											
-											
+
+
 										</ul>
 									</nav>
 									<!-- /Tab Menu -->
-									
+
 									<!-- Tab Content -->
 									<div class="tab-content">
-									
+
 										<!-- Overview Content -->
 										<div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
 											<div class="row">
 												<div class="col-md-12 col-lg-12">
-												
+
 													<!-- About Details -->
 													<div class="widget about-widget">
 														<h4 class="widget-title">About Our Hospital</h4>
@@ -195,19 +194,19 @@
 																<li>
 																	<div class="experience-content">
 																		<div class="timeline-content">
-																			
+
 																			<h4 class="exp-title mb-0">{{department.hospital_department_name}}</h4>
-							
+
 																		</div>
 																	</div>
 																</li>
 																{% endfor %}
-															
+
 															</ul>
 														</div>
 													</div>
 													<!-- /Awards Details -->
-													
+
 													<!-- Services List -->
 													<div class="widget service-list">
 														<h4>Services</h4>
@@ -215,37 +214,37 @@
 															{% for service in services %}
 															<li>{{service.service_name}}</li>
 															{% endfor %}
-															
+
 														</ul>
 													</div>
 													<!-- /Services List -->
-													
+
 													<!-- Specializations List -->
 													<div class="widget service-list">
 														<h4>Specializations</h4>
 														<ul class="clearfix">
 															{% for specialization in specializations %}
 															<li>{{specialization.specialization_name}}</li>
-															{% endfor %}	
+															{% endfor %}
 
 														</ul>
 													</div>
 													<!-- /Specializations List -->
-		
+
 												</div>
 											</div>
 										</div>
 										<!-- /Overview Content -->
-										
+
 										<!-- Locations Content -->
 										<div role="tabpanel" id="doc_locations" class="tab-pane fade">
-										
+
 											<!-- Location List -->
 											<div class="location-list">
 														<div class="clinic-content">
 															<h4 class="clinic-name"><a href="#">{{hospitals.name}}</a></h4>
 															<p class="doc-specialty">{{hospital.hospital_type}}</p>
-															
+
 															<div class="clinic-details ">
 																<h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> {{hospitals.address}} <br><a href="javascript:void(0);">Get Directions</a></h5>
 																<ul>
@@ -269,7 +268,7 @@
 																			<img src="{% static 'MediCare/images/Normal/features/feature-04.jpg' %}" alt="Feature Image">
 																		</a>
 																	</li>
-																</ul> 
+																</ul>
 															</div>
 														</div>
 														<div class="clinic-timing">
@@ -287,14 +286,14 @@
 																<span>Contact</span>
 															</p>
 															<p class="timings-times">
-																<span>{{hospitals.phone_number}}</span>
+																<span>+20{{hospitals.phone_number}}</span>
 															</p>
 															</div>
 														</div>
 													</div>
 										</div>
 										<!-- /Locations Content -->
-											
+
 										<!-- Overview Content -->
 										<div role="tabpanel" id="doc_emergency" class="tab-pane fade show">
 											<div class="row">
@@ -320,47 +319,47 @@
 															<td><b>VIP room</b> </td>
 															<td>{{hospitals.vip_cabin_no}}</td>
 														</tr>
-														
+
 													</Table>
-													
+
 												</div>
 											</div>
 										</div>
 										<!-- /Overview Content -->
-										
+
 									</div>
 								</div>
 							</div>
 						</div>
-					
+
 					<!-- Doctor Widget -->
-					
+
 					<!-- /Doctor Details Tab -->
 
 				</div>
-			</div>		
+			</div>
 			<!-- /Page Content -->
-			
-   
+
+
 			<!-- Footer -->
-			
+
 			<!-- /Footer -->
-		   
+
 		</div>
 		{% include 'footer.html' %}
 		<!-- /Main Wrapper -->
-		
 
-		
+
+
 		<!-- Scripts -->
     <script src="{% static 'MediCare/js/jquery.min.js' %}"></script>
     <script src="{% static 'MediCare/js/popper.min.js' %}"></script>
     <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'MediCare/js/all.min.js' %}"></script>
     <script src="{% static 'MediCare/js/script.js' %}"></script>
-	
 
-		
+
+
 	</body>
 
 </html>

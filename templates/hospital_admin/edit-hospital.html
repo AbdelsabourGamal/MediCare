@@ -36,6 +36,7 @@
         {% include 'hospital_admin/hospital-admin-navbar.html' %}
       </header>
       <!-- /Header -->
+                {% include 'message.html' %}
 
       <!-- Sidebar -->
       <aside class="sidebar" id="sidebar">
@@ -152,7 +153,7 @@
                       name="phone_number"
                       class="input-field"
                       placeholder="Enter phone number"
-                      value="{{hospital.phone_number}}"
+                      value="0{{hospital.phone_number}}"
                     />
                   </div>
 
@@ -184,9 +185,10 @@
                         <input
                           type="text"
                           class="input-field"
-                          name="department_name[]"
+                          name="department_name"
                           placeholder="Enter department name"
                           value="{{department.hospital_department_name}}"
+                          readonly
                         />
                       </div>
                     </div>
@@ -218,9 +220,10 @@
                         <input
                           type="text"
                           class="input-field"
-                          name="service_name[]"
+                          name="service_name"
                           placeholder="Enter service name"
                           value="{{service.service_name}}"
+                          readonly
                         />
                       </div>
                       <a
@@ -256,9 +259,10 @@
                         <input
                           type="text"
                           class="input-field"
-                          name="specialization_name[]"
+                          name="specialization_name"
                           placeholder="Enter specialization"
                           value="{{specialization.specialization_name}}"
+                          readonly
                         />
                       </div>
                       <a
@@ -336,7 +340,7 @@
               <input
                   type="text"
                   class="input-field"
-                  name="department_name[]"
+                  name="department_name"
                   placeholder="Enter department name"
               />
           </div>
@@ -357,7 +361,7 @@
               <input
                   type="text"
                   class="input-field"
-                  name="service_name[]"
+                  name="service_name"
                   placeholder="Enter service name"
               />
           </div>
@@ -378,7 +382,7 @@
               <input
                   type="text"
                   class="input-field"
-                  name="specialization_name[]"
+                  name="specialization_name"
                   placeholder="Enter specialization"
               />
           </div>
@@ -519,5 +523,14 @@
         });
       });
     </script>
+        {% if messages %}
+    <script>
+      {% for message in messages %}
+          $(document).ready(function () {
+              $('.toast').toast('show');
+          });
+      {% endfor %}
+    </script>
+    {% endif %}
   </body>
 </html>

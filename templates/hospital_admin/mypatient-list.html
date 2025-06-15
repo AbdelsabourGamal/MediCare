@@ -58,14 +58,20 @@
 
             <div class="patient-info">
               <h3 class="patient-name">
-                <a href="{% url 'prescription-list' pk=p.patient_id %}"
+                <a href="{% url 'prescription-test-list' pk=p.patient_id %}"
                   >{{p.name}}</a
                 >
               </h3>
+
+              <h3 class="patient-name">
+                  >{{test_count}}</a
+                >
+              </h3>
+
               <div class="patient-contact">
                 <div class="contact-item">
                   <i class="fas fa-phone"></i>
-                  <span>{{p.phone_number}}</span>
+                  <span>+20{{p.phone_number}}</span>
                 </div>
                 <div class="contact-item">
                   <i class="fas fa-envelope"></i>
@@ -76,7 +82,7 @@
 
             <div class="patient-status">
               <a
-                href="{% url 'prescription-list' pk=p.patient_id %}"
+                href="{% url 'prescription-test-list' pk=p.patient_id %}"
                 class="status-badge"
               >
                 Pending Reports

@@ -8,10 +8,10 @@ from rest_framework.response import Response
 from .serializers import DoctorSerializer, HospitalSerializer, PatientRegisterSerializer, DoctorRegisterSerializer,LoginSerializer, PasswordResetSerializer, PrescriptionMedicineSerializer, PrescriptionMedicineSerializer, PrescriptionTestSerializer, PatientProfileSerializer, ChangePasswordSerializer, PatientAppointmentSerializer, PrescriptionSerializer, ReportSerializer, PaymentSerializer, HospitalDepartmentSerializer, SpecimenSerializer, TestSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken # type: ignore
-from hospital.models import Hospital_Information, Patient, User 
+from hospital.models import Hospital_Information, Patient, User
 from doctor.models import Doctor_Information, Appointment, Prescription, Prescription_medicine, Prescription_test, Report, Specimen, Test
 from paypal.models import Payment
-from hospital_admin.models import Admin_Information,hospital_department
+from hospital_admin.models import Admin_Information,Hospital_department
 from rest_framework import generics,status
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
@@ -24,7 +24,7 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 @api_view(['GET'])
 def getRoutes(request):
     # Specify which urls (routes) to accept
-    
+
     routes = [
         # to test built-in authentication - JSON web tokens have an expiration date
 
@@ -73,7 +73,7 @@ class PatientRegister(generics.CreateAPIView):
             "username": user.username,
             "email": user.email
         }, status=status.HTTP_201_CREATED)
-    
+
 class DoctorRegister(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = DoctorRegisterSerializer
@@ -121,7 +121,7 @@ class PasswordResetView(APIView):
         serializer = PasswordResetSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
+
         email = serializer.validated_data['email'] # type: ignore
         try:
             user = User.objects.get(email=email)
@@ -137,11 +137,11 @@ class PasswordResetView(APIView):
                 fail_silently=False,
             )
             return Response({'message': 'Password reset link sent.'}, status=status.HTTP_200_OK)
-            
+
         except User.DoesNotExist:
             return Response({'error': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            print(f"Error sending email: {e}")  
+            print(f"Error sending email: {e}")
             return Response({'error': 'Failed to send email'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class ChangePasswordView(generics.UpdateAPIView):
@@ -170,7 +170,7 @@ class LogoutView(APIView):
             if auth_header and auth_header.startswith('Bearer '):
                 access_token = auth_header.split(' ')[1]
                 token = AccessToken(access_token)
-                
+
                 outstanding_token, created = OutstandingToken.objects.get_or_create(
                     jti=token['jti'],
                     defaults={
@@ -323,7 +323,7 @@ class CombinedDataView(APIView):
         return Response(data)
 
 class HospitalDepartment(generics.ListAPIView):
-    queryset = hospital_department.objects.all()
+    queryset = Hospital_department.objects.all()
     serializer_class = HospitalDepartmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
