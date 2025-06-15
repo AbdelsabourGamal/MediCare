@@ -408,8 +408,9 @@ def create_report(request, pk):
         prescription =Prescription.objects.get(prescription_id=pk)
         patient = Patient.objects.get(patient_id=prescription.patient_id)
         doctor = Doctor_Information.objects.get(doctor_id=prescription.doctor_id)
-        tests = Prescription_test.objects.filter(prescription=prescription).filter(test_info_pay_status='Paid')
+        prescription_test = Prescription_test.objects.filter(prescription=prescription).first()
 
+        print(prescription_test)
 
         if request.method == 'POST':
             report = Report(doctor=doctor, patient=patient)
@@ -426,9 +427,10 @@ def create_report(request, pk):
 
             report.delivery_date = delivery_date
             report.other_information = other_information
-
-
             report.save()
+
+            prescription_test.purchased = True
+            prescription_test.save()
 
             for i in range(len(specimen_type)):
                 specimens = Specimen(report=report)
@@ -473,7 +475,7 @@ def create_report(request, pk):
 
             return redirect('mypatient-list')
 
-        context = {'prescription':prescription,'lab_workers':lab_workers,'tests':tests}
+        context = {'prescription':prescription,'lab_workers':lab_workers}
         return render(request, 'hospital_admin/create-report.html',context)
 
 @csrf_exempt
@@ -892,13 +894,23 @@ def labworker_dashboard(request):
 @csrf_exempt
 @login_required(login_url='admin-login')
 def mypatient_list(request):
-    if request.user.is_authenticated:
-        if request.user.is_labworker:
-            lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
-            #report= Report.objects.all()
-            patient = Patient.objects.all()
-            context = {'patient': patient,'lab_workers':lab_workers}
-            return render(request, 'hospital_admin/mypatient-list.html',context)
+    if request.user.is_authenticated and request.user.is_labworker:
+        lab_worker = Clinical_Laboratory_Technician.objects.get(user=request.user)
+        patients = Patient.objects.all()
+
+        for patient in patients:
+            prescriptions = Prescription.objects.filter(patient=patient)
+            tests = Prescription_test.objects.filter(
+                prescription__in=prescriptions,
+                purchased=False,
+                test_info_pay_status='confirmed'
+            )
+            patient.test_count = tests.count()
+        context = {
+            'patients': patients,
+            'lab_worker': lab_worker,
+        }
+        return render(request, 'hospital_admin/mypatient-list.html', context)
 
 @csrf_exempt
 @login_required(login_url='admin-login')
@@ -909,14 +921,14 @@ def prescription_test_list(request,pk):
         patient = Patient.objects.get(patient_id=pk)
         prescription = Prescription.objects.filter(patient=patient)
         prescription_test = Prescription_test.objects.filter(prescription__in=prescription).filter(purchased=False).filter(test_info_pay_status='confirmed')
-        test_count = prescription_test.count()
+
         context = {
             'prescription': prescription,
             'lab_workers': lab_workers,
             'patient': patient,
-            'prescription_test': prescription_test,
-                'test_count': test_count
+            'prescription_test': prescription_test
         }
+        return render(request, 'hospital_admin/prescription-list.html',context)
 
 @csrf_exempt
 @login_required(login_url='admin-login')
