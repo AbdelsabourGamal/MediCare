@@ -405,10 +405,10 @@ def generate_random_specimen():
 def create_report(request, pk):
     if request.user.is_labworker:
         lab_workers = Clinical_Laboratory_Technician.objects.get(user=request.user)
-        prescription =Prescription.objects.get(prescription_id=pk)
-        patient = Patient.objects.get(patient_id=prescription.patient_id)
-        doctor = Doctor_Information.objects.get(doctor_id=prescription.doctor_id)
-        prescription_test = Prescription_test.objects.filter(prescription=prescription).filter(purchased="confirmed").first()
+        prescription_test = Prescription_test.objects.get(test_id=pk)
+        patient = Patient.objects.get(patient_id=prescription_test.prescription.patient.patient_id)
+        doctor = Doctor_Information.objects.get(doctor_id=prescription_test.prescription.doctor.doctor_id)
+
 
         print(prescription_test)
 
@@ -429,8 +429,8 @@ def create_report(request, pk):
             report.other_information = other_information
             report.save()
 
-            prescription_test.purchased = "confirmed"
-            prescription_test.save()
+            prescription_test.purchased = "confirmed" # type: ignore
+            prescription_test.save() # type: ignore
 
             for i in range(len(specimen_type)):
                 specimens = Specimen(report=report)
@@ -471,7 +471,7 @@ def create_report(request, pk):
 
             return redirect('mypatient-list')
 
-        context = {'prescription':prescription,'lab_workers':lab_workers}
+        context = {'lab_workers':lab_workers}
         return render(request, 'hospital_admin/create-report.html',context)
 
 @csrf_exempt
