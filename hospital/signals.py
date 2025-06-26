@@ -23,21 +23,23 @@ def createPatient(sender, instance, created, **kwargs):
         if instance.is_patient:
             user = instance
             Patient.objects.create(
-                user=user, username=user.username, email=user.email, serial_number = generate_random_string())
+                user=user, name=user.username, username=user.username, email=user.email, serial_number = generate_random_string())
         elif instance.is_doctor:
             user = instance
             Doctor_Information.objects.create(
-                user=user, username=user.username, email=user.email)
+                user=user, name=user.username, username=user.username, email=user.email)
         elif instance.is_hospital_admin:
             user = instance
             Admin_Information.objects.create(
-                user=user, username=user.username, email=user.email)
+                user=user, name=user.username, username=user.username, email=user.email)
         elif instance.is_pharmacist:
             user = instance
-            Pharmacist.objects.create(user=user, username=user.username, email=user.email)
+            Pharmacist.objects.create(
+                user=user, name=user.username, username=user.username, email=user.email)
         elif instance.is_labworker:
             user = instance
-            Clinical_Laboratory_Technician.objects.create(user=user, username=user.username, email=user.email)
+            Clinical_Laboratory_Technician.objects.create(
+                user=user, name=user.username, username=user.username, email=user.email)
 
 @receiver(post_save, sender=Patient)
 def updateUser(sender, instance, created, **kwargs):

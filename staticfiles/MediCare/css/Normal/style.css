@@ -5271,6 +5271,8 @@ table.table td h2 span {
   max-width: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  width: 150px;
+  height: 150px;
 }
 
 .doctor.patient-profile .patient-avatar:hover,

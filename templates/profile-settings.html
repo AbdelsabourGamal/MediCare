@@ -55,7 +55,7 @@
         </nav>
       </div>
       <!-- /Breadcrumb -->
-
+		{% include 'message.html' %}
       <!-- Page Content -->
       <div class="patient profile-setting">
         <div class="container-fluid">
@@ -321,5 +321,14 @@
         });
       });
     </script>
+        {% if messages %}
+    <script>
+      $(document).ready(function () {
+        {% for message in messages %}
+          $('.toast').toast('show');
+        {% endfor %}
+      });
+    </script>
+    {% endif %}
   </body>
 </html>

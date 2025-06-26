@@ -182,28 +182,30 @@
             </p>
           </div>
 
-          <form id="resetForm" method="POST">
-            {% csrf_token %}
+            <form method="POST">
+              {% csrf_token %}
 
-            <div class="form-group">
-              <label class="form-label" for="email">Email Address</label>
-              <input
-                type="email"
-                class="form-input"
-                name="email"
-                id="email"
-                required
-              />
-            </div>
+              <div class="form-group">
+                {{ form.new_password1.label_tag }}
+                <input type="password" class="form-control" name="{{ form.new_password1.name }}" id="{{ form.new_password1.id_for_label }}" />
+                {% for error in form.new_password1.errors %}
+                  <p class="text-danger">{{ error }}</p>
+                {% endfor %}
+              </div>
 
-            {{form.as_p}}
+              <div class="form-group">
+                {{ form.new_password2.label_tag }}
+                <input type="password" class="form-control" name="{{ form.new_password2.name }}" id="{{ form.new_password1.id_for_label }}" />
+                {% for error in form.new_password2.errors %}
+                  <p class="text-danger">{{ error }}</p>
+                {% endfor %}
+              </div>
 
-            <a href="{% url 'login' %}" class="forgot-link">← Back to Login</a>
+              <a href="{% url 'login' %}" class="forgot-link">← Back to Login</a>
 
-            <button type="submit" class="submit-btn" id="submitBtn">
-              Reset Password
-            </button>
-          </form>
+              <button type="submit" class="submit-btn">Reset Password</button>
+            </form>
+
         </div>
       </div>
       <!-- Page Content -->

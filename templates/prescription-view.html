@@ -98,10 +98,8 @@
                                         <b>Name : </b>{{prescription.patient.name}}<br>
                                         <b>Address : </b>{{prescription.patient.address}}<br>
                                         <b>Email: </b>{{prescription.patient.email}}<br>
-                                        <b>Phone Number : </b>{{prescription.prescription_id}}
-
+                                        <b>Phone Number : </b>+20{{prescription.patient.phone_number}}
                                     </p>
-
                                 </div>
                             </div>
                         </div>
@@ -176,7 +174,7 @@
                                                 {% if pt.test_info_pay_status != 'confirmed' %}
                                                 <a href="{% url 'test-add-to-cart' pk=pt.prescription.prescription_id pk2=pt.test_info_id %}" class="btn btn-primary">Select</a>
                                                 {% else %}
-                                                <a class="btn btn-secondary disabled" aria-disabled="true">Select</a>
+                                                <a class="btn btn-secondary disabled" aria-disabled="true">Add To Cart</a>
                                                 {% endif %}
                                                 </td>
                                             </tr>

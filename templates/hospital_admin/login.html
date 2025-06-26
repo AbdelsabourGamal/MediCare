@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{% static 'MediCare/css/admin/style.css' %}" />
   </head>
   <body>
+     {% include 'message.html' %}
     <!-- Main Wrapper -->
     <div class="login-wrapper">
       <main class="login-container" role="main">
@@ -111,9 +112,6 @@
             <a href="{%url 'hospital_home' %}" class="form-link"
               >← Return to Homepage</a
             >
-            <a href="{%url 'admin_register'%}" class="form-link">
-              Don't have an account? <strong>Create one here</strong>
-            </a>
           </nav>
         </section>
       </main>
@@ -125,5 +123,15 @@
     <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'MediCare/js/all.min.js' %}"></script>
     <script src="{% static 'MediCare/js/admin.js' %}"></script>
+
+    {% if messages %}
+    <script>
+      $(document).ready(function () {
+        {% for message in messages %}
+          $('.toast').toast('show');
+        {% endfor %}
+      });
+    </script>
+    {% endif %}
   </body>
 </html>

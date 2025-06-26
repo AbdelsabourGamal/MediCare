@@ -113,16 +113,14 @@ def admin_login(request):
         if user is not None:
             login(request, user)
             if user.is_hospital_admin:
-                messages.success(request, 'User logged in')
                 return redirect('admin-dashboard')
             elif user.is_labworker:
-                messages.success(request, 'User logged in')
                 return redirect('labworker-dashboard')
             elif user.is_pharmacist:
-                messages.success(request, 'User logged in')
                 return redirect('pharmacist-dashboard')
             else:
-                return redirect('admin-logout')
+                messages.error(request, 'Invalid credentials. Not a Hospital Admin')
+                logout(request)
         else:
             messages.error(request, 'Invalid username or password')
 
@@ -467,7 +465,7 @@ def create_report(request, pk):
 
             html_message = render_to_string('hospital_admin/report-mail-delivery.html', {'values': values})
             plain_message = strip_tags(html_message)
-            #send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
+            send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
 
             return redirect('mypatient-list')
 

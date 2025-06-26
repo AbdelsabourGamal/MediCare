@@ -140,10 +140,9 @@
                             class="avatar"
                           />
                           <a
-                            href="{% url 'hospital-profile' pk=hospital.hospital_id %}"
+                            href="{% url 'edit-hospital' pk=hospital.hospital_id %}"
                             class="user-name"
-                            >{{hospital.name}}</a
-                          >
+                            >{{hospital.name}}</a>
                         </div>
                       </td>
                       <td>{{hospital.address}}</td>
@@ -247,7 +246,7 @@
                             alt="Patient Image"
                             class="avatar"
                           />
-                          <a href="#" class="user-name">{{patient.name}}</a>
+                          <a class="user-name">{{patient.name}}</a>
                         </div>
                       </td>
                       {% if patient.phone_number %}
@@ -296,7 +295,7 @@
                             alt="Pharmacist Image"
                             class="avatar"
                           />
-                          <a href="#" class="user-name">{{p.username}}</a>
+                          <a href="{% url 'edit-pharmacist' pk=p.pharmacist_id %}" class="user-name">{{p.username}}</a>
                         </div>
                       </td>
                       <td>{{p.email}}</td>
@@ -344,7 +343,7 @@
                             alt="Lab-Worker Image"
                             class="avatar"
                           />
-                          <a href="#" class="user-name">{{lab_worker.name}}</a>
+                          <a href="{% url 'edit-lab-worker' pk=lab_worker.technician_id %}" class="user-name">{{lab_worker.name}}</a>
                         </div>
                       </td>
                       <td>+20{{lab_worker.phone_number}}</td>
@@ -370,5 +369,6 @@
     <script src="{% static 'MediCare/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'MediCare/js/all.min.js' %}"></script>
     <script src="{% static 'MediCare/js/admin.js' %}"></script>
+
   </body>
 </html>

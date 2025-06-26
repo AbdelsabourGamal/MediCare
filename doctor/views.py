@@ -117,13 +117,12 @@ def doctor_login(request):
 
             login(request, user)
             if request.user.is_doctor:
-                # user.login_status = "online"
-                # user.save()
                 messages.success(request, 'Welcome Doctor!')
                 return redirect('doctor:doctor-dashboard')
             else:
                 messages.error(request, 'Invalid credentials. Not a Doctor')
-                return redirect('doctor:doctor-logout')
+                logout(request)
+
         else:
             messages.error(request, 'Invalid username or password')
 
@@ -423,7 +422,7 @@ def booking(request, pk):
 
         if message:
             # Mailtrap
-            patient_email = appointment.patient.email
+            doctor_email = appointment.doctor.email
             patient_name = appointment.patient.name
             patient_username = appointment.patient.username
             patient_phone_number = appointment.patient.phone_number
@@ -432,10 +431,10 @@ def booking(request, pk):
             subject = "Appointment Request"
 
             values = {
-                    "email":patient_email,
+                    "email":doctor_email,
                     "name":patient_name,
                     "username":patient_username,
-                    "phone_number":patient_phone_number,
+                    "phone_number":+patient_phone_number,
                     "doctor_name":doctor_name,
                     "message":message,
                 }
@@ -444,7 +443,7 @@ def booking(request, pk):
             plain_message = strip_tags(html_message)
 
             try:
-                send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [patient_email], html_message=html_message, fail_silently=False)
+                send_mail(subject, plain_message, 'hospital_admin@gmail.com',  [doctor_email], html_message=html_message, fail_silently=False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found')
 

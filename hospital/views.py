@@ -121,7 +121,8 @@ def login_user(request):
                 return redirect('patient-dashboard')
             else:
                 messages.error(request, 'Invalid credentials. Not a Patient')
-                return redirect('logout')
+                logout(request)
+                return redirect('login')
         else:
             messages.error(request, 'Invalid username or password')
 
@@ -148,8 +149,8 @@ def patient_register(request):
             user.serial_number = str(uuid.uuid4())[:8]
             user.save()
             messages.success(request, 'Patient account was created!')
-
-            return redirect('login')
+            login(request, user)
+            return redirect('profile-settings')
 
         else:
             messages.error(request, 'An error has occurred during registration')
